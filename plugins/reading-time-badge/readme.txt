@@ -4,7 +4,7 @@ Tags: reading time, posts, badge, content, accessibility
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,16 @@ No. It is zero-config and fully self-contained — no settings page, no external
 requests, and no stored data.
 
 == Changelog ==
+
+= 1.4.0 =
+* Added native theme integration. When the active theme declares
+  `add_theme_support( 'wpai-companions' )`, the badge renders on the theme's
+  `wpai_entry_top` action hook (priority 5) — full article width, just above the
+  content — instead of being prepended inside `the_content`.
+* No double render: in companion-aware themes the `the_content` prepend is
+  automatically disabled, so the badge appears exactly once.
+* No change for themes without companion support — the classic `the_content`
+  prepend is preserved, so the plugin still works on any theme.
 
 = 1.3.0 =
 * Added a crafted, accessible entrance: the badge fades and slides up as it scrolls

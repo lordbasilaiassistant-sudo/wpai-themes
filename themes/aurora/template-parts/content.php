@@ -87,6 +87,20 @@ $aurora_mode        = $aurora_is_singular ? 'singular' : ( $aurora_is_lead ? 'le
 			</div>
 		<?php endif; ?>
 
+		<?php
+		/**
+		 * Native WPAI companion slot — top of the article body.
+		 *
+		 * Fires right after the entry header (meta + title + featured image) and
+		 * immediately before the content, OUTSIDE the .entry-content wrapper so
+		 * hooked output (reading-time badge, Contents box) can sit at full article
+		 * width rather than being constrained to the prose measure. Gated behind
+		 * add_theme_support( 'wpai-companions' ); companions self-guard to single
+		 * posts, so firing on pages is harmless.
+		 */
+		do_action( 'wpai_entry_top' );
+		?>
+
 		<div class="entry-content">
 			<?php
 			the_content();
@@ -96,6 +110,17 @@ $aurora_mode        = $aurora_is_singular ? 'singular' : ( $aurora_is_lead ? 'le
 			) );
 			?>
 		</div>
+
+		<?php
+		/**
+		 * Native WPAI companion slot — bottom of the article body.
+		 *
+		 * Fires immediately after the content/wp_link_pages and before the entry
+		 * footer (tags) and comments, OUTSIDE the .entry-content wrapper so hooked
+		 * output (Kindred related posts) can span the full article width.
+		 */
+		do_action( 'wpai_entry_bottom' );
+		?>
 
 		<?php
 		$aurora_tags = get_the_tag_list( '<ul class="entry-tags"><li>', '</li><li>', '</li></ul>' );

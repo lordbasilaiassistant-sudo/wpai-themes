@@ -4,7 +4,7 @@ Theme URI: https://lordbasilaiassistant-sudo.github.io/wpai-themes/
 Author: WPAI Themes
 Author URI: https://github.com/lordbasilaiassistant-sudo/wpai-themes
 Description: A dark-mode-first longform theme for writers. Deep charcoal, warm off-white serif at a narrow reading measure, and a muted gold accent. The homepage opens as a quiet literary journal — a featured lead essay with its cover image, then a refined reading list. Drop-cap lead-ins, italic pull-quotes, and hairline ornament throughout.
-Version: 1.3.0
+Version: 1.4.0
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
@@ -1536,3 +1536,161 @@ html.sonnet-reveal-all .post-list__title {
 }
 html.sonnet-reveal-all .sonnet-constellation,
 html.sonnet-reveal-all .sonnet-caret { display: none !important; }
+
+/* =========================================================================
+   25. WPAI companion plugins — native placement & styling
+   -------------------------------------------------------------------------
+   The theme declares add_theme_support( 'wpai-companions' ) and fires
+   wpai_entry_top / wpai_entry_bottom in template-parts/content.php, so the
+   companion plugins render OUTSIDE the .entry-content prose column:
+
+     • Reading Time Badge (.rtb-badge)  → wpai_entry_top, priority 5
+     • Contents / TOC box (.contents-toc) → wpai_entry_top, priority 10
+     • Kindred related posts (.kindred) → wpai_entry_bottom
+
+   Each plugin's own CSS is theme-adaptive: it tints from currentColor and
+   exposes overridable --rtb-* / --contents-* / --kindred-* custom properties.
+   We re-skin all three in Sonnet's own language — gold accent, hairline
+   ornament, serif body + sans eyebrows, the 1.25 scale, and the same slow
+   literary motion. Overrides are scoped under .entry--single (specificity
+   0,2,0) so they win over the plugins' single-class defaults regardless of
+   stylesheet load order. The reduced-motion firewall in §24 already neutralizes
+   the plugins' transitions via the universal selector, so these add no new
+   motion that escapes it.
+   ========================================================================= */
+
+/* --- 25a. Reading Time Badge --------------------------------------------- */
+/* Recolor to the gold accent on a faint gold surface, set in the theme's sans
+   eyebrow type, and center it beneath the centered single-post header. */
+.entry--single .rtb-badge {
+  --rtb-radius: 999px;
+  --rtb-fg: var(--s-accent);
+  --rtb-bg: var(--s-accent-soft);
+  --rtb-border: color-mix(in srgb, var(--s-accent) 34%, transparent);
+  margin: 0 0 1.4rem;
+  font-family: var(--s-sans);
+  font-size: var(--s-step--1);
+  font-weight: 600;
+  letter-spacing: .14em;
+}
+/* The header is centered on posts (left on pages); follow it. */
+.entry-header--single + .rtb-badge,
+.featured-image--single + .rtb-badge { margin-inline: auto; }
+.page .entry--single .rtb-badge { margin-inline: 0; }
+.entry--single .rtb-badge__icon { color: var(--s-accent); opacity: .9; }
+
+/* --- 25b. Contents / TOC box --------------------------------------------- */
+/* A quiet card in the theme surface with a gold tick, an uppercase gold title
+   matching the widget/eyebrow language, serif links at the reading color, and a
+   gold active-section rail. */
+.entry--single .contents-toc {
+  --contents-radius: var(--s-radius);
+  --contents-fg: var(--s-ink);
+  --contents-muted: var(--s-accent);
+  --contents-bg: var(--s-surface);
+  --contents-border: var(--s-line);
+  --contents-accent: var(--s-accent);
+  --contents-hover-bg: var(--s-accent-soft);
+  --contents-marker: var(--s-line-strong);
+  margin: 0 0 2.2rem;
+  border-left: 2px solid var(--s-accent-deep);
+  font-family: var(--s-serif);
+  font-size: var(--s-step--1);
+  text-align: left;
+}
+/* Title reads like the theme's eyebrows: uppercase, tracked, gold, sans. */
+.entry--single .contents-toc__title {
+  font-family: var(--s-sans);
+  font-size: var(--s-step--2);
+  font-weight: 700;
+  letter-spacing: .2em;
+  color: var(--s-accent);
+}
+.entry--single .contents-toc__chevron { color: var(--s-accent); }
+/* Links sit at the reading ink color and warm to gold like prose links. */
+.entry--single .contents-toc__link {
+  color: var(--s-ink-soft);
+  border-radius: var(--s-radius);
+  transition: background-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
+}
+.entry--single .contents-toc__link:hover { color: var(--s-accent); }
+.entry--single .contents-toc__link.is-active,
+.entry--single .contents-toc__link[aria-current="true"] {
+  color: var(--s-accent);
+  font-weight: 600;
+}
+.entry--single .contents-toc__sublist { border-left-color: var(--s-line); }
+
+/* --- 25c. Kindred related posts ------------------------------------------ */
+/* Render at the full article width (the same break-out the single cover uses),
+   crowned by an uppercase muted eyebrow like the homepage reading-list title,
+   with cards that echo the reading-list thumbnails: hairline borders, a quiet
+   gold warm-up, and the saturate-on-hover image treatment. */
+.entry--single .kindred {
+  --kindred-radius: var(--s-radius);
+  --kindred-gap: 1.4rem;
+  --kindred-min: 14rem;
+  --kindred-fg: var(--s-ink);
+  --kindred-muted: var(--s-faint);
+  --kindred-card-bg: var(--s-surface);
+  --kindred-card-bg-hover: var(--s-surface-2);
+  --kindred-border: var(--s-line);
+  --kindred-border-hover: var(--s-accent-deep);
+  --kindred-shadow: color-mix(in srgb, #000 50%, transparent);
+  margin-top: clamp(2.8rem, 2rem + 2vw, 3.8rem);
+  padding-top: 1.7rem;
+  border-top: 1px solid var(--s-line);
+  font-family: var(--s-sans);
+  /* Break out of the reading measure to the full article width, centered —
+     mirrors .featured-image--single so the block never overflows the viewport. */
+  margin-inline: max(calc(50% - 50vw), calc(-1 * (var(--s-full) - var(--s-measure)) / 2));
+  max-width: var(--s-full);
+}
+/* Heading echoes .post-list__title: muted, uppercase, tracked, hairline rule. */
+.entry--single .kindred__heading {
+  font-family: var(--s-sans);
+  font-size: var(--s-step--1);
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--s-faint);
+  border-bottom-color: var(--s-line);
+}
+/* Card titles use the reading serif and warm to gold, like the list cards. */
+.entry--single .kindred-card__title {
+  font-family: var(--s-serif);
+  font-size: var(--s-step-0);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--s-ink);
+}
+.entry--single .kindred-card__link:hover .kindred-card__title,
+.entry--single .kindred-card__link:focus-visible .kindred-card__title {
+  color: var(--s-accent);
+  text-decoration: none;
+}
+.entry--single .kindred-card__date {
+  font-family: var(--s-sans);
+  font-size: var(--s-step--2);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--s-faint);
+}
+/* Match the list-thumb saturate treatment so related images feel native. */
+.entry--single .kindred-card__image { filter: saturate(.9); transition: transform 500ms cubic-bezier(.2, .7, .2, 1), filter 350ms ease; }
+.entry--single .kindred-card__link:hover .kindred-card__image,
+.entry--single .kindred-card__link:focus-visible .kindred-card__image { filter: saturate(1); }
+.entry--single .kindred-card__link:focus-visible { outline-color: var(--s-accent-hi); }
+
+/* On narrow screens, let the related block fall back to the gutter width. */
+@media (max-width: 560px) {
+  .entry--single .kindred {
+    margin-inline: calc(-1 * var(--s-gut));
+    padding-inline: var(--s-gut);
+    max-width: none;
+  }
+}
+
+/* The reduced-motion firewall (§24) already zeroes all transition/animation
+   durations via the universal selector, so the plugins' reveals and hovers are
+   neutralized for reduced-motion users without any extra rules here. */

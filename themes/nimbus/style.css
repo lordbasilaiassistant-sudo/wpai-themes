@@ -4,7 +4,7 @@ Theme URI: https://lordbasilaiassistant-sudo.github.io/wpai-themes/
 Author: WPAI Themes
 Author URI: https://github.com/lordbasilaiassistant-sudo/wpai-themes
 Description: A bright, conversion-grade SaaS and startup theme. Crisp white cards float on a soft light canvas, a violet-to-indigo gradient powers the homepage hero, pill buttons, and category chips, and a geometric system sans keeps everything modern and fast. Full-bleed featured-image covers, a two-column reading layout with a card sidebar, and accessible focus states throughout.
-Version: 1.3.0
+Version: 1.4.0
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
@@ -1173,4 +1173,162 @@ input[type="submit"]:hover {
   .nm-magnetic .nm-magnetic__label { transform: none !important; }
   .nm-magnetic::before { display: none; }
 }
+
+/* =====================================================================
+   WPAI COMPANIONS — native placement & styling.
+
+   The theme declares add_theme_support( 'wpai-companions' ) and fires
+   `wpai_entry_top` / `wpai_entry_bottom` around the article body on single
+   posts (template-parts/content.php). The free companion plugins render
+   through those hooks instead of into the_content, so their output lands
+   OUTSIDE the .entry-content prose column and can use full article width.
+
+   The plugins ship theme-adaptive defaults built from currentColor and expose
+   --rtb-*, --contents-*, and --kindred-* custom properties. Here we override
+   only those tokens (plus a few presentational touches) so the badge, Contents
+   box, and related-posts block wear Nimbus's palette, spacing, type, radii, and
+   springy motion — looking hand-built into the theme, not bolted on. Each rule
+   degrades gracefully: if a plugin is inactive nothing here applies.
+   ===================================================================== */
+
+/* Both hooked top-slot pieces sit just under the entry header at full inner
+   width. The badge leads; the Contents box follows. */
+body.single .rtb-badge,
+body.single .contents-toc {
+  max-width: none;
+}
+
+/* ---- Reading Time Badge (wpai_entry_top, priority 5) ---------------- */
+/* Match Nimbus's accent pill chips (cf. .entry-cats a / .cat-chip): a soft
+   indigo fill, deep-indigo ink, hairline accent border. */
+body.single .rtb-badge {
+  --rtb-fg: var(--n-accent-deep);
+  --rtb-bg: var(--n-accent-soft);
+  --rtb-border: color-mix(in srgb, var(--n-accent) 20%, transparent);
+  --rtb-radius: var(--n-radius-pill);
+  margin: 0 0 var(--n-space-3);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  box-shadow: var(--n-shadow-sm);
+  transition: transform 0.15s var(--n-ease-spring), border-color 0.16s ease, background-color 0.16s ease;
+}
+body.single .rtb-badge:hover { transform: translateY(-1px); }
+body.single .rtb-badge__icon { opacity: 1; color: var(--n-accent); }
+
+/* ---- Contents box (wpai_entry_top, priority 10) -------------------- */
+/* A calm card on the article surface: softer indigo tint, Nimbus radius and
+   line color, comfortable spacing. */
+body.single .contents-toc {
+  --contents-radius: var(--n-radius);
+  --contents-fg: var(--n-ink-soft);
+  --contents-muted: var(--n-accent-deep);
+  --contents-bg: var(--n-accent-softer);
+  --contents-border: var(--n-line);
+  --contents-accent: var(--n-accent);
+  --contents-hover-bg: var(--n-accent-soft);
+  --contents-marker: var(--n-line);
+  --contents-pad: var(--n-space-3) var(--n-space-4);
+  margin: 0 0 var(--n-space-4);
+  font-family: var(--n-sans);
+  box-shadow: var(--n-shadow-sm);
+}
+/* Give the "Contents" title the theme's eyebrow treatment: an uppercase
+   deep-indigo label led by a small gradient bar (cf. .widget-title). */
+body.single .contents-toc__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--n-text-sm);
+  letter-spacing: 0.09em;
+  font-weight: 800;
+  color: var(--n-accent-deep);
+}
+body.single .contents-toc__title::before {
+  content: "";
+  width: 0.85rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--n-gradient);
+  flex: none;
+}
+body.single .contents-toc__link {
+  color: var(--n-ink-soft);
+  font-weight: 600;
+}
+body.single .contents-toc__link:hover {
+  color: var(--n-accent-deep);
+  text-decoration: none;
+}
+/* Active section: a gradient left rail + deep-indigo ink, echoing the theme's
+   accent-soft active states. */
+body.single .contents-toc__link.is-active,
+body.single .contents-toc__link[aria-current="true"] {
+  color: var(--n-accent-deep);
+  box-shadow: inset 2px 0 0 0 var(--n-accent);
+  font-weight: 800;
+}
+body.single .contents-toc__chevron { color: var(--n-accent-deep); }
+
+/* ---- Kindred — Related Posts (wpai_entry_bottom) ------------------- */
+/* Full article width, set off from the article with the theme's top border
+   like the entry footer / post navigation. */
+body.single .kindred {
+  --kindred-radius: var(--n-radius-lg);
+  --kindred-gap: var(--n-space-4);
+  --kindred-fg: var(--n-ink);
+  --kindred-muted: var(--n-faint);
+  --kindred-card-bg: var(--n-surface);
+  --kindred-card-bg-hover: var(--n-surface);
+  --kindred-border: var(--n-line);
+  --kindred-border-hover: rgba(99, 102, 241, 0.35);
+  --kindred-shadow: rgba(99, 102, 241, 0.18);
+  margin: var(--n-space-5) 0 0;
+  padding-top: var(--n-space-4);
+  border-top: 1px solid var(--n-line);
+  font-family: var(--n-sans);
+}
+/* Heading reads like a Nimbus section heading: bold, tight, ink. */
+body.single .kindred__heading {
+  margin: 0 0 var(--n-space-4);
+  padding-bottom: 0;
+  border-bottom: 0;
+  color: var(--n-ink);
+  font-size: var(--n-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.022em;
+}
+/* Cards mirror the listing .entry card: white surface, line border, large
+   radius, the theme's layered shadow, and a springy accent lift on hover. */
+body.single .kindred-card__link {
+  border-radius: var(--n-radius-lg);
+  box-shadow: var(--n-shadow);
+  transition:
+    transform 0.2s var(--n-ease-spring),
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+body.single .kindred-card__link:hover,
+body.single .kindred-card__link:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: var(--n-shadow-lg);
+}
+body.single .kindred-card__media { background: var(--n-bg-deep); }
+body.single .kindred-card__title { color: var(--n-ink); font-weight: 700; }
+body.single .kindred-card__link:hover .kindred-card__title,
+body.single .kindred-card__link:focus-visible .kindred-card__title {
+  color: var(--n-accent-deep);
+  text-decoration: none;
+}
+body.single .kindred-card__date { color: var(--n-faint); font-weight: 600; }
+body.single .kindred-card__link:focus-visible { outline-color: var(--n-accent-2); }
+
+/* Reduced motion: drop the lift cue we add above (the plugins self-gate the
+   rest, and the global reduced-motion block already neutralizes transitions). */
+@media (prefers-reduced-motion: reduce) {
+  body.single .rtb-badge:hover,
+  body.single .kindred-card__link:hover,
+  body.single .kindred-card__link:focus-visible { transform: none !important; }
+}
+
 html { scroll-behavior: smooth; }

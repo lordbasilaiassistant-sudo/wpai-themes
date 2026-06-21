@@ -3,7 +3,7 @@
  * Plugin Name: Kindred — Related Posts
  * Plugin URI:  https://lordbasilaiassistant-sudo.github.io/wpai-themes/
  * Description: A tasteful "You might also like" section after single posts, with related posts chosen by shared categories, then tags, then recency. Theme-adaptive, accessible, cached, zero configuration.
- * Version:     1.0.0
+ * Version:     1.1.0
  * Author:      WPAI Themes
  * Author URI:  https://github.com/lordbasilaiassistant-sudo/wpai-themes
  * License:     GPL-2.0-or-later
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin version, kept in sync with the header for cache-busting.
  */
-const KINDRED_VERSION = '1.0.0';
+const KINDRED_VERSION = '1.1.0';
 
 /**
  * Number of related posts to display.
@@ -389,17 +389,42 @@ function kindred_is_active() {
 }
 
 /**
+ * Whether a WPAI-aware theme is driving placement via entry hooks.
+ *
+ * When the active theme declares `add_theme_support( 'wpai-companions' )` it
+ * fires `wpai_entry_top` / `wpai_entry_bottom` around the article body, outside
+ * the .entry-content wrapper. In that case Kindred renders on the bottom hook
+ * (full article width) instead of appending inside the_content — so the section
+ * is never rendered twice.
+ *
+ * @return bool True when the theme supports the WPAI companions contract.
+ */
+function kindred_theme_supports_companions() {
+	return (bool) current_theme_supports( 'wpai-companions' );
+}
+
+/**
  * Append the related-posts section after single-post content.
  *
  * Guards on the main query in the loop for single posts only, so the section is
  * never injected into excerpts, archives, feeds, REST responses, or secondary
  * queries. Returns early (and unchanged) when there are no relatives.
  *
+ * When the active theme supports the WPAI companions contract this returns the
+ * content untouched: the section is rendered on the `wpai_entry_bottom` hook
+ * instead (see kindred_render_entry_bottom), so it appears at full article width
+ * and is never double-rendered.
+ *
  * @param string $content The post content.
  * @return string
  */
 function kindred_append_section( $content ) {
 	if ( ! kindred_is_active() || ! in_the_loop() || ! is_main_query() ) {
+		return $content;
+	}
+
+	// WPAI-aware theme: it renders via the entry hook, not inside the content.
+	if ( kindred_theme_supports_companions() ) {
 		return $content;
 	}
 
@@ -418,6 +443,39 @@ function kindred_append_section( $content ) {
 	return $content . kindred_get_section_html( (int) get_the_ID() );
 }
 add_filter( 'the_content', 'kindred_append_section', 25 );
+
+/**
+ * Render the related-posts section on the theme's `wpai_entry_bottom` hook.
+ *
+ * Active only when the theme supports the WPAI companions contract; otherwise
+ * placement stays in the_content (see kindred_append_section), so there is never
+ * a double render. The same activity and auto-append guards apply here as for
+ * the content placement, keeping the two paths in lockstep.
+ *
+ * The hook fires outside the .entry-content wrapper, so the section can stretch
+ * to full article width rather than the constrained prose column.
+ *
+ * @return void
+ */
+function kindred_render_entry_bottom() {
+	if ( ! kindred_theme_supports_companions() || ! kindred_is_active() ) {
+		return;
+	}
+
+	/** This filter is documented in kindred_append_section(). */
+	if ( ! apply_filters( 'kindred_auto_append', true ) ) {
+		return;
+	}
+
+	$post_id = (int) get_the_ID();
+	if ( ! $post_id ) {
+		return;
+	}
+
+	// Output is fully escaped inside kindred_get_section_html().
+	echo kindred_get_section_html( $post_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}
+add_action( 'wpai_entry_bottom', 'kindred_render_entry_bottom' );
 
 /**
  * Register and enqueue the section stylesheet and reveal script.

@@ -43,6 +43,13 @@ if ( ! function_exists( 'sonnet_setup' ) ) {
 		add_theme_support( 'wp-block-styles' );
 		add_editor_style( 'style.css' );
 
+		// Tell WPAI companion plugins (Reading Time, Contents/TOC, Kindred) that
+		// this theme natively places their output via the wpai_entry_top /
+		// wpai_entry_bottom hooks fired in template-parts/content.php — so they
+		// render there instead of injecting into the_content. See the Integration
+		// Contract; matching CSS lives in style.css §25.
+		add_theme_support( 'wpai-companions' );
+
 		// A tasteful default image size for the list-card thumbnails (3:2).
 		add_image_size( 'sonnet-card', 720, 480, true );
 

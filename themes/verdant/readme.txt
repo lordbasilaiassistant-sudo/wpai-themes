@@ -45,6 +45,11 @@ Features:
 
 == Changelog ==
 
+= 1.4.0 =
+* New: native integration with the WPAI companion plugins. The theme now declares `add_theme_support( 'wpai-companions' )` and fires `wpai_entry_top` / `wpai_entry_bottom` action hooks around the article body on single posts.
+* New: companion output (the Reading Time badge and Contents box at the top, the Kindred "You might also like" related posts at the bottom) now renders outside the prose column — so the related-posts grid can span the full article width — and is styled to match Verdant's palette, rounding, type, soft shadows, and soft-spring motion.
+* Compatibility: when a companion is active without theme support nothing changes; the hooks only fire on single posts (pages may fire them harmlessly), and Smooth Back to Top and Beacon are unaffected.
+
 = 1.3.0 =
 * New: organic motion system — gentle float-up scroll reveals with a soft stagger (IntersectionObserver), a living "breathing" hero glow, and an organic mask reveal on featured images.
 * New: signature drifting botanicals — a few hand-drawn leaf and seed shapes that slowly drift behind the hero and footer, each on its own path and rhythm (pure CSS).

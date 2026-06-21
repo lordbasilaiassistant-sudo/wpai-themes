@@ -3,7 +3,7 @@ Contributors: wpaithemes
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: blog, business, landing, custom-menu, featured-images, two-columns, right-sidebar, threaded-comments, translation-ready, light
@@ -46,6 +46,12 @@ Features:
 6. Add widgets under Appearance > Widgets to populate the sidebar.
 
 == Changelog ==
+
+= 1.4.0 =
+* Added native integration with the free WPAI companion plugins via add_theme_support( 'wpai-companions' ).
+* Single posts now fire `wpai_entry_top` (after the entry header, before the content) and `wpai_entry_bottom` (after the content, before the footer) action hooks, outside the prose column so companion output can use full article width.
+* Styled the hooked output to look native to Nimbus: the Reading Time Badge wears the accent pill-chip look, the Contents box gets the theme's soft-indigo card and gradient eyebrow title, and the Kindred related-posts block matches the cover-card grid with the theme's springy hover lift — all driven by Nimbus's palette, spacing, type, and motion tokens, and fully reduced-motion safe.
+* No double-rendering: when the companions are active they render only through the hooks; with the plugins inactive the theme is unchanged.
 
 = 1.3.0 =
 * Added a self-contained motion system (assets/js/motion.js, no libraries or CDNs): a living animated gradient-mesh hero, a magnetic gradient CTA, a small 3D tilt on post cards, springy staggered scroll-reveal entrances, count-up hero stats, and a scroll progress bar.

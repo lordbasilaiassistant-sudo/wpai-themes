@@ -82,6 +82,19 @@ if ( $nimbus_is_listing ) {
 				<?php endif; ?>
 			</header>
 
+			<?php
+			/**
+			 * WPAI companions: top slot. Fires after the entry header and the
+			 * featured image, immediately before the_content() and OUTSIDE the
+			 * .entry-content prose column, so hooked output (reading-time badge,
+			 * Contents box) can use full article width. Single posts only — the
+			 * theme declares add_theme_support( 'wpai-companions' ).
+			 */
+			if ( $nimbus_is_post ) {
+				do_action( 'wpai_entry_top' );
+			}
+			?>
+
 			<div class="entry-content">
 				<?php
 				the_content();
@@ -91,6 +104,18 @@ if ( $nimbus_is_listing ) {
 				) );
 				?>
 			</div>
+
+			<?php
+			/**
+			 * WPAI companions: bottom slot. Fires immediately after the_content()
+			 * /wp_link_pages() and BEFORE the entry footer/tags, outside the
+			 * .entry-content wrapper so the related-posts block (Kindred) can span
+			 * the full article width. Single posts only.
+			 */
+			if ( $nimbus_is_post ) {
+				do_action( 'wpai_entry_bottom' );
+			}
+			?>
 
 			<?php if ( $nimbus_is_post ) : ?>
 				<?php $nimbus_cats = get_the_category_list( '' ); ?>

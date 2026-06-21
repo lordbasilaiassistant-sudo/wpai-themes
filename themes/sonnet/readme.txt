@@ -3,7 +3,7 @@ Contributors: wpaithemes
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: blog, one-column, custom-menu, featured-images, threaded-comments, translation-ready, dark, editor-style, full-width-template
@@ -48,6 +48,24 @@ Features:
    Appearance > Widgets.
 
 == Changelog ==
+
+= 1.4.0 =
+* Native integration with the WPAI companion plugins. The theme now declares
+  add_theme_support( 'wpai-companions' ) and fires two action hooks around the
+  article body on single posts — wpai_entry_top (right after the title, byline,
+  and cover image, before the content) and wpai_entry_bottom (right after the
+  content, before the tag/category footer). Both fire outside the .entry-content
+  prose column so companion output can use the full article width.
+* When the companions are active they now place themselves via these hooks
+  instead of injecting into the_content: the Reading Time badge and the Contents
+  (table of contents) box render at the top, and the Kindred related-posts block
+  renders at the bottom (spanning the full article width). The Contents plugin
+  still adds heading anchor ids as before.
+* Re-skinned all three companions in Sonnet's own language — gold accent, hairline
+  ornament, serif body with sans-serif eyebrows, the 1.25 type scale, and the
+  theme's slow literary motion — so they look hand-built into the theme. No new
+  motion escapes the reduced-motion firewall. No change to existing design,
+  animations, or to themes/sites without the companions installed.
 
 = 1.3.0 =
 * Added a hand-rolled, self-contained motion system (assets/js/motion.js, no

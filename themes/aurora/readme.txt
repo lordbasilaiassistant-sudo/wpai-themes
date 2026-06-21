@@ -3,7 +3,7 @@ Contributors: wpaithemes
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: blog, two-columns, right-sidebar, custom-menu, custom-logo, featured-images, threaded-comments, translation-ready, editor-style, block-styles, light, accessibility-ready
@@ -48,6 +48,22 @@ Features:
    Appearance > Widgets, and give your posts featured images for the best look.
 
 == Changelog ==
+
+= 1.4.0 =
+* Native companion-plugin integration. Aurora now declares
+  add_theme_support( 'wpai-companions' ) and fires `wpai_entry_top` and
+  `wpai_entry_bottom` action hooks around the single-post article body —
+  outside the prose column — so its free companion plugins place their output
+  natively and at full article width.
+* Reading Time Badge now renders just above the article (right under the
+  title/meta) instead of inside the prose; the Contents box sits beneath it;
+  and Kindred's related-posts block spans the full article width below the
+  content, before the tags — no more double rendering via the_content.
+* New "native skin" styling maps each companion's theming custom properties
+  onto Aurora's tokens: terracotta accent, warm paper surfaces, serif
+  headings and card titles, hairline rules, matching radii, the prev/next
+  hover lift, and warm aurora-hue placeholders. Self-contained CSS, no extra
+  requests, and full prefers-reduced-motion support preserved.
 
 = 1.3.0 =
 * New signature flourish: a hand-drawn ink underline (inline SVG) that draws

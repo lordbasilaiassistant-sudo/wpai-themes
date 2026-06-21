@@ -4,7 +4,7 @@ Theme URI: https://lordbasilaiassistant-sudo.github.io/wpai-themes/
 Author: WPAI Themes
 Author URI: https://github.com/lordbasilaiassistant-sudo/wpai-themes
 Description: A bold brutalist portfolio and agency theme. Oversized uppercase display type, a monospace UI, a hard 1px grid, zero rounded corners, and an electric accent on near-black. Confident for studios, portfolios, and engineering blogs.
-Version: 1.3.0
+Version: 1.4.0
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
@@ -735,6 +735,152 @@ h1, h2, h3, h4, h5, h6 {
 /* Body utility for full-bleed first impression on small screens */
 @media (max-width: 30rem) {
   body { background-size: 2rem 2rem; }
+}
+
+/* ==========================================================================
+   WPAI COMPANIONS — native single-post integration (Monolith 1.4.0)
+   --------------------------------------------------------------------------
+   The theme declares add_theme_support( 'wpai-companions' ) and fires
+   wpai_entry_top / wpai_entry_bottom around the article body (see
+   template-parts/content.php). Supporting companion plugins render OUTSIDE the
+   .entry-content prose column, so we restyle their (plugin-prefixed) markup here
+   to read as native Monolith: hard 1px borders, zero rounded corners, the
+   monospace/uppercase UI voice, the electric accent, and the same easing tokens.
+   Top pieces (reading-time badge + Contents box) align to the prose measure;
+   the bottom "You might also like" block uses the full article width.
+   Selectors are scoped to .entry so only the single/page article is affected.
+   ========================================================================== */
+
+/* --- Reading-time badge (wpai_entry_top, priority 5) --------------------- *
+ * The plugin exposes --rtb-* tokens for themes; we retune them to the
+ * brutalist surface (square, hard accent border) rather than overriding rules. */
+.entry > .rtb-badge {
+  --rtb-radius: 0;                         /* no rounded corners, ever */
+  --rtb-pad-y: .4em;
+  --rtb-pad-x: .8em;
+  --rtb-fg: var(--m-accent);
+  --rtb-bg: var(--m-surface);
+  --rtb-border: var(--m-accent);
+  max-width: var(--m-measure);
+  margin: 0 0 1.4rem;
+  font-family: var(--m-mono);
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.entry > .rtb-badge .rtb-badge__icon { opacity: 1; }
+
+/* --- Contents (TOC) box (wpai_entry_top, priority 10) -------------------- *
+ * Sits just under the reading-time badge. Matches the framed .widget box
+ * language: hard border, surface fill, the "//" + accent title motif, the "▸"
+ * accent bullet motif from .entry-content lists. Aligned to the reading measure
+ * so it lines up with the prose column that follows. */
+.entry > .contents-toc {
+  max-width: var(--m-measure);
+  margin: 0 0 2.2rem;
+  border: 1px solid var(--m-line-strong);
+  background: var(--m-surface);
+  padding: 1.2rem 1.4rem;
+}
+.entry > .contents-toc .contents-toc__toggle {
+  display: flex; align-items: center; justify-content: space-between; gap: .6rem;
+  width: 100%; margin: 0; padding: 0 0 .8rem;
+  background: none; border: 0; border-bottom: 1px solid var(--m-line);
+  border-radius: 0; box-shadow: none; cursor: pointer; text-align: left;
+}
+.entry > .contents-toc .contents-toc__title {
+  display: flex; align-items: center; gap: .5rem;
+  font-family: var(--m-mono); font-size: .74rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .18em; color: var(--m-accent);
+}
+.entry > .contents-toc .contents-toc__title::before { content: "//"; color: var(--m-line-strong); }
+.entry > .contents-toc .contents-toc__chevron {
+  flex: none; color: var(--m-faint);
+  transition: transform var(--m-fast) var(--m-ease), color var(--m-fast) var(--m-ease);
+}
+.entry > .contents-toc .contents-toc__toggle:hover .contents-toc__chevron { color: var(--m-accent); }
+.entry > .contents-toc .contents-toc__toggle[aria-expanded="false"] .contents-toc__chevron { transform: rotate(-90deg); }
+.entry > .contents-toc .contents-toc__list,
+.entry > .contents-toc .contents-toc__inner,
+.entry > .contents-toc .contents-toc__items,
+.entry > .contents-toc .contents-toc__sublist {
+  list-style: none; margin: 0; padding: 0;
+}
+.entry > .contents-toc .contents-toc__items { margin-top: 1rem; }
+.entry > .contents-toc .contents-toc__sublist { margin: .25rem 0 .25rem 1rem; border-left: 1px solid var(--m-line); padding-left: .9rem; }
+.entry > .contents-toc .contents-toc__item { position: relative; margin: 0; padding: .15rem 0 .15rem 1.2rem; line-height: 1.4; }
+.entry > .contents-toc .contents-toc__item::before {
+  content: "▸"; position: absolute; left: 0; top: .15rem;
+  color: var(--m-accent); font-size: .9em;
+}
+.entry > .contents-toc .contents-toc__link {
+  font-family: var(--m-mono); font-size: .78rem; letter-spacing: .04em;
+  color: var(--m-ink-soft); border-bottom: 1px solid transparent;
+  transition: color var(--m-fast) var(--m-ease), border-color var(--m-fast) var(--m-ease);
+}
+.entry > .contents-toc .contents-toc__link:hover,
+.entry > .contents-toc .contents-toc__link[aria-current="true"],
+.entry > .contents-toc .contents-toc__link.is-active {
+  color: var(--m-accent); border-bottom-color: var(--m-accent); text-decoration: none;
+}
+
+/* --- Kindred related posts (wpai_entry_bottom) -------------------------- *
+ * Full article width. The plugin exposes --kindred-* tokens for themes, so we
+ * retune the whole section to the brutalist card language (square frames, hard
+ * lines, surface fill, accent on hover) instead of fighting its rules; only the
+ * heading and the hover-lift motion are restyled directly to match the theme. */
+.entry > .kindred {
+  --kindred-radius: 0;
+  --kindred-gap: clamp(1.25rem, 2.5vw, 2rem);
+  --kindred-card-pad: 1.2rem 1.3rem 1.4rem;
+  --kindred-min: 220px;
+  --kindred-fg: var(--m-ink);
+  --kindred-muted: var(--m-faint);
+  --kindred-card-bg: var(--m-surface);
+  --kindred-card-bg-hover: var(--m-surface);
+  --kindred-border: var(--m-line);
+  --kindred-border-hover: var(--m-accent);
+  --kindred-shadow: transparent;
+  margin: 3rem 0 0;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--m-line-strong);
+}
+.entry > .kindred .kindred__heading {
+  display: flex; align-items: center; gap: 1rem;
+  font-family: var(--m-mono); font-size: .74rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .2em; color: var(--m-faint);
+  border: 0; padding: 0; margin: 0 0 1.8rem;
+}
+.entry > .kindred .kindred__heading::after { content: ""; flex: 1; height: 1px; background: var(--m-line); }
+.entry > .kindred .kindred-card {
+  border-radius: 0;
+  transition: border-color var(--m-mid) var(--m-ease), transform var(--m-mid) var(--m-ease);
+}
+.entry > .kindred .kindred-card:hover { transform: translateY(-3px); }
+.entry > .kindred .kindred-card:focus-within { border-color: var(--m-accent); }
+.entry > .kindred .kindred-card__media { border-radius: 0; }
+.entry > .kindred .kindred-card__title {
+  font-family: var(--m-display); font-weight: 800; line-height: 1.05;
+  letter-spacing: -.02em; text-transform: uppercase; color: var(--m-ink);
+}
+.entry > .kindred .kindred-card:hover .kindred-card__title { color: var(--m-accent); }
+.entry > .kindred .kindred-card__date {
+  font-family: var(--m-mono); font-size: .68rem; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--m-faint);
+}
+
+/* Motion: the companion pieces reuse the theme's own interaction language —
+   the kindred cards lift on hover exactly like .project-card, and the TOC
+   chevron/link transitions ride the same --m-fast/--m-ease tokens (declared on
+   the rules above). No competing entrance animation is added, so nothing can
+   double-trigger against the theme's IntersectionObserver reveals or appear
+   below the fold before scroll. The guard below honours reduced-motion. */
+@media (prefers-reduced-motion: reduce) {
+  .entry > .kindred .kindred-card { transition: none !important; }
+  .entry > .kindred .kindred-card:hover { transform: none !important; }
+  .entry > .contents-toc .contents-toc__chevron,
+  .entry > .contents-toc .contents-toc__link { transition: none !important; }
 }
 
 /* ==========================================================================

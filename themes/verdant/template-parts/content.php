@@ -68,6 +68,15 @@ if ( ! is_singular() ) {
 			</div>
 		<?php endif; ?>
 
+		<?php
+		// Companion integration: fire just after the entry header (title, meta,
+		// featured image) and before the prose column opens. Hooked output lands
+		// outside .entry-content, so it can use the full article width.
+		if ( is_singular() ) {
+			do_action( 'wpai_entry_top' );
+		}
+		?>
+
 		<div class="entry-content">
 			<?php
 			if ( is_singular() ) :
@@ -87,6 +96,14 @@ if ( ! is_singular() ) {
 			endif;
 			?>
 		</div>
+
+		<?php
+		// Companion integration: fire right after the content (and pagination)
+		// and before the entry footer / tags. Full article width is available.
+		if ( is_singular() ) {
+			do_action( 'wpai_entry_bottom' );
+		}
+		?>
 
 		<?php if ( is_singular() ) : ?>
 			<footer class="entry-footer">

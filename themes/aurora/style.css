@@ -4,7 +4,7 @@ Theme URI: https://lordbasilaiassistant-sudo.github.io/wpai-themes/
 Author: WPAI Themes
 Author URI: https://github.com/lordbasilaiassistant-sudo/wpai-themes
 Description: A refined, minimal serif theme for personal blogs and essayists. Aurora leads with one beautifully set featured story, then a quiet editorial list — generous whitespace, a comfortable reading measure, and gorgeous long-form typography. Light, fast, and accessible, with no external fonts.
-Version: 1.3.0
+Version: 1.4.0
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
@@ -1887,6 +1887,218 @@ input[type="submit"]:hover {
 	.wp-block-button__link:hover,
 	button[type="submit"]:hover,
 	input[type="submit"]:hover {
+		transform: none;
+	}
+}
+
+/* =========================================================================
+   26. WPAI companion plugins — native skin
+   -------------------------------------------------------------------------
+   Aurora declares add_theme_support( 'wpai-companions' ), so the free
+   companion plugins render their output through the theme's own
+   `wpai_entry_top` / `wpai_entry_bottom` action hooks (fired in
+   template-parts/content.php), OUTSIDE the .entry-content prose wrapper.
+
+   Each plugin is theme-adaptive: it derives its colours from currentColor
+   and exposes a set of --rtb-* / --contents-* / --kindred-* custom
+   properties for the theme to override. We map those onto Aurora's own
+   design tokens so the badge, the Contents box, and the related-posts
+   block read as native parts of the theme — same terracotta accent, warm
+   paper surfaces, serif headings, hairline rules, radii, and easing — with
+   no extra HTTP requests and no fight with the plugins' base CSS.
+
+   These slots sit inside .entry--singular, so they share the article's
+   reading measure; the Kindred grid uses that full article width with its
+   own responsive auto-fill columns.
+   ========================================================================= */
+
+/* --- Shared placement: hooked output aligns to the article body ----------- */
+.entry--singular .rtb-badge,
+.entry--singular .contents-toc,
+.entry--singular .kindred {
+	font-family: var(--a-sans);
+}
+
+/* --- Reading Time Badge --------------------------------------------------- */
+.entry--singular .rtb-badge {
+	/* Map the badge surface onto Aurora's accent wash + token radius. */
+	--rtb-fg: var(--a-accent-deep);
+	--rtb-bg: var(--a-accent-wash);
+	--rtb-border: var(--a-accent-soft);
+	--rtb-radius: 999px;
+	--rtb-pad-y: 0.32em;
+	--rtb-pad-x: 0.85em;
+
+	margin: 0 0 clamp(1.4rem, 3vw, 2rem);
+	font-size: var(--a-fs-xs);
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	transition: background 0.18s var(--a-ease), border-color 0.18s var(--a-ease), color 0.18s var(--a-ease);
+}
+
+/* Echo the category pill's hover so the badge feels part of the same family
+   (it is non-interactive, but matched motion keeps the language consistent). */
+.entry--singular .rtb-badge__icon {
+	opacity: 0.9;
+}
+
+/* --- Contents (table of contents) box ------------------------------------- */
+.entry--singular .contents-toc {
+	/* A quiet card on Aurora's secondary paper, with the theme's hairline,
+	   radius and accent for the active rail. */
+	--contents-radius: var(--a-radius);
+	--contents-pad: clamp(1rem, 2.5vw, 1.4rem) clamp(1.1rem, 3vw, 1.5rem);
+	--contents-gap: 0.4em;
+	--contents-fg: var(--a-ink);
+	--contents-muted: var(--a-faint);
+	--contents-bg: var(--a-surface-2);
+	--contents-border: var(--a-line);
+	--contents-accent: var(--a-accent);
+	--contents-hover-bg: var(--a-accent-wash);
+	--contents-marker: var(--a-line);
+
+	margin: 0 0 clamp(1.75rem, 4vw, 2.5rem);
+	box-shadow: var(--a-shadow-soft);
+	font-size: var(--a-fs-sm);
+	line-height: 1.5;
+}
+
+/* Title uses Aurora's widget-label voice: small, tracked, uppercase, faint. */
+.entry--singular .contents-toc__title {
+	font-family: var(--a-sans);
+	font-size: var(--a-fs-xs);
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	color: var(--a-faint);
+}
+
+/* Links pick up Aurora's soft-ink reading colour and accent on hover. */
+.entry--singular .contents-toc__link {
+	color: var(--a-ink-soft);
+	border-radius: var(--a-radius-sm);
+}
+
+.entry--singular .contents-toc__link:hover {
+	color: var(--a-accent);
+}
+
+.entry--singular .contents-toc__link.is-active,
+.entry--singular .contents-toc__link[aria-current="true"] {
+	color: var(--a-accent-deep);
+}
+
+.entry--singular .contents-toc__chevron {
+	color: var(--a-faint);
+}
+
+.entry--singular .contents-toc__sublist {
+	border-left-color: var(--a-line);
+}
+
+/* --- Kindred (related posts) — full article width ------------------------- */
+.entry--singular .kindred {
+	/* Card surfaces, borders, radius and shadow tint all from Aurora tokens. */
+	--kindred-radius: var(--a-radius);
+	--kindred-gap: clamp(1rem, 2.5vw, 1.6rem);
+	--kindred-card-pad: 1rem 1.05rem;
+	--kindred-min: 13rem;
+	--kindred-fg: var(--a-ink);
+	--kindred-muted: var(--a-faint);
+	--kindred-card-bg: var(--a-surface);
+	--kindred-card-bg-hover: var(--a-surface);
+	--kindred-border: var(--a-line);
+	--kindred-border-hover: var(--a-accent-soft);
+
+	/* Sit on the article's full width and echo the prev/next nav rhythm:
+	   a generous top gap and a hairline rule introducing the section. */
+	width: 100%;
+	margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+	padding-top: clamp(1.6rem, 3vw, 2.2rem);
+	border-top: 1px solid var(--a-line);
+}
+
+/* Heading matches Aurora's section voice: serif, balanced, no extra rule
+   (the section already has its own top hairline above). */
+.entry--singular .kindred__heading {
+	margin: 0 0 clamp(1.1rem, 3vw, 1.5rem);
+	padding-bottom: 0;
+	border-bottom: 0;
+	font-family: var(--a-serif);
+	font-size: var(--a-fs-lg);
+	font-weight: 600;
+	letter-spacing: -0.014em;
+	color: var(--a-ink);
+	text-wrap: balance;
+}
+
+/* Cards inherit the theme's soft shadow at rest and the prev/next lift on
+   hover, so the related block moves like the rest of Aurora. */
+.entry--singular .kindred-card__link {
+	box-shadow: var(--a-shadow-soft);
+	transition:
+		transform 0.22s var(--a-ease),
+		border-color 0.18s var(--a-ease),
+		box-shadow 0.2s var(--a-ease);
+}
+
+.entry--singular .kindred-card__link:hover,
+.entry--singular .kindred-card__link:focus-visible {
+	transform: translateY(-2px);
+	border-color: var(--a-accent-soft);
+	box-shadow: var(--a-shadow);
+}
+
+.entry--singular .kindred-card__link:focus-visible {
+	outline: 2px solid var(--a-accent);
+	outline-offset: 3px;
+}
+
+/* Card titles in the warm serif, like every Aurora entry title. */
+.entry--singular .kindred-card__title {
+	font-family: var(--a-serif);
+	font-size: 1.02rem;
+	font-weight: 600;
+	line-height: 1.3;
+	color: var(--a-ink);
+	letter-spacing: -0.01em;
+}
+
+.entry--singular .kindred-card__link:hover .kindred-card__title,
+.entry--singular .kindred-card__link:focus-visible .kindred-card__title {
+	color: var(--a-accent);
+}
+
+.entry--singular .kindred-card__date {
+	font-family: var(--a-sans);
+	font-size: var(--a-fs-xs);
+	letter-spacing: 0.02em;
+	color: var(--a-faint);
+}
+
+/* Image-less cards: recolour the placeholder gradient into Aurora's calm,
+   warm aurora-hue palette (the same family used by aurora_featured_media's
+   placeholders) instead of the plugin's saturated blue default. */
+.entry--singular .kindred-card__media--placeholder {
+	background-image:
+		radial-gradient(120% 120% at 0% 0%, hsl(var(--kindred-hue, 26) 46% 90%) 0%, transparent 55%),
+		radial-gradient(120% 120% at 100% 100%, hsl(calc(var(--kindred-hue, 26) + 40) 42% 86%) 0%, transparent 55%),
+		linear-gradient(135deg, hsl(var(--kindred-hue, 26) 38% 88%), hsl(calc(var(--kindred-hue, 26) + 24) 34% 82%));
+}
+
+.entry--singular .kindred-card__letter {
+	color: hsl(var(--kindred-hue, 26) 32% 36%);
+	font-family: var(--a-serif);
+	font-weight: 600;
+	opacity: 0.6;
+	text-shadow: none;
+}
+
+/* Reduced-motion: drop the card lift to match Aurora's own motion policy.
+   (The plugins ship their own reveal safety nets; this only governs the
+   hover lift we added above.) */
+@media (prefers-reduced-motion: reduce) {
+	.entry--singular .kindred-card__link:hover,
+	.entry--singular .kindred-card__link:focus-visible {
 		transform: none;
 	}
 }

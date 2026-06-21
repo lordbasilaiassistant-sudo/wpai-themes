@@ -4,7 +4,7 @@ Tags: table of contents, toc, navigation, accessibility, anchor links
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +99,20 @@ per-post custom field you set yourself.
    both light and dark themes.
 
 == Changelog ==
+
+= 1.1.0 =
+* Added native integration with WPAI companion themes. When the active theme
+  declares `add_theme_support( 'wpai-companions' )`, the Contents box renders on
+  the theme's `wpai_entry_top` hook (priority 10) at full article width — just
+  under the Reading Time badge and above the article body — instead of being
+  prepended inside the constrained content column.
+* Heading ids are still added via `the_content` on every theme, so anchor links
+  always resolve regardless of where the box is placed.
+* No double render: when companion placement is active the in-content injection
+  is disabled; the box appears in exactly one place. On themes without companion
+  support the behavior is unchanged from 1.0.0.
+* New `contents_entry_top_html` filter to tweak the markup rendered on the
+  `wpai_entry_top` hook.
 
 = 1.0.0 =
 * Initial release.

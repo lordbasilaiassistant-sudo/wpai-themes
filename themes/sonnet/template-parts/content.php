@@ -46,6 +46,16 @@ $sonnet_is_post = ( 'post' === get_post_type() );
 		</figure>
 	<?php endif; ?>
 
+	<?php
+	/**
+	 * Fires after the entry header (title, meta, featured image) and immediately
+	 * before the_content() — outside the .entry-content wrapper so hooked output
+	 * (e.g. the WPAI Reading Time badge and Contents/TOC box) can use the full
+	 * article width. Part of the WPAI companions integration contract.
+	 */
+	do_action( 'wpai_entry_top' );
+	?>
+
 	<div class="entry-content" data-sonnet-reveal>
 		<?php
 		the_content();
@@ -58,6 +68,16 @@ $sonnet_is_post = ( 'post' === get_post_type() );
 		) );
 		?>
 	</div>
+
+	<?php
+	/**
+	 * Fires immediately after the_content()/wp_link_pages() and before the entry
+	 * footer (tags/categories) and comments — outside the .entry-content wrapper
+	 * so hooked output (e.g. the WPAI Kindred related-posts block) can use the
+	 * full article width. Part of the WPAI companions integration contract.
+	 */
+	do_action( 'wpai_entry_bottom' );
+	?>
 
 	<?php if ( $sonnet_is_post ) : ?>
 		<footer class="entry-footer">

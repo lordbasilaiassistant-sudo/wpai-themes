@@ -39,6 +39,15 @@ if ( ! function_exists( 'nimbus_setup' ) ) {
 		add_theme_support( 'editor-styles' );
 		add_theme_support( 'custom-background', array( 'default-color' => 'f6f7fb' ) );
 
+		// Native WPAI companion placement. Declaring this tells the free WPAI
+		// companion plugins (Reading Time Badge, Contents, Kindred) to render
+		// through the theme's `wpai_entry_top` / `wpai_entry_bottom` action hooks
+		// — fired around the article body on single posts in template-parts/
+		// content.php — instead of injecting into the_content. The hooks fire
+		// outside the .entry-content prose column, so the companion output sits at
+		// full article width and is styled to look native in style.css.
+		add_theme_support( 'wpai-companions' );
+
 		register_nav_menus( array(
 			'primary' => esc_html__( 'Primary Menu', 'nimbus' ),
 		) );

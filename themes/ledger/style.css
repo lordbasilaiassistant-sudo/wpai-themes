@@ -4,7 +4,7 @@ Theme URI: https://lordbasilaiassistant-sudo.github.io/wpai-themes/
 Author: WPAI Themes
 Author URI: https://github.com/lordbasilaiassistant-sudo/wpai-themes
 Description: An authoritative editorial and magazine theme. Off-white paper, near-black serif type, and a single red accent, opening with a real masthead and a full-width lead-story treatment. Small-caps bylines, category kickers, a drop cap on single posts, and a column-ruled article-plus-sidebar layout deliver a print-newsstand feel built for long-form reading.
-Version: 1.3.0
+Version: 1.4.0
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
@@ -817,10 +817,166 @@ html:not(.js) .l-progress { display: none; }
   .l-ticker__dot { padding: 0 .7rem; }
 }
 
+/* ========================================================= */
+/* WPAI COMPANIONS  (native single-post integration)         */
+/* ========================================================= */
+/* The theme declares add_theme_support('wpai-companions') and fires            */
+/* wpai_entry_top / wpai_entry_bottom around the article body (see              */
+/* template-parts/content.php). The companion plugins (Reading Time Badge,      */
+/* Contents, Kindred) render via those hooks OUTSIDE .entry-content, so their    */
+/* output is dressed here to match Ledger's paper palette, editorial type, and  */
+/* journalistic motion language. Each plugin tints from currentColor and        */
+/* exposes --* custom properties; we set ink/paper/accent and a handful of      */
+/* structural choices (square corners, serif headings, small-caps labels,       */
+/* double-rule, drawn entrances) rather than re-styling from scratch.           */
+
+/* The hooked badge + Contents box are siblings of .entry-content, so give them
+   the body-copy ink and align them to the prose measure used by the article. */
+.single .rtb-badge,
+.single .contents-toc { color: var(--l-ink); }
+.single .rtb-badge,
+.single .contents-toc { max-width: var(--l-measure); }
+
+/* ---- Reading Time Badge ---- *
+ * A small-caps newsprint chip in the accent wash, square-cornered like the rest
+ * of Ledger's chrome rather than a pill. */
+.single .rtb-badge {
+  --rtb-radius: 0;
+  --rtb-fg: var(--l-accent-ink);
+  --rtb-bg: var(--l-accent-wash);
+  --rtb-border: var(--l-line);
+  margin: 0 0 1.4rem;
+  padding: .34rem .7rem;
+  border-left: 2px solid var(--l-accent);
+  font-family: var(--l-sans);
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+.single .rtb-badge__icon { color: var(--l-accent); opacity: .9; }
+
+/* ---- Contents (table of contents) ---- *
+ * A flat, ruled box on the surface paper: square corners, a serif title given
+ * Ledger's small-caps treatment via the override below, and accent left-rails on
+ * the active link. */
+.single .contents-toc {
+  --contents-radius: 0;
+  --contents-fg: var(--l-ink);
+  --contents-muted: var(--l-faint-ink);
+  --contents-bg: var(--l-surface);
+  --contents-border: var(--l-line);
+  --contents-accent: var(--l-accent);
+  --contents-hover-bg: var(--l-accent-wash);
+  --contents-marker: var(--l-line);
+  margin: 0 0 1.9rem;
+  padding: 1.1rem 1.3rem;
+  border-top: 3px solid var(--l-rule);
+  font-family: var(--l-sans);
+  font-size: .9rem;
+}
+/* Title matches the theme's small-caps section labels. */
+.single .contents-toc__title {
+  font-family: var(--l-sans);
+  font-size: .72rem;
+  letter-spacing: .15em;
+  color: var(--l-ink);
+}
+.single .contents-toc__chevron { color: var(--l-faint-ink); }
+/* Links read like sidebar widget links: ink at rest, accent on hover/active. */
+.single .contents-toc__link {
+  border-radius: 0;
+  color: var(--l-ink-soft);
+  line-height: 1.4;
+}
+.single .contents-toc__link:hover { color: var(--l-accent); }
+.single .contents-toc__link.is-active,
+.single .contents-toc__link[aria-current="true"] {
+  color: var(--l-accent);
+  font-weight: 700;
+}
+.single .contents-toc__sublist { border-left-color: var(--l-line); }
+
+/* ---- Kindred (related posts) ---- *
+ * Rendered on wpai_entry_bottom, OUTSIDE the prose measure, so it spans the full
+ * article column like a print "More Stories" rail. Cards adopt Ledger's surface,
+ * hairline rules, square corners, serif titles, and small-caps dates. */
+.single .kindred {
+  color: var(--l-ink);
+  max-width: none;            /* break the prose measure: full article width */
+  margin: 2.8rem 0 .5rem;
+  --kindred-fg: var(--l-ink);
+  --kindred-muted: var(--l-faint-ink);
+  --kindred-radius: 0;
+  --kindred-card-bg: var(--l-surface);
+  --kindred-card-bg-hover: var(--l-surface);
+  --kindred-border: var(--l-line);
+  --kindred-border-hover: var(--l-accent);
+  --kindred-shadow: rgba(22, 19, 15, .1);
+  --kindred-min: 15rem;
+  --kindred-gap: 2.2rem;
+}
+/* Heading echoes the theme's small-caps "section-heading" with a drawn rule. */
+.single .kindred__heading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 1.8rem;
+  padding: 0;
+  border-bottom: 0;
+  font-family: var(--l-sans);
+  font-size: .74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  color: var(--l-ink);
+}
+.single .kindred__heading::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--l-rule);
+}
+.single .kindred-card__link {
+  border-color: var(--l-line);
+  box-shadow: none;
+}
+.single .kindred-card__link:hover,
+.single .kindred-card__link:focus-visible {
+  border-color: var(--l-accent);
+  background: var(--l-surface);
+  box-shadow: 0 10px 24px rgba(22, 19, 15, .1);
+}
+/* Cool, desaturated media at rest that warms on hover — Ledger's duotone cue. */
+.js .single .kindred-card__image { filter: saturate(.62) contrast(1.06) brightness(.97); transition: transform .5s cubic-bezier(.2, .7, .2, 1), filter .5s ease; }
+.js .single .kindred-card__link:hover .kindred-card__image,
+.js .single .kindred-card__link:focus-visible .kindred-card__image { filter: saturate(1.04) contrast(1) brightness(1); }
+.single .kindred-card__title {
+  font-family: var(--l-serif);
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -.01em;
+  color: var(--l-ink);
+}
+.single .kindred-card__date {
+  color: var(--l-faint-ink);
+  font-family: var(--l-sans);
+  font-size: .66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+/* Reduced-motion: kill the added duotone shift on related-card media. */
+@media (prefers-reduced-motion: reduce) {
+  .js .single .kindred-card__image,
+  .js .single .kindred-card__link:hover .kindred-card__image { filter: none !important; transform: none !important; }
+}
+
 /* ---- Print ---- */
 @media print {
   .main-nav, .widget-area, .site-dateline, .comments-area, .read-more, .post-navigation,
-  .l-ticker, .l-progress { display: none; }
+  .l-ticker, .l-progress, .kindred, .contents-toc { display: none; }
   body { background: #fff; font-size: 12pt; }
   .content-area { grid-template-columns: 1fr; }
   [data-reveal] { opacity: 1 !important; transform: none !important; }

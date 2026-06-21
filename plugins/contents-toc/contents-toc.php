@@ -3,7 +3,7 @@
  * Plugin Name: Contents — Smart Table of Contents
  * Plugin URI:  https://lordbasilaiassistant-sudo.github.io/wpai-themes/
  * Description: Automatically adds a tidy, accessible "Contents" navigation box to long posts and pages. Smooth-scrolls to sections, highlights the section you are reading, and adapts to any theme. Zero configuration.
- * Version:     1.0.0
+ * Version:     1.1.0
  * Author:      WPAI Themes
  * Author URI:  https://github.com/lordbasilaiassistant-sudo/wpai-themes
  * License:     GPL-2.0-or-later
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin version, kept in sync with the header for cache-busting.
  */
-const CONTENTS_VERSION = '1.0.0';
+const CONTENTS_VERSION = '1.1.0';
 
 /**
  * Minimum number of qualifying headings before a table of contents is shown.
@@ -361,14 +361,82 @@ function contents_build_toc_html( $items ) {
 }
 
 /**
- * Inject the table of contents into singular post/page content.
+ * Whether the active theme opts in to native WPAI companion placement.
+ *
+ * When a theme declares `add_theme_support( 'wpai-companions' )` it promises to
+ * fire `wpai_entry_top` / `wpai_entry_bottom` action hooks around the article
+ * body, outside the constrained `.entry-content` prose column. In that case the
+ * Contents box is rendered on `wpai_entry_top` (full article width) instead of
+ * being prepended inside `the_content`, so it is never double-rendered.
+ *
+ * @return bool True when the theme supports the companion hooks.
+ */
+function contents_theme_supports_companions() {
+	return (bool) current_theme_supports( 'wpai-companions' );
+}
+
+/**
+ * Parse content for headings (assigning ids) and build the TOC, once per post.
+ *
+ * Centralizes the expensive regex parse and the markup build so both the
+ * `the_content` filter and the `wpai_entry_top` hook share a single memoized
+ * result for the duration of the request — a theme calling `the_content` twice,
+ * or both the filter and the hook running, never pays for the parse twice.
+ *
+ * @param int    $post_id The post being rendered.
+ * @param string $content The raw post content passed to `the_content`.
+ * @return array {
+ *     @type string $content The content with ids ensured on each heading.
+ *     @type string $toc     The TOC box markup, or '' when below threshold.
+ *     @type array  $items   The collected heading items.
+ * }
+ */
+function contents_prepare( $post_id, $content ) {
+	static $cache = array();
+
+	if ( isset( $cache[ $post_id ] ) ) {
+		return $cache[ $post_id ];
+	}
+
+	$parsed = contents_collect_headings( $content );
+
+	if ( count( $parsed['items'] ) < contents_min_headings() ) {
+		// Not enough headings to warrant a TOC; keep the original content
+		// untouched (no injected ids either — nothing referenced them).
+		$cache[ $post_id ] = array(
+			'content' => $content,
+			'toc'     => '',
+			'items'   => array(),
+		);
+
+		return $cache[ $post_id ];
+	}
+
+	$cache[ $post_id ] = array(
+		'content' => $parsed['content'],
+		'toc'     => contents_build_toc_html( $parsed['items'] ),
+		'items'   => $parsed['items'],
+	);
+
+	return $cache[ $post_id ];
+}
+
+/**
+ * Ensure heading ids on singular content and, where appropriate, prepend the TOC.
  *
  * Guards on the main query in the loop for singular views only, so the TOC is
  * never added to excerpts, archives, feeds, REST responses, or secondary
- * queries. Headings are slugged in place, then the TOC box is prepended.
+ * queries. Headings are always slugged in place (ids must exist for the box's
+ * anchor links to work, regardless of where the box is rendered).
  *
- * Expensive work (the regex parse) is memoized per post for the duration of the
- * request so a theme calling the_content twice does not pay for it twice.
+ * Placement of the TOC BOX is integration-aware:
+ *   - When the theme supports `wpai-companions`, the box is output on
+ *     `wpai_entry_top` (full article width) and is NOT injected here, so it is
+ *     never double-rendered.
+ *   - Otherwise the box is prepended into the content exactly as before.
+ *
+ * Expensive work (the regex parse + markup build) is memoized per post via
+ * contents_prepare() for the duration of the request.
  *
  * @param string $content The post content.
  * @return string
@@ -384,23 +452,21 @@ function contents_prepend_toc( $content ) {
 		return $content;
 	}
 
-	static $cache = array();
+	$prepared = contents_prepare( $post_id, $content );
 
-	if ( isset( $cache[ $post_id ] ) ) {
-		return $cache[ $post_id ];
+	// Always return the content with heading ids ensured. Below the threshold
+	// contents_prepare() returns the original content unchanged.
+	if ( '' === $prepared['toc'] ) {
+		return $prepared['content'];
 	}
 
-	$parsed = contents_collect_headings( $content );
-
-	if ( count( $parsed['items'] ) < contents_min_headings() ) {
-		// Not enough headings to warrant a TOC; return the original content
-		// untouched (no injected ids either — nothing referenced them).
-		$cache[ $post_id ] = $content;
-		return $content;
+	// When the theme drives placement via wpai_entry_top, do not inject the box
+	// here — render only the id-bearing content so the box is not double-rendered.
+	if ( contents_theme_supports_companions() ) {
+		return $prepared['content'];
 	}
 
-	$toc    = contents_build_toc_html( $parsed['items'] );
-	$result = $toc . $parsed['content'];
+	$result = $prepared['toc'] . $prepared['content'];
 
 	/**
 	 * Filter the final content after the TOC has been prepended.
@@ -410,9 +476,7 @@ function contents_prepend_toc( $content ) {
 	 * @param array  $items    The collected heading items.
 	 * @param int    $post_id  The post ID.
 	 */
-	$result = apply_filters( 'contents_after_inject', $result, $toc, $parsed['items'], $post_id );
-
-	$cache[ $post_id ] = $result;
+	$result = apply_filters( 'contents_after_inject', $result, $prepared['toc'], $prepared['items'], $post_id );
 
 	return $result;
 }
@@ -421,6 +485,68 @@ function contents_prepend_toc( $content ) {
 // at 10), so we always parse rendered <h2>/<h3> tags rather than raw block
 // comments — while still landing before most theme/plugin additions.
 add_filter( 'the_content', 'contents_prepend_toc', 12 );
+
+/**
+ * Render the Contents box on the theme's `wpai_entry_top` hook.
+ *
+ * Only active when the theme supports `wpai-companions`. Priority 10 places the
+ * box just under the Reading Time badge (rendered on the same hook at priority
+ * 5) and above the article body, at full article width. When companions are
+ * supported, contents_prepend_toc() skips the inline injection and the box is
+ * emitted here instead, so there is no double render.
+ *
+ * `wpai_entry_top` fires immediately BEFORE the_content(), so the parse cache is
+ * normally still empty here. We render the post content through the same content
+ * pipeline the_content uses (so block markup / shortcodes become real <h2>/<h3>
+ * tags) and parse that. contents_prepare() memoizes the result, so the
+ * subsequent the_content pass reuses it and never re-parses — both placements
+ * stay in lockstep with identical ids and the same heading set.
+ *
+ * Output is assembled from escaped, trusted parts in contents_build_toc_html().
+ *
+ * @return void
+ */
+function contents_render_entry_top() {
+	if ( ! contents_theme_supports_companions() || ! contents_is_active() || ! is_main_query() ) {
+		return;
+	}
+
+	$post_id = get_the_ID();
+
+	if ( ! $post_id || contents_is_disabled_for_post( $post_id ) ) {
+		return;
+	}
+
+	// The hook fires before the real the_content() call. If a theme already ran
+	// the_content earlier the parse is cached (contents_prepare short-circuits);
+	// otherwise render the raw content through the same the_content filters so we
+	// parse real rendered headings, matching exactly what the inline path sees,
+	// then memoize it for the upcoming the_content pass. The nested the_content
+	// call does not recurse into this hook — our the_content filter only reads
+	// from contents_prepare(), it never re-applies the_content.
+	$raw     = get_post_field( 'post_content', $post_id );
+	$content = apply_filters( 'the_content', $raw );
+
+	$prepared = contents_prepare( $post_id, $content );
+
+	if ( '' === $prepared['toc'] ) {
+		return;
+	}
+
+	$toc = $prepared['toc'];
+
+	/**
+	 * Filter the TOC markup rendered on the `wpai_entry_top` hook.
+	 *
+	 * @param string $toc     The TOC box markup.
+	 * @param array  $items   The collected heading items.
+	 * @param int    $post_id The post ID.
+	 */
+	$toc = apply_filters( 'contents_entry_top_html', $toc, $prepared['items'], $post_id );
+
+	echo $toc; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped, trusted parts in contents_build_toc_html().
+}
+add_action( 'wpai_entry_top', 'contents_render_entry_top', 10 );
 
 /**
  * Register and enqueue the front-end stylesheet and behavior script.

@@ -46,6 +46,18 @@ $ledger_is_post = ( 'post' === get_post_type() );
 		</a>
 	<?php endif; ?>
 
+	<?php
+	/**
+	 * Companion hook: fires after the entry header (title, meta, featured image)
+	 * and before .entry-content, OUTSIDE the prose wrapper so hooked output
+	 * (e.g. reading-time badge + Contents box) can break the reading measure.
+	 * Singular only; pages may fire it too — harmless.
+	 */
+	if ( is_singular() ) {
+		do_action( 'wpai_entry_top' );
+	}
+	?>
+
 	<div class="entry-content">
 		<?php
 		if ( is_singular() ) :
@@ -64,6 +76,18 @@ $ledger_is_post = ( 'post' === get_post_type() );
 		endif;
 		?>
 	</div>
+
+	<?php
+	/**
+	 * Companion hook: fires after .entry-content (the_content + wp_link_pages)
+	 * and before the entry footer / tags / comments, OUTSIDE the prose wrapper
+	 * so hooked output (e.g. a related-posts block) can use the full article
+	 * width. Singular only; pages may fire it too — harmless.
+	 */
+	if ( is_singular() ) {
+		do_action( 'wpai_entry_bottom' );
+	}
+	?>
 
 	<?php if ( is_singular() && $ledger_is_post ) : ?>
 		<footer class="entry-footer">

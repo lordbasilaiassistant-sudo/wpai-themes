@@ -4,7 +4,7 @@ Theme URI: https://lordbasilaiassistant-sudo.github.io/wpai-themes/
 Author: WPAI Themes
 Author URI: https://github.com/lordbasilaiassistant-sudo/wpai-themes
 Description: A calm, organic wellness and small-business theme. A light paper canvas, sage and forest greens, and soft generous rounding make it warm and welcoming. The homepage opens with a gentle welcome hero and featured images sit in soft rounded cards.
-Version: 1.3.0
+Version: 1.4.0
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
@@ -879,4 +879,190 @@ input[type="submit"]:active {
   /* Stop the ambient/breathing loops outright. */
   .home-hero__sprig { animation: none !important; }
   .v-drift { display: none !important; }
+}
+
+/* =========================================================================
+   18. WPAI companion plugins  (native single-post integration)
+   -------------------------------------------------------------------------
+   The theme declares add_theme_support( 'wpai-companions' ) and fires
+   `wpai_entry_top` / `wpai_entry_bottom` around the article body on single
+   posts (see template-parts/content.php). The companion plugins render their
+   output on those hooks — OUTSIDE .entry-content — so it can use the full
+   article width instead of the constrained prose column.
+
+   Each companion ships theme-adaptive defaults built on its own --rtb-*,
+   --contents-*, and --kindred-* custom properties, which it explicitly invites
+   themes to override. We do exactly that — remapping every surface, border,
+   radius, and accent onto Verdant's tokens — then add a few structural touches
+   (serif headings, the sage pill look, the soft-spring motion) so the output
+   reads as a native part of the theme rather than a bolt-on. Rules are scoped
+   under .single / .page and the .entry__body container so they reliably win
+   over the single-class plugin defaults without an !important arms race.
+
+   Reading time + Contents sit on `wpai_entry_top`; they align to the prose
+   measure so they feel anchored to the article. Kindred sits on
+   `wpai_entry_bottom` and is allowed the full body width for its card grid.
+   Smooth Back to Top and Beacon are global and are intentionally untouched.
+   ========================================================================= */
+
+/* --- Shared: keep top-hook companions aligned to the reading measure ------ */
+.single .entry__body > .rtb-badge,
+.page .entry__body > .rtb-badge,
+.single .entry__body > .contents-toc,
+.page .entry__body > .contents-toc {
+  max-width: var(--v-measure);
+  margin-inline: auto;
+}
+
+/* Give the badge → contents stack the same rhythm as the article body. */
+.single .entry__body > .rtb-badge { margin-bottom: var(--v-space-3); }
+.single .entry__body > .contents-toc,
+.page .entry__body > .contents-toc { margin-bottom: var(--v-space-5); }
+
+/* --- Reading Time Badge --------------------------------------------------- */
+/* Verdant's category-pill / eyebrow language: a soft sage pill in accent-soft
+   with the deep-green ink, the sans face, and the theme's uppercase tracking. */
+.single .entry__body > .rtb-badge {
+  --rtb-bg: var(--v-accent-soft);
+  --rtb-fg: var(--v-accent-deep);
+  --rtb-border: transparent;
+  --rtb-pad-y: 0.34em;
+  --rtb-pad-x: 0.85em;
+  --rtb-radius: var(--v-radius-pill);
+  font-family: var(--v-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+.single .entry__body > .rtb-badge .rtb-badge__icon { opacity: 0.9; }
+
+/* --- Contents (Table of Contents) ---------------------------------------- */
+/* A calm card that echoes the sidebar widget: white surface, leaf-line border,
+   generous rounding, and the theme's soft shadow. The title borrows the
+   widget-title treatment (sans, uppercase, deep green) and the link rail /
+   hovers use the sage accents. */
+.single .entry__body > .contents-toc,
+.page .entry__body > .contents-toc {
+  --contents-radius: var(--v-radius);
+  --contents-pad: var(--v-space-3) var(--v-space-4);
+  --contents-fg: var(--v-ink-soft);
+  --contents-muted: var(--v-accent-deep);
+  --contents-bg: var(--v-surface);
+  --contents-border: var(--v-line);
+  --contents-accent: var(--v-accent);
+  --contents-hover-bg: var(--v-accent-soft);
+  --contents-marker: var(--v-line);
+  box-shadow: var(--v-shadow-soft);
+  font-family: var(--v-sans);
+}
+.single .entry__body > .contents-toc .contents-toc__title,
+.page .entry__body > .contents-toc .contents-toc__title {
+  font-family: var(--v-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  color: var(--v-accent-deep);
+}
+.single .entry__body > .contents-toc .contents-toc__link,
+.page .entry__body > .contents-toc .contents-toc__link {
+  color: var(--v-ink-soft);
+  border-radius: var(--v-radius-sm);
+}
+.single .entry__body > .contents-toc .contents-toc__link:hover,
+.page .entry__body > .contents-toc .contents-toc__link:hover {
+  color: var(--v-accent-deep);
+}
+.single .entry__body > .contents-toc .contents-toc__link.is-active,
+.single .entry__body > .contents-toc .contents-toc__link[aria-current="true"],
+.page .entry__body > .contents-toc .contents-toc__link.is-active,
+.page .entry__body > .contents-toc .contents-toc__link[aria-current="true"] {
+  color: var(--v-accent-deep);
+}
+/* Nested-section guide rail in the soft leaf-line tone. */
+.single .entry__body > .contents-toc .contents-toc__sublist,
+.page .entry__body > .contents-toc .contents-toc__sublist {
+  border-left-color: var(--v-line);
+}
+
+/* --- Kindred (Related Posts) --------------------------------------------- */
+/* Full article width. Cards mirror the homepage post cards: white surface,
+   leaf border, the theme rounding + soft shadow, the spring lift on hover, and
+   the same image zoom. The heading uses the serif and the theme's divider. */
+.single .entry__body > .kindred {
+  --kindred-radius: var(--v-radius);
+  --kindred-card-pad: var(--v-space-3);
+  --kindred-min: 14rem;
+  --kindred-gap: var(--v-space-4);
+  --kindred-fg: var(--v-ink);
+  --kindred-muted: var(--v-faint);
+  --kindred-card-bg: var(--v-surface);
+  --kindred-card-bg-hover: var(--v-surface);
+  --kindred-border: var(--v-line);
+  --kindred-border-hover: var(--v-accent);
+  margin-top: var(--v-space-5);
+  padding-top: var(--v-space-4);
+  border-top: 1px solid var(--v-line);
+}
+.single .entry__body > .kindred .kindred__heading {
+  font-family: var(--v-serif);
+  font-size: clamp(1.4rem, 3vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  color: var(--v-ink);
+  padding-bottom: var(--v-space-2);
+  border-bottom-color: var(--v-accent-soft);
+}
+.single .entry__body > .kindred .kindred-card__link {
+  box-shadow: var(--v-shadow-soft);
+  /* Soft-spring lift to match the theme's card motion language (§16). */
+  transition:
+    transform 0.45s var(--v-ease-spring),
+    box-shadow 0.45s var(--v-ease-soft),
+    border-color 0.3s var(--v-ease-soft),
+    background-color 0.2s var(--v-ease-soft);
+}
+.single .entry__body > .kindred .kindred-card__link:hover,
+.single .entry__body > .kindred .kindred-card__link:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: var(--v-shadow-lift);
+  border-color: var(--v-accent);
+}
+.single .entry__body > .kindred .kindred-card__media {
+  background: var(--v-accent-soft);
+}
+.single .entry__body > .kindred .kindred-card__image {
+  transition: transform 0.5s var(--v-ease);
+}
+.single .entry__body > .kindred .kindred-card__link:hover .kindred-card__image,
+.single .entry__body > .kindred .kindred-card__link:focus-visible .kindred-card__image {
+  transform: scale(1.04);
+}
+.single .entry__body > .kindred .kindred-card__title {
+  color: var(--v-ink);
+  font-family: var(--v-sans);
+}
+.single .entry__body > .kindred .kindred-card__link:hover .kindred-card__title,
+.single .entry__body > .kindred .kindred-card__link:focus-visible .kindred-card__title {
+  color: var(--v-accent-deep);
+}
+.single .entry__body > .kindred .kindred-card__date {
+  color: var(--v-faint);
+}
+/* Use the theme's focus ring on focusable companion controls. */
+.single .entry__body > .kindred .kindred-card__link:focus-visible,
+.single .entry__body > .contents-toc .contents-toc__link:focus-visible,
+.page .entry__body > .contents-toc .contents-toc__link:focus-visible {
+  outline: 3px solid var(--v-accent);
+  outline-offset: 3px;
+}
+
+/* --- Reduced motion: honor the theme-wide preference --------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .single .entry__body > .kindred .kindred-card__link:hover,
+  .single .entry__body > .kindred .kindred-card__link:focus-visible {
+    transform: none;
+  }
+  .single .entry__body > .kindred .kindred-card__link:hover .kindred-card__image,
+  .single .entry__body > .kindred .kindred-card__link:focus-visible .kindred-card__image {
+    transform: none;
+  }
 }

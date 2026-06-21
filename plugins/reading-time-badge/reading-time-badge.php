@@ -3,7 +3,7 @@
  * Plugin Name: Reading Time Badge
  * Plugin URI:  https://lordbasilaiassistant-sudo.github.io/wpai-themes/
  * Description: Adds a tasteful "X min read" badge with a small clock glyph above the content of single posts. Theme-adaptive (light & dark), accessible, zero configuration.
- * Version:     1.3.0
+ * Version:     1.4.0
  * Author:      WPAI Themes
  * Author URI:  https://github.com/lordbasilaiassistant-sudo/wpai-themes
  * License:     GPL-2.0-or-later
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin version, kept in sync with the header for cache-busting.
  */
-const RTB_VERSION = '1.3.0';
+const RTB_VERSION = '1.4.0';
 
 /**
  * Default reading speed in words per minute.
@@ -111,11 +111,31 @@ function rtb_get_badge_html( $minutes ) {
 }
 
 /**
+ * Whether the active theme opts in to native WPAI companion placement.
+ *
+ * When a theme declares `add_theme_support( 'wpai-companions' )`, it promises to
+ * fire `wpai_entry_top` / `wpai_entry_bottom` action hooks around the article
+ * body on single posts. In that mode the badge renders on `wpai_entry_top`
+ * (full article width, outside the prose column) instead of being prepended via
+ * `the_content`. Without theme support we keep the classic `the_content`
+ * prepend so the plugin still works on any theme.
+ *
+ * @return bool True when the theme supports native companion hooks.
+ */
+function rtb_theme_supports_companions() {
+	return (bool) current_theme_supports( 'wpai-companions' );
+}
+
+/**
  * Prepend the reading-time badge to single post content.
  *
  * Guards on the main query in the loop for single posts only, so the badge is
  * never injected into excerpts, archives, feeds, REST responses, or secondary
  * queries.
+ *
+ * When the active theme supports `wpai-companions`, this becomes a no-op: the
+ * badge is rendered on the `wpai_entry_top` action hook instead (see
+ * rtb_render_badge_on_entry_top) so it never double-renders.
  *
  * @param string $content The post content.
  * @return string
@@ -125,11 +145,53 @@ function rtb_prepend_badge( $content ) {
 		return $content;
 	}
 
+	// Native companion placement owns the badge in supporting themes; do not
+	// also prepend here, or the badge would render twice.
+	if ( rtb_theme_supports_companions() ) {
+		return $content;
+	}
+
 	$minutes = rtb_estimate_minutes( $content );
 
 	return rtb_get_badge_html( $minutes ) . $content;
 }
 add_filter( 'the_content', 'rtb_prepend_badge', 20 );
+
+/**
+ * Render the reading-time badge on the theme's `wpai_entry_top` hook.
+ *
+ * Only active when the theme supports `wpai-companions`. The hook fires right
+ * after the entry header and immediately before `the_content()`, outside the
+ * `.entry-content` wrapper, so the badge can sit at full article width. The
+ * reading time is computed from the current post's content because, unlike the
+ * `the_content` filter, this hook does not receive the content as an argument.
+ *
+ * Guards match the `the_content` path (single posts, main query, in the loop)
+ * so the badge appears in exactly the same contexts as the classic placement.
+ *
+ * @return void
+ */
+function rtb_render_badge_on_entry_top() {
+	if ( is_admin() || is_feed() || ! is_singular( 'post' ) || ! in_the_loop() || ! is_main_query() ) {
+		return;
+	}
+
+	if ( ! rtb_theme_supports_companions() ) {
+		return;
+	}
+
+	$post = get_post();
+
+	if ( ! $post instanceof WP_Post ) {
+		return;
+	}
+
+	$minutes = rtb_estimate_minutes( $post->post_content );
+
+	// rtb_get_badge_html() escapes every dynamic value internally.
+	echo rtb_get_badge_html( $minutes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}
+add_action( 'wpai_entry_top', 'rtb_render_badge_on_entry_top', 5 );
 
 /**
  * Whether the current request is a single post where the badge can appear.

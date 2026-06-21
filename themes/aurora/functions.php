@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'AURORA_VERSION' ) ) {
-	define( 'AURORA_VERSION', '1.3.0' );
+	define( 'AURORA_VERSION', '1.4.0' );
 }
 
 // Customizer: live color & style controls.
@@ -49,6 +49,13 @@ if ( ! function_exists( 'aurora_setup' ) ) {
 		add_theme_support( 'custom-background', array(
 			'default-color' => 'f7f4ee',
 		) );
+
+		// Native WPAI companion-plugin placement. Declaring this support tells the
+		// free companion plugins (Reading Time Badge, Contents, Kindred) that this
+		// theme fires `wpai_entry_top` / `wpai_entry_bottom` action hooks around the
+		// single-post article body — outside the prose column — so their output can
+		// render at full article width instead of being injected into the_content.
+		add_theme_support( 'wpai-companions' );
 
 		// Image size for the homepage lead story cover.
 		add_image_size( 'aurora-lead', 1320, 760, true );

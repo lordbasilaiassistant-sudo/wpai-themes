@@ -4,7 +4,7 @@ Tags: related posts, posts, engagement, accessibility, recommendations
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -88,6 +88,14 @@ No. The related IDs are cached per post in a transient for ~12 hours and recompu
 only when you save the post. There are no external requests and no settings page.
 
 == Changelog ==
+
+= 1.1.0 =
+* Native theme integration: when the active theme declares
+  `add_theme_support( 'wpai-companions' )`, the related section now renders on
+  the theme's `wpai_entry_bottom` hook (outside the prose column, so it can run
+  full article width) instead of being appended inside the_content.
+* No double render: on a companion-aware theme the in-content append is disabled
+  automatically; on every other theme the after-content placement is unchanged.
 
 = 1.0.0 =
 * Initial release.

@@ -128,6 +128,18 @@ endif;
 		</div>
 	<?php endif; ?>
 
+	<?php
+	/**
+	 * WPAI companions — top of the article body.
+	 *
+	 * Fires right after the entry header (title + meta + featured image) and
+	 * immediately before the_content(), OUTSIDE the .entry-content prose column
+	 * so hooked output (reading-time badge, contents box) can use full width.
+	 * See add_theme_support( 'wpai-companions' ) in functions.php.
+	 */
+	do_action( 'wpai_entry_top' );
+	?>
+
 	<div class="entry-content">
 		<?php
 		the_content();
@@ -137,6 +149,17 @@ endif;
 		) );
 		?>
 	</div>
+
+	<?php
+	/**
+	 * WPAI companions — bottom of the article body.
+	 *
+	 * Fires immediately after the_content()/wp_link_pages() and BEFORE the entry
+	 * footer/tags/comments, OUTSIDE .entry-content so a hooked related-posts
+	 * block can span the full article width.
+	 */
+	do_action( 'wpai_entry_bottom' );
+	?>
 
 	<?php if ( ! $monolith_is_page ) : ?>
 		<footer class="entry-footer">

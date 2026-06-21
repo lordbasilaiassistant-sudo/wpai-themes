@@ -54,6 +54,13 @@ Features:
 
 == Changelog ==
 
+= 1.4.0 =
+* Native integration with the free WPAI companion plugins via add_theme_support( 'wpai-companions' ).
+* Single posts now fire wpai_entry_top (after the headline, byline, and featured image, before the article body) and wpai_entry_bottom (after the article body, before the tags/comments). These hooks fire outside the prose column so companion output can break the reading measure.
+* Reading Time Badge and the Contents box render above the article, styled as native Ledger chrome: small-caps labels, the accent wash, square editorial corners, and ruled boxes aligned to the reading measure.
+* Kindred related posts ("You might also like") render below the article at full article width, with serif card titles, small-caps dates, hairline rules, a drawn section-heading rule, and the theme's duotone-to-colour hover on card images.
+* No double-rendering: when these companions detect the theme they render via the hooks instead of filtering the_content; on themes without support they keep their classic placement.
+
 = 1.3.0 =
 * New signature "LATEST" headline ticker beneath the masthead — a seamless, pausable newswire marquee of recent posts.
 * Added a crisp, journalistic motion system: staggered scroll reveals for the lead story, "More Stories" cards, and archive entries via IntersectionObserver.

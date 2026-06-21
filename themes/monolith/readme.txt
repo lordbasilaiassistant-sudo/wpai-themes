@@ -50,6 +50,23 @@ Features:
 
 == Changelog ==
 
+= 1.4.0 =
+* Native WPAI companion-plugin integration. The theme now declares
+  add_theme_support( 'wpai-companions' ) and fires two action hooks around the
+  single-post article body — wpai_entry_top (right after the entry header and
+  featured image, before the content) and wpai_entry_bottom (right after the
+  content, before the footer/tags/comments). Both fire OUTSIDE the
+  .entry-content prose column so companion output can break to full article width.
+* Styled supporting companions to read as native Monolith: the reading-time
+  badge and the "Contents" (table of contents) box sit at the top — square,
+  hard-bordered, monospace/uppercase, electric-accent, aligned to the reading
+  measure — and the "You might also like" related-posts block spans the full
+  article width with brutalist project-style cards that lift on hover.
+* No design or motion regressions: companion styling reuses the existing color,
+  spacing, type, and easing tokens, adds no competing entrance animation, and
+  fully respects prefers-reduced-motion. Themes without the companion plugins
+  are unaffected (the hooks simply have no subscribers).
+
 = 1.3.0 =
 * New hand-rolled motion system (assets/js/motion.js) — vanilla JS, no
   libraries or CDNs, deferred and footer-loaded. Adds: clip-path / wipe scroll

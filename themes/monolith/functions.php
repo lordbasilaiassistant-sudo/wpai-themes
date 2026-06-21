@@ -45,6 +45,13 @@ if ( ! function_exists( 'monolith_setup' ) ) {
 
 		add_theme_support( 'wp-block-styles' );
 
+		// Native integration with WPAI companion plugins. When this flag is
+		// present, companion plugins render their single-post pieces (reading
+		// time, contents box, related posts) via the theme's wpai_entry_top /
+		// wpai_entry_bottom hooks instead of through the_content filters, so
+		// they sit outside the prose column and read as native to the theme.
+		add_theme_support( 'wpai-companions' );
+
 		// A slightly wider crop for project covers and featured images.
 		add_image_size( 'monolith-cover', 1200, 750, true );
 

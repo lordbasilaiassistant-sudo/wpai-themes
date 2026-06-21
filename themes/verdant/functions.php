@@ -43,6 +43,12 @@ if ( ! function_exists( 'verdant_setup' ) ) {
 		add_theme_support( 'align-wide' );
 		add_theme_support( 'editor-styles' );
 
+		// Native integration with the WPAI companion plugins: the single-post
+		// template fires `wpai_entry_top` and `wpai_entry_bottom` so companions
+		// (reading time, contents, related posts) render in-flow and full width
+		// instead of being squeezed into the_content. See template-parts/content.php.
+		add_theme_support( 'wpai-companions' );
+
 		register_nav_menus( array(
 			'primary' => esc_html__( 'Primary Menu', 'verdant' ),
 		) );
