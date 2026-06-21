@@ -8,6 +8,7 @@ docs/gallery.json
 docs/og-image.png
 docs/sitemap.xml
 docs/robots.txt
+docs/demo/
 
 # Rasterized theme/plugin screenshots (generated from screenshot.svg).
 themes/*/screenshot.png

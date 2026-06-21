@@ -6,7 +6,7 @@ import { spawnSync, spawn } from 'node:child_process';
 const PORT = process.env.PORT || 4173;
 const env = { ...process.env, PORT: String(PORT), SITE_URL: `http://localhost:${PORT}/` };
 
-for (const step of ['gen-screenshots', 'build-zips', 'gen-gallery']) {
+for (const step of ['gen-demo-images', 'gen-screenshots', 'build-zips', 'gen-gallery']) {
   const r = spawnSync(process.execPath, [`scripts/${step}.mjs`], { stdio: 'inherit', env });
   if (r.status !== 0) process.exit(r.status ?? 1);
 }

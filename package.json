@@ -10,7 +10,8 @@
   },
   "scripts": {
     "dev": "node scripts/dev.mjs",
-    "build": "node scripts/gen-screenshots.mjs && node scripts/build-zips.mjs && node scripts/gen-gallery.mjs",
+    "build": "node scripts/gen-demo-images.mjs && node scripts/gen-screenshots.mjs && node scripts/build-zips.mjs && node scripts/gen-gallery.mjs",
+    "build:demo-images": "node scripts/gen-demo-images.mjs",
     "build:screenshots": "node scripts/gen-screenshots.mjs",
     "build:zips": "node scripts/build-zips.mjs",
     "build:gallery": "node scripts/gen-gallery.mjs",
