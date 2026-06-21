@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Weave Auto Internal Links preview">
+  <defs>
+    <linearGradient id="weave-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#eef2f7"/>
+    </linearGradient>
+    <linearGradient id="weave-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <filter id="weave-card-shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#0f172a" flood-opacity="0.16"/>
+    </filter>
+    <marker id="weave-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#8b5cf6"/>
+    </marker>
+  </defs>
+
+  <!-- Page background -->
+  <rect width="1200" height="900" fill="url(#weave-bg)"/>
+
+  <!-- Browser chrome -->
+  <rect x="80" y="60" width="1040" height="780" rx="18" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="80" y="60" width="1040" height="56" rx="18" fill="#f1f5f9"/>
+  <rect x="80" y="98" width="1040" height="18" fill="#f1f5f9"/>
+  <circle cx="116" cy="88" r="8" fill="#f87171"/>
+  <circle cx="144" cy="88" r="8" fill="#fbbf24"/>
+  <circle cx="172" cy="88" r="8" fill="#34d399"/>
+  <rect x="210" y="76" width="820" height="24" rx="12" fill="#e2e8f0"/>
+
+  <!-- Article title -->
+  <text x="140" y="190" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="34" font-weight="800" fill="#1f2937">Getting started with WordPress</text>
+
+  <!-- Body line 1 (plain) -->
+  <rect x="140" y="222" width="760" height="14" rx="7" fill="#e2e8f0"/>
+
+  <!-- Body line 2: contains an auto-link phrase with dotted underline -->
+  <rect x="140" y="262" width="150" height="14" rx="7" fill="#e2e8f0"/>
+  <text x="306" y="276" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#6366f1">theme customization</text>
+  <line x1="306" y1="284" x2="488" y2="284" stroke="#6366f1" stroke-width="2" stroke-dasharray="2 3" stroke-linecap="round"/>
+  <rect x="506" y="262" width="190" height="14" rx="7" fill="#e2e8f0"/>
+
+  <!-- Body line 3: another auto-link phrase -->
+  <rect x="140" y="302" width="90" height="14" rx="7" fill="#e2e8f0"/>
+  <text x="246" y="316" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#6366f1">SEO basics</text>
+  <line x1="246" y1="324" x2="346" y2="324" stroke="#6366f1" stroke-width="2" stroke-dasharray="2 3" stroke-linecap="round"/>
+  <rect x="364" y="302" width="300" height="14" rx="7" fill="#e2e8f0"/>
+
+  <!-- Body line 4: third auto-link phrase -->
+  <rect x="140" y="342" width="240" height="14" rx="7" fill="#e2e8f0"/>
+  <text x="396" y="356" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#6366f1">securing your site</text>
+  <line x1="396" y1="364" x2="558" y2="364" stroke="#6366f1" stroke-width="2" stroke-dasharray="2 3" stroke-linecap="round"/>
+  <rect x="576" y="342" width="120" height="14" rx="7" fill="#e2e8f0"/>
+
+  <!-- Body line 5 (plain) -->
+  <rect x="140" y="382" width="556" height="14" rx="7" fill="#e2e8f0"/>
+
+  <!-- Connector curves from each phrase to its target post card -->
+  <path d="M488 284 C 700 284, 760 470, 856 470" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-dasharray="4 5" opacity="0.7" marker-end="url(#weave-arrow)"/>
+  <path d="M346 324 C 660 360, 760 590, 856 590" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-dasharray="4 5" opacity="0.7" marker-end="url(#weave-arrow)"/>
+  <path d="M558 364 C 700 440, 760 710, 856 710" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-dasharray="4 5" opacity="0.7" marker-end="url(#weave-arrow)"/>
+
+  <!-- Target post chips (the other published posts) -->
+  <g filter="url(#weave-card-shadow)">
+    <rect x="868" y="440" width="208" height="60" rx="12" fill="#ffffff" stroke="#e8edf3" stroke-width="1.5"/>
+  </g>
+  <rect x="884" y="458" width="10" height="24" rx="3" fill="url(#weave-accent)"/>
+  <rect x="906" y="462" width="150" height="11" rx="5.5" fill="#1f2937"/>
+  <rect x="906" y="479" width="96" height="9" rx="4.5" fill="#94a3b8"/>
+
+  <g filter="url(#weave-card-shadow)">
+    <rect x="868" y="560" width="208" height="60" rx="12" fill="#ffffff" stroke="#e8edf3" stroke-width="1.5"/>
+  </g>
+  <rect x="884" y="578" width="10" height="24" rx="3" fill="url(#weave-accent)"/>
+  <rect x="906" y="582" width="120" height="11" rx="5.5" fill="#1f2937"/>
+  <rect x="906" y="599" width="80" height="9" rx="4.5" fill="#94a3b8"/>
+
+  <g filter="url(#weave-card-shadow)">
+    <rect x="868" y="680" width="208" height="60" rx="12" fill="#ffffff" stroke="#e8edf3" stroke-width="1.5"/>
+  </g>
+  <rect x="884" y="698" width="10" height="24" rx="3" fill="url(#weave-accent)"/>
+  <rect x="906" y="702" width="140" height="11" rx="5.5" fill="#1f2937"/>
+  <rect x="906" y="719" width="70" height="9" rx="4.5" fill="#94a3b8"/>
+
+  <!-- Protected-region callout: a heading that is NOT linked -->
+  <rect x="140" y="470" width="320" height="20" rx="6" fill="#1f2937" opacity="0.88"/>
+  <text x="152" y="485" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="700" fill="#ffffff">Headings &amp; code are never linked</text>
+  <rect x="140" y="506" width="560" height="64" rx="10" fill="#0f172a"/>
+  <text x="160" y="534" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#7dd3fc">&lt;code&gt;</text>
+  <text x="160" y="556" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#cbd5e1">  install WordPress // left alone</text>
+
+  <!-- Caption -->
+  <text x="600" y="808" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="22" font-weight="600" fill="#475569" text-anchor="middle">Weave — auto-links the first mention of your other post titles. Zero config, safe, theme-adaptive.</text>
+</svg>

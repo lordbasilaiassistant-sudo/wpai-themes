@@ -19,7 +19,7 @@ const tpl = $('#card-tpl');
 
 const CATEGORY_ORDER = {
   themes: ['Blog & Personal', 'Magazine & Editorial', 'Portfolio & Creative', 'Business & Local', 'SaaS & Startup', 'Docs & Knowledge'],
-  plugins: ['SEO & AI', 'Content & Reading', 'Engagement', 'Media & UX'],
+  plugins: ['Automation', 'SEO & AI', 'Content & Reading', 'Engagement', 'Media & UX'],
 };
 
 function items() {

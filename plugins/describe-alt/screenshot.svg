@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Describe — Auto Alt Text preview">
+  <defs>
+    <linearGradient id="da-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e1726"/>
+      <stop offset="1" stop-color="#15233b"/>
+    </linearGradient>
+    <linearGradient id="da-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#34d399"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="da-photo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#475569"/>
+      <stop offset="1" stop-color="#334155"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Page background -->
+  <rect width="1200" height="900" fill="url(#da-bg)"/>
+
+  <!-- Title block -->
+  <text x="600" y="98" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="46" font-weight="800" fill="#f1f5f9" text-anchor="middle" letter-spacing="0.5">Describe — Auto Alt Text</text>
+  <text x="600" y="140" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="22" font-weight="500" fill="#94a3b8" text-anchor="middle">Meaningful image alt text, automatically — no config, no AI, no network</text>
+
+  <!-- ===================== BEFORE CARD ===================== -->
+  <g>
+    <rect x="92" y="196" width="468" height="408" rx="16" fill="#0f1a30" stroke="#1e293b" stroke-width="2"/>
+    <!-- header -->
+    <rect x="92" y="196" width="468" height="50" rx="16" fill="#13213c"/>
+    <rect x="92" y="230" width="468" height="16" fill="#13213c"/>
+    <circle cx="120" cy="221" r="6" fill="#f87171"/>
+    <text x="138" y="227" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700" fill="#fca5a5">before</text>
+
+    <!-- photo with no alt -->
+    <rect x="124" y="282" width="180" height="135" rx="10" fill="url(#da-photo)"/>
+    <!-- mountains primitive -->
+    <polygon points="124,417 188,330 232,380 280,338 304,417" fill="#64748b"/>
+    <circle cx="270" cy="312" r="16" fill="#94a3b8"/>
+
+    <!-- empty alt field -->
+    <text x="330" y="304" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#64748b">alt=</text>
+    <rect x="330" y="318" width="198" height="34" rx="8" fill="#1b2740" stroke="#3b2530" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="344" y="340" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#f87171">"" (empty)</text>
+
+    <!-- filename -->
+    <text x="330" y="384" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#94a3b8">my-cat_on-the-</text>
+    <text x="330" y="404" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#94a3b8">sofa-1024x768.jpg</text>
+
+    <!-- accessibility warning row -->
+    <circle cx="138" cy="470" r="13" fill="none" stroke="#f87171" stroke-width="2.5"/>
+    <text x="138" y="476" font-family="system-ui, sans-serif" font-size="18" font-weight="800" fill="#f87171" text-anchor="middle">!</text>
+    <text x="162" y="476" font-family="system-ui, sans-serif" font-size="16" fill="#cbd5e1">Screen reader: "image"</text>
+
+    <text x="138" y="520" font-family="system-ui, sans-serif" font-size="15" fill="#94a3b8">Inaccessible · invisible to SEO</text>
+    <text x="138" y="560" font-family="system-ui, sans-serif" font-size="15" fill="#94a3b8">Most common a11y failure on the web</text>
+  </g>
+
+  <!-- ===================== ARROW ===================== -->
+  <g>
+    <circle cx="600" cy="400" r="40" fill="#0f1a30" stroke="url(#da-accent)" stroke-width="3"/>
+    <path d="M582 400 h28 M600 388 l14 12 -14 12" fill="none" stroke="url(#da-accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="600" y="470" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#7dd3fc" text-anchor="middle">derive locally</text>
+    <text x="600" y="492" font-family="system-ui, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">title · caption · filename</text>
+  </g>
+
+  <!-- ===================== AFTER CARD ===================== -->
+  <g>
+    <rect x="640" y="196" width="468" height="408" rx="16" fill="#0f1a30" stroke="#1e293b" stroke-width="2"/>
+    <!-- header -->
+    <rect x="640" y="196" width="468" height="50" rx="16" fill="#13213c"/>
+    <rect x="640" y="230" width="468" height="16" fill="#13213c"/>
+    <circle cx="668" cy="221" r="6" fill="#34d399"/>
+    <text x="686" y="227" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700" fill="#6ee7b7">after</text>
+
+    <!-- same photo -->
+    <rect x="672" y="282" width="180" height="135" rx="10" fill="url(#da-photo)"/>
+    <polygon points="672,417 736,330 780,380 828,338 852,417" fill="#64748b"/>
+    <circle cx="818" cy="312" r="16" fill="#94a3b8"/>
+
+    <!-- filled alt field -->
+    <text x="878" y="304" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#64748b">alt=</text>
+    <rect x="878" y="318" width="198" height="78" rx="8" fill="#10241d" stroke="#1f6f52" stroke-width="1.5"/>
+    <text x="892" y="344" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#6ee7b7">"My cat on the</text>
+    <text x="892" y="368" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#6ee7b7">sofa"</text>
+
+    <!-- accessibility ok row -->
+    <circle cx="686" cy="470" r="13" fill="none" stroke="#34d399" stroke-width="2.5"/>
+    <path d="M680 470 l4 5 8 -10" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="710" y="476" font-family="system-ui, sans-serif" font-size="16" fill="#cbd5e1">Screen reader: "My cat on the sofa"</text>
+
+    <text x="686" y="520" font-family="system-ui, sans-serif" font-size="15" fill="#94a3b8">Accessible · search-engine friendly</text>
+    <text x="686" y="560" font-family="system-ui, sans-serif" font-size="15" fill="#94a3b8">Written automatically on upload</text>
+  </g>
+
+  <!-- ===================== COVERAGE GAUGE STRIP ===================== -->
+  <g>
+    <rect x="92" y="640" width="1016" height="150" rx="16" fill="#0f1a30" stroke="#1e293b" stroke-width="2"/>
+
+    <!-- gauge ring (≈ 92% sweep) -->
+    <g transform="translate(196,715)">
+      <circle r="56" fill="none" stroke="#1f2a3d" stroke-width="14"/>
+      <circle r="56" fill="none" stroke="url(#da-accent)" stroke-width="14" stroke-linecap="round"
+        stroke-dasharray="324 352" transform="rotate(-90)"/>
+      <text x="0" y="6" font-family="system-ui, sans-serif" font-size="32" font-weight="800" fill="#f1f5f9" text-anchor="middle">92%</text>
+    </g>
+    <text x="196" y="800" font-family="system-ui, sans-serif" font-size="15" font-weight="600" fill="#94a3b8" text-anchor="middle" dy="-12">alt-text coverage</text>
+
+    <!-- two-layer explanation -->
+    <g font-family="system-ui, sans-serif">
+      <rect x="320" y="668" width="36" height="36" rx="9" fill="#13213c"/>
+      <text x="338" y="692" font-size="18" font-weight="800" fill="#7dd3fc" text-anchor="middle">1</text>
+      <text x="372" y="685" font-size="18" font-weight="700" fill="#e2e8f0">On upload</text>
+      <text x="372" y="710" font-size="14.5" fill="#94a3b8">Writes real, editable alt into the Media Library</text>
+
+      <rect x="320" y="724" width="36" height="36" rx="9" fill="#13213c"/>
+      <text x="338" y="748" font-size="18" font-weight="800" fill="#6ee7b7" text-anchor="middle">2</text>
+      <text x="372" y="741" font-size="18" font-weight="700" fill="#e2e8f0">On the front end</text>
+      <text x="372" y="766" font-size="14.5" fill="#94a3b8">Backfills any image still missing alt — old library too</text>
+    </g>
+
+    <!-- guarantees -->
+    <g font-family="system-ui, sans-serif" font-size="14.5" font-weight="600" fill="#cbd5e1">
+      <path d="M812 686 l5 6 11 -13" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="836" y="691">Never overwrites human-written alt</text>
+      <path d="M812 726 l5 6 11 -13" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="836" y="731">No AI · no external services · no network</text>
+      <path d="M812 766 l5 6 11 -13" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="836" y="771">Zero config — works on activation</text>
+    </g>
+  </g>
+
+  <!-- Caption -->
+  <text x="600" y="858" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="600" fill="#64748b" text-anchor="middle">Accessible images on autopilot · title → caption → humanized filename</text>
+</svg>

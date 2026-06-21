@@ -1,0 +1,78 @@
+/**
+ * Weave — Auto Internal Links
+ *
+ * Styling for the auto-injected internal links (.weave-link). Designed to look
+ * intentional and editorial on ANY theme, light or dark, without shouting.
+ *
+ * Design notes:
+ * - Colors derive from `currentColor` / `inherit`, so an auto-link reads as part
+ *   of the surrounding prose rather than fighting the theme's own link color.
+ *   The accent is the theme's link color where one is exposed, falling back to
+ *   the text color, so it works with zero configuration on every theme.
+ * - The signature is a FAINT dotted underline (so readers can tell an auto-link
+ *   from hand-placed links and from plain text) that firms up on hover/focus.
+ * - All transitions animate `color`, `text-decoration-color`, and
+ *   `background-size` only — no layout properties — so there is zero layout
+ *   shift and the page never reflows when links appear or are hovered.
+ * - prefers-reduced-motion is honored: the @media block kills the transitions
+ *   entirely for visitors who ask for less motion.
+ * - Every value is overridable: a theme or user can restyle auto-links by
+ *   targeting `.weave-link` or redefining the scoped `--weave-*` properties.
+ */
+
+.weave-link {
+	/* Tunable surface — themes/users may override these custom properties.
+	   --weave-accent prefers a theme's exposed link color, then falls back to
+	   the surrounding text color so it always has a sensible value. */
+	--weave-accent: var( --wp--preset--color--primary, var( --link-color, currentColor ) );
+	--weave-underline: color-mix( in srgb, var( --weave-accent ) 45%, transparent );
+	--weave-underline-hover: var( --weave-accent );
+
+	color: var( --weave-accent );
+	text-decoration: underline;
+	text-decoration-style: dotted;
+	text-decoration-thickness: 1px;
+	text-decoration-color: var( --weave-underline );
+	text-underline-offset: 0.18em;
+	border-radius: 2px;
+	transition:
+		color 0.18s ease,
+		text-decoration-color 0.18s ease;
+}
+
+.weave-link:hover,
+.weave-link:focus-visible {
+	color: var( --weave-underline-hover );
+	text-decoration-style: solid;
+	text-decoration-color: var( --weave-underline-hover );
+}
+
+/* Clear, theme-agnostic focus ring for keyboard users. Uses currentColor so it
+   contrasts on both light and dark themes. */
+.weave-link:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+
+/* color-mix-free fallback: older browsers get a simple dimmed underline via
+   opacity on the decoration color rather than a transparent mix. */
+@supports not ( color: color-mix( in srgb, currentColor 45%, transparent ) ) {
+	.weave-link {
+		--weave-underline: currentColor;
+		text-decoration-color: currentColor;
+		opacity: 0.95;
+	}
+
+	.weave-link:hover,
+	.weave-link:focus-visible {
+		opacity: 1;
+	}
+}
+
+/* Respect the user's motion preference: no transitions at all. The link's
+   appearance is otherwise unchanged — only the animation is removed. */
+@media ( prefers-reduced-motion: reduce ) {
+	.weave-link {
+		transition: none;
+	}
+}

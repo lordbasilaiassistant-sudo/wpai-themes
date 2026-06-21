@@ -1,0 +1,200 @@
+/**
+ * Describe — Auto Alt Text: status-page styles.
+ *
+ * Loaded only on Media > Auto Alt Text. Theme-agnostic: every color is a scoped
+ * custom property that resolves from WordPress admin context and falls back
+ * gracefully, with a prefers-color-scheme override for dark admin schemes. The
+ * coverage gauge animates with transform/opacity only and is fully disabled
+ * under prefers-reduced-motion. No external fonts, no images, no network.
+ */
+
+.describe-alt-wrap {
+	--describe-alt-accent: #2271b1;       /* WP admin primary blue. */
+	--describe-alt-accent-soft: #d8e7f3;
+	--describe-alt-track: #e2e4e7;
+	--describe-alt-surface: #fff;
+	--describe-alt-border: #dcdcde;
+	--describe-alt-text: #1d2327;
+	--describe-alt-muted: #646970;
+	--describe-alt-good: #1a7f55;
+	--describe-alt-radius: 10px;
+
+	max-width: 920px;
+}
+
+.describe-alt-lede {
+	max-width: 60ch;
+	font-size: 14px;
+	color: var(--describe-alt-muted);
+}
+
+.describe-alt-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 20px;
+	margin-top: 16px;
+}
+
+.describe-alt-card {
+	background: var(--describe-alt-surface);
+	border: 1px solid var(--describe-alt-border);
+	border-radius: var(--describe-alt-radius);
+	padding: 22px 24px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.describe-alt-card__title {
+	margin: 0 0 10px;
+	font-size: 15px;
+	color: var(--describe-alt-text);
+}
+
+.describe-alt-card__desc {
+	margin: 0 0 16px;
+	color: var(--describe-alt-muted);
+	font-size: 13.5px;
+	line-height: 1.6;
+}
+
+/* Coverage gauge: a conic-gradient ring driven by --describe-alt-percent. */
+.describe-alt-card--gauge {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+.describe-alt-meter {
+	--describe-alt-percent: 0;
+
+	position: relative;
+	width: 160px;
+	height: 160px;
+	margin: 6px auto 18px;
+	border-radius: 50%;
+	background:
+		conic-gradient(
+			var(--describe-alt-accent) calc(var(--describe-alt-percent) * 1%),
+			var(--describe-alt-track) 0
+		);
+	display: grid;
+	place-items: center;
+	transform: rotate(0deg);
+	animation: describe-alt-gauge-in 600ms ease-out both;
+}
+
+.describe-alt-meter::before {
+	content: "";
+	position: absolute;
+	inset: 16px;
+	border-radius: 50%;
+	background: var(--describe-alt-surface);
+}
+
+.describe-alt-meter__value {
+	position: relative;
+	font-size: 38px;
+	font-weight: 700;
+	line-height: 1;
+	color: var(--describe-alt-text);
+	font-variant-numeric: tabular-nums;
+}
+
+.describe-alt-meter__unit {
+	font-size: 18px;
+	font-weight: 600;
+	color: var(--describe-alt-muted);
+	margin-left: 2px;
+}
+
+@keyframes describe-alt-gauge-in {
+	from {
+		opacity: 0;
+		transform: scale(0.92);
+	}
+
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.describe-alt-stats {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px 22px;
+	margin: 0;
+}
+
+.describe-alt-stat {
+	min-width: 84px;
+}
+
+.describe-alt-stat dt {
+	font-size: 11.5px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--describe-alt-muted);
+	margin: 0;
+}
+
+.describe-alt-stat dd {
+	margin: 2px 0 0;
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--describe-alt-text);
+	font-variant-numeric: tabular-nums;
+}
+
+.describe-alt-hint,
+.describe-alt-foot {
+	color: var(--describe-alt-muted);
+	font-size: 12.5px;
+}
+
+.describe-alt-foot {
+	margin-top: 22px;
+}
+
+.describe-alt-done {
+	display: inline-block;
+	padding: 8px 14px;
+	border-radius: 999px;
+	background: var(--describe-alt-accent-soft);
+	color: var(--describe-alt-good);
+	font-weight: 600;
+	font-size: 13px;
+}
+
+/* Visible, high-contrast focus for the action button (keyboard users). */
+.describe-alt-wrap .button-primary:focus-visible {
+	outline: 2px solid var(--describe-alt-text);
+	outline-offset: 2px;
+	box-shadow: none;
+}
+
+/* Dark admin schemes / OS dark mode. */
+@media (prefers-color-scheme: dark) {
+	.describe-alt-wrap {
+		--describe-alt-accent: #4f94d4;
+		--describe-alt-accent-soft: #1e2a36;
+		--describe-alt-track: #2c3338;
+		--describe-alt-surface: #1d2327;
+		--describe-alt-border: #3c434a;
+		--describe-alt-text: #f0f0f1;
+		--describe-alt-muted: #a7aaad;
+		--describe-alt-good: #5fd0a0;
+	}
+
+	.describe-alt-card {
+		box-shadow: none;
+	}
+}
+
+/* Respect reduced-motion: no gauge animation. */
+@media (prefers-reduced-motion: reduce) {
+	.describe-alt-meter {
+		animation: none;
+	}
+}

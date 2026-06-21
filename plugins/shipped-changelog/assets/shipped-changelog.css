@@ -1,0 +1,463 @@
+/**
+ * Shipped — Auto Changelog & Roadmap
+ *
+ * A self-building release timeline and a Planned / In progress / Shipped status
+ * board. Designed to look at home on ANY theme, light or dark.
+ *
+ * Design notes:
+ * - Colors derive from `currentColor` / `inherit` and `color-mix`, so surfaces,
+ *   borders, markers, and muted text read correctly on light and dark themes
+ *   with no hardcoded grays. Sites can override any --shipped-* custom property.
+ * - The roadmap board is a responsive grid (no media queries for the columns):
+ *   `auto-fit` + `minmax` lets it sit three-across on desktop and stack to one
+ *   column on mobile. A single status-accent variable tints each column.
+ * - The changelog is a single vertical timeline with a connecting rail and a
+ *   marker dot per entry, drawn from the theme's own text color.
+ * - Entrance motion animates only `transform`/`opacity` (GPU-friendly, zero
+ *   layout shift) and is pure progressive enhancement: entries are fully
+ *   visible by default and only hide-then-reveal once JS confirms it can run.
+ * - prefers-reduced-motion is honored at every layer (JS gate + the @media
+ *   block at the bottom of this file).
+ */
+
+.shipped {
+	/* Tunable surface — sites may override these custom properties. */
+	--shipped-gap: 1.25rem;
+	--shipped-radius: 14px;
+	--shipped-pad: 1rem;
+	--shipped-col-min: 230px;
+
+	/* Derive everything from the surrounding text color so the section adapts to
+	   any theme rather than fighting it. */
+	--shipped-fg: currentColor;
+	--shipped-muted: color-mix( in srgb, currentColor 62%, transparent );
+	--shipped-faint: color-mix( in srgb, currentColor 45%, transparent );
+	--shipped-card-bg: color-mix( in srgb, currentColor 4%, transparent );
+	--shipped-card-bg-hover: color-mix( in srgb, currentColor 8%, transparent );
+	--shipped-border: color-mix( in srgb, currentColor 14%, transparent );
+	--shipped-border-hover: color-mix( in srgb, currentColor 28%, transparent );
+	--shipped-rail: color-mix( in srgb, currentColor 16%, transparent );
+	--shipped-shadow: color-mix( in srgb, currentColor 20%, transparent );
+	--shipped-chip-bg: color-mix( in srgb, currentColor 10%, transparent );
+
+	/* Status accents (kept tasteful; tinted toward the theme text by color-mix
+	   so they never clash on dark themes). */
+	--shipped-accent-planned: color-mix( in srgb, #8b93a7 70%, currentColor );
+	--shipped-accent-in-progress: color-mix( in srgb, #e0a52b 72%, currentColor );
+	--shipped-accent-shipped: color-mix( in srgb, #2faa6a 72%, currentColor );
+
+	box-sizing: border-box;
+	margin: 2.25rem 0;
+	padding: 0;
+	color: var( --shipped-fg );
+	font-family: inherit;
+}
+
+.shipped *,
+.shipped *::before,
+.shipped *::after {
+	box-sizing: border-box;
+}
+
+.shipped__heading {
+	margin: 0 0 1.4rem;
+	padding-bottom: 0.6rem;
+	border-bottom: 1px solid var( --shipped-border );
+	color: inherit;
+	font-family: inherit;
+	font-size: 1.3rem;
+	font-weight: 750;
+	line-height: 1.2;
+	letter-spacing: 0.01em;
+}
+
+.shipped__empty {
+	margin: 0;
+	padding: 1.1rem 1.2rem;
+	border: 1px dashed var( --shipped-border );
+	border-radius: var( --shipped-radius );
+	background: var( --shipped-card-bg );
+	color: var( --shipped-muted );
+	font-size: 0.95rem;
+	line-height: 1.5;
+}
+
+/* ===========================================================================
+   Changelog — vertical timeline
+   =========================================================================== */
+.shipped-tl {
+	position: relative;
+	margin: 0;
+	padding: 0 0 0 0.25rem;
+	list-style: none;
+}
+
+/* The connecting rail runs through every marker. */
+.shipped-tl__entry {
+	position: relative;
+	margin: 0;
+	padding: 0 0 1.6rem 2.1rem;
+	list-style: none;
+}
+
+.shipped-tl__entry:last-child {
+	padding-bottom: 0;
+}
+
+/* Rail segment: a 2px line behind the markers. */
+.shipped-tl__entry::before {
+	content: "";
+	position: absolute;
+	top: 0.55rem;
+	bottom: -0.2rem;
+	left: 6px;
+	width: 2px;
+	background: var( --shipped-rail );
+}
+
+.shipped-tl__entry:last-child::before {
+	bottom: auto;
+	height: 0;
+}
+
+.shipped-tl__marker {
+	position: absolute;
+	top: 0.45rem;
+	left: 0;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	background: var( --shipped-fg );
+	box-shadow: 0 0 0 4px color-mix( in srgb, currentColor 8%, transparent );
+}
+
+.shipped-tl__card {
+	padding: var( --shipped-pad );
+	border: 1px solid var( --shipped-border );
+	border-radius: var( --shipped-radius );
+	background: var( --shipped-card-bg );
+	transition:
+		border-color 0.2s ease,
+		background-color 0.2s ease,
+		box-shadow 0.28s cubic-bezier( 0.22, 1, 0.36, 1 );
+}
+
+.shipped-tl__card:hover,
+.shipped-tl__card:focus-within {
+	border-color: var( --shipped-border-hover );
+	background: var( --shipped-card-bg-hover );
+	box-shadow: 0 8px 22px var( --shipped-shadow );
+}
+
+.shipped-tl__meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 0.7rem;
+	margin-bottom: 0.45rem;
+}
+
+.shipped-tl__date {
+	color: var( --shipped-muted );
+	font-size: 0.8rem;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+}
+
+.shipped-tl__version {
+	display: inline-block;
+	padding: 0.15em 0.55em;
+	border-radius: 999px;
+	background: var( --shipped-chip-bg );
+	color: inherit;
+	font-size: 0.74rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	font-variant-numeric: tabular-nums;
+}
+
+.shipped-tl__title {
+	margin: 0 0 0.35rem;
+	color: inherit;
+	font-family: inherit;
+	font-size: 1.05rem;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.shipped-tl__link {
+	color: inherit;
+	text-decoration: none;
+}
+
+.shipped-tl__link:hover,
+.shipped-tl__link:focus-visible {
+	text-decoration: underline;
+	text-underline-offset: 0.15em;
+}
+
+.shipped-tl__link:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+	border-radius: 3px;
+}
+
+.shipped-tl__body {
+	margin: 0;
+	color: var( --shipped-muted );
+	font-size: 0.92rem;
+	line-height: 1.55;
+}
+
+/* ===========================================================================
+   Roadmap — status board
+   =========================================================================== */
+.shipped-rm__board {
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax( var( --shipped-col-min ), 1fr ) );
+	gap: var( --shipped-gap );
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.shipped-rm__column {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	/* Per-column accent, defaulted then overridden by the modifier classes. */
+	--shipped-accent: var( --shipped-faint );
+}
+
+.shipped-rm__column--planned {
+	--shipped-accent: var( --shipped-accent-planned );
+}
+
+.shipped-rm__column--in-progress {
+	--shipped-accent: var( --shipped-accent-in-progress );
+}
+
+.shipped-rm__column--shipped {
+	--shipped-accent: var( --shipped-accent-shipped );
+}
+
+.shipped-rm__col {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: var( --shipped-pad );
+	border: 1px solid var( --shipped-border );
+	border-top: 3px solid var( --shipped-accent );
+	border-radius: var( --shipped-radius );
+	background: var( --shipped-card-bg );
+}
+
+.shipped-rm__colhead {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin: 0 0 0.9rem;
+	color: inherit;
+	font-family: inherit;
+	font-size: 0.95rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+}
+
+.shipped-rm__dot {
+	flex: 0 0 auto;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: var( --shipped-accent );
+}
+
+.shipped-rm__collabel {
+	flex: 1 1 auto;
+}
+
+.shipped-rm__count {
+	flex: 0 0 auto;
+	min-width: 1.6em;
+	padding: 0.05em 0.5em;
+	border-radius: 999px;
+	background: var( --shipped-chip-bg );
+	color: var( --shipped-muted );
+	font-size: 0.75rem;
+	font-weight: 700;
+	text-align: center;
+	font-variant-numeric: tabular-nums;
+}
+
+.shipped-rm__list {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	gap: 0.7rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.shipped-rm__item {
+	margin: 0;
+	padding: 0.7rem 0.8rem;
+	border: 1px solid var( --shipped-border );
+	border-left: 3px solid var( --shipped-accent );
+	border-radius: 10px;
+	background: color-mix( in srgb, currentColor 2%, transparent );
+	list-style: none;
+	transition:
+		transform 0.24s cubic-bezier( 0.22, 1, 0.36, 1 ),
+		border-color 0.2s ease,
+		background-color 0.2s ease,
+		box-shadow 0.24s cubic-bezier( 0.22, 1, 0.36, 1 );
+}
+
+.shipped-rm__item:hover,
+.shipped-rm__item:focus-within {
+	transform: translateY( -2px );
+	border-color: var( --shipped-border-hover );
+	background: var( --shipped-card-bg-hover );
+	box-shadow: 0 6px 16px var( --shipped-shadow );
+}
+
+.shipped-rm__title {
+	margin: 0;
+	color: inherit;
+	font-family: inherit;
+	font-size: 0.95rem;
+	font-weight: 650;
+	line-height: 1.35;
+}
+
+.shipped-rm__link {
+	color: inherit;
+	text-decoration: none;
+}
+
+.shipped-rm__link:hover,
+.shipped-rm__link:focus-visible {
+	text-decoration: underline;
+	text-underline-offset: 0.15em;
+}
+
+.shipped-rm__link:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+	border-radius: 3px;
+}
+
+.shipped-rm__body {
+	margin: 0.35rem 0 0;
+	color: var( --shipped-muted );
+	font-size: 0.86rem;
+	line-height: 1.5;
+}
+
+.shipped-rm__empty {
+	margin: 0;
+	padding: 0.7rem 0.8rem;
+	border: 1px dashed var( --shipped-border );
+	border-radius: 10px;
+	color: var( --shipped-faint );
+	font-size: 0.84rem;
+	font-style: italic;
+	list-style: none;
+}
+
+/* ---------------------------------------------------------------------------
+   color-mix-free fallbacks for older browsers. Everything stays legible with
+   plain rgba tints derived from a neutral gray.
+--------------------------------------------------------------------------- */
+@supports not ( color: color-mix( in srgb, currentColor 50%, transparent ) ) {
+	.shipped-tl__card,
+	.shipped-rm__col,
+	.shipped-rm__item {
+		background: rgba( 127, 127, 127, 0.06 );
+		border-color: rgba( 127, 127, 127, 0.28 );
+	}
+
+	.shipped-tl__entry::before {
+		background: rgba( 127, 127, 127, 0.3 );
+	}
+
+	.shipped-tl__marker {
+		background: currentColor;
+		box-shadow: none;
+	}
+
+	.shipped-tl__date,
+	.shipped-tl__body,
+	.shipped-rm__body,
+	.shipped-rm__count {
+		opacity: 0.72;
+	}
+
+	.shipped-tl__version,
+	.shipped-rm__count {
+		background: rgba( 127, 127, 127, 0.16 );
+	}
+
+	.shipped-rm__column--planned .shipped-rm__col,
+	.shipped-rm__column--planned .shipped-rm__item {
+		border-top-color: #8b93a7;
+		border-left-color: #8b93a7;
+	}
+
+	.shipped-rm__column--in-progress .shipped-rm__col,
+	.shipped-rm__column--in-progress .shipped-rm__item {
+		border-top-color: #e0a52b;
+		border-left-color: #e0a52b;
+	}
+
+	.shipped-rm__column--shipped .shipped-rm__col,
+	.shipped-rm__column--shipped .shipped-rm__item {
+		border-top-color: #2faa6a;
+		border-left-color: #2faa6a;
+	}
+}
+
+/* ---------------------------------------------------------------------------
+   Entrance motion (progressive enhancement)
+
+   Scoped to `.shipped-js [data-shipped-reveal].shipped-will-reveal` so it ONLY
+   applies when (1) JS is available (head snippet set `.shipped-js`) and (2) the
+   motion script primed this specific entry. If either is false, entries keep
+   their default fully-visible styling and never move — no flash, no stuck
+   entries, no layout shift. We animate only transform + opacity.
+--------------------------------------------------------------------------- */
+.shipped-js [data-shipped-reveal].shipped-will-reveal {
+	opacity: 0;
+	transform: translate3d( 0, 14px, 0 );
+	will-change: transform, opacity;
+}
+
+.shipped-js [data-shipped-reveal].shipped-is-revealed {
+	opacity: 1;
+	transform: translate3d( 0, 0, 0 );
+	transition:
+		opacity 0.5s cubic-bezier( 0.22, 1, 0.36, 1 ) var( --shipped-delay, 0ms ),
+		transform 0.5s cubic-bezier( 0.22, 1, 0.36, 1 ) var( --shipped-delay, 0ms );
+}
+
+/* Once revealed, drop the compositor hint so we don't keep a layer around. */
+.shipped-js [data-shipped-reveal].shipped-is-revealed:not( .shipped-will-reveal ) {
+	will-change: auto;
+}
+
+/* Reduced-motion safety net (mirrors the JS gate in motion.js). Even if an
+   entry somehow carries a motion class, force it visible and kill transitions
+   so it simply appears. */
+@media ( prefers-reduced-motion: reduce ) {
+	.shipped-tl__card,
+	.shipped-rm__item,
+	.shipped-js [data-shipped-reveal].shipped-will-reveal,
+	.shipped-js [data-shipped-reveal].shipped-is-revealed {
+		opacity: 1 !important;
+		transform: none !important;
+		transition: none !important;
+		will-change: auto;
+	}
+}
