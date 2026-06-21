@@ -1,0 +1,281 @@
+/**
+ * Contents — Smart Table of Contents
+ *
+ * A tidy, theme-adaptive "Contents" box prepended to long single posts/pages.
+ *
+ * Design notes:
+ * - Colors derive from `currentColor` / `inherit` plus a few scoped --contents-*
+ *   custom properties, so the box reads correctly on light AND dark themes with
+ *   no hardcoded grays. A theme can override any --contents-* property to fully
+ *   restyle it without touching this file.
+ * - The box never sets a solid background that fights the theme: its surface is a
+ *   translucent tint of the surrounding text color (color-mix on currentColor),
+ *   with a graceful @supports fallback for browsers without color-mix.
+ * - Motion is progressive enhancement and animates only transform / opacity (and
+ *   a GPU-cheap grid-rows collapse). prefers-reduced-motion is honored by the JS
+ *   gate and by the @media block at the bottom of this file.
+ * - Sizing reserves space up front (no images, no web fonts) so there is no
+ *   cumulative layout shift.
+ */
+
+.contents-toc {
+	/* Tunable surface — themes may override these custom properties. */
+	--contents-radius: 12px;
+	--contents-pad: 1em 1.25em;
+	--contents-gap: 0.45em;
+	--contents-indent: 1.1em;
+
+	/* Tint everything from the surrounding text color so it adapts to any theme. */
+	--contents-fg: currentColor;
+	--contents-muted: color-mix( in srgb, currentColor 70%, transparent );
+	--contents-bg: color-mix( in srgb, currentColor 5%, transparent );
+	--contents-border: color-mix( in srgb, currentColor 14%, transparent );
+	--contents-accent: color-mix( in srgb, currentColor 92%, transparent );
+	--contents-hover-bg: color-mix( in srgb, currentColor 9%, transparent );
+	--contents-marker: color-mix( in srgb, currentColor 28%, transparent );
+
+	box-sizing: border-box;
+	max-width: 100%;
+	margin: 0 0 1.75em;
+	padding: var( --contents-pad );
+	border: 1px solid var( --contents-border );
+	border-radius: var( --contents-radius );
+	background: var( --contents-bg );
+	color: var( --contents-fg );
+	font-family: inherit;
+	font-size: 0.95rem;
+	line-height: 1.45;
+}
+
+.contents-toc *,
+.contents-toc *::before,
+.contents-toc *::after {
+	box-sizing: border-box;
+}
+
+/* Browsers without color-mix() fall back to a subtle, theme-safe tint built from
+   a CSS-wide opacity on a currentColor border, and a transparent surface. */
+@supports not ( background: color-mix( in srgb, currentColor 5%, transparent ) ) {
+	.contents-toc {
+		--contents-muted: inherit;
+		--contents-bg: transparent;
+		--contents-border: currentColor;
+		--contents-accent: currentColor;
+		--contents-hover-bg: transparent;
+		--contents-marker: currentColor;
+		border-color: currentColor;
+		opacity: 0.999; /* Establishes a stacking context without dimming text. */
+	}
+
+	.contents-toc__list {
+		opacity: 1;
+	}
+}
+
+/* ---------------------------------------------------------------------------
+   Header: the title + collapse toggle.
+
+   The toggle is a real <button>, so it is keyboard-operable by default. On wide
+   screens it reads as a static heading (the chevron is hidden); on small screens
+   it becomes an obvious tap target for collapse / expand.
+--------------------------------------------------------------------------- */
+.contents-toc__toggle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5em;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	text-align: left;
+	cursor: default; /* Wide screens: behaves like a heading, not a control. */
+	-webkit-tap-highlight-color: transparent;
+}
+
+.contents-toc__title {
+	margin: 0;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var( --contents-muted );
+}
+
+.contents-toc__chevron {
+	flex: 0 0 auto;
+	width: 1em;
+	height: 1em;
+	color: var( --contents-muted );
+	/* Hidden on wide screens; revealed as a control at the breakpoint below. */
+	display: none;
+	transition: transform 0.25s cubic-bezier( 0.22, 1, 0.36, 1 );
+}
+
+/* ---------------------------------------------------------------------------
+   The list of links.
+--------------------------------------------------------------------------- */
+.contents-toc__list,
+.contents-toc__inner,
+.contents-toc__items,
+.contents-toc__sublist {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* The outer list is a structural wrapper (and the grid container for the
+   small-screen collapse). Its single child, .contents-toc__inner, carries no
+   bullet and holds the real items list. */
+.contents-toc__inner {
+	display: block;
+}
+
+.contents-toc__items {
+	margin-top: 0.75em;
+}
+
+.contents-toc__sublist {
+	margin-top: var( --contents-gap );
+	padding-left: var( --contents-indent );
+	/* A hairline guide rail for nested sections, tinted from the text color. */
+	border-left: 1px solid var( --contents-marker );
+}
+
+.contents-toc__item {
+	margin: 0;
+}
+
+.contents-toc__item + .contents-toc__item {
+	margin-top: var( --contents-gap );
+}
+
+.contents-toc__sublist .contents-toc__item:first-child {
+	margin-top: var( --contents-gap );
+}
+
+.contents-toc__link {
+	display: block;
+	padding: 0.2em 0.5em;
+	border-radius: 7px;
+	color: inherit;
+	text-decoration: none;
+	/* A left rail that fills in for the active item; reserved so there is no
+	   shift when it appears. */
+	box-shadow: inset 2px 0 0 0 transparent;
+	transition:
+		background-color 0.18s ease,
+		box-shadow 0.18s ease,
+		color 0.18s ease;
+}
+
+.contents-toc__link:hover {
+	background: var( --contents-hover-bg );
+	text-decoration: underline;
+	text-underline-offset: 0.18em;
+}
+
+.contents-toc__link:focus-visible {
+	outline: 2px solid var( --contents-accent );
+	outline-offset: 2px;
+}
+
+/* Active section: set by the IntersectionObserver in contents.js. The link gets
+   aria-current="true" plus .is-active; we surface it with a left rail, a faint
+   fill, and full-strength weight so it stands out without shouting. */
+.contents-toc__link.is-active,
+.contents-toc__link[aria-current="true"] {
+	background: var( --contents-hover-bg );
+	box-shadow: inset 2px 0 0 0 var( --contents-accent );
+	font-weight: 650;
+	color: var( --contents-fg );
+}
+
+/* ---------------------------------------------------------------------------
+   Entrance: a subtle, reduced-motion-safe reveal.
+
+   Scoped to `.contents-js` — a class set on <html> by a tiny <head> snippet
+   *before first paint* when JavaScript is confirmed available. Gating on it
+   (rather than on a class added by the deferred behavior script) means the box
+   is primed for its entrance at first paint, so there is no flash-on-then-off;
+   and a no-JS visitor — or one whose script fails — keeps the box fully rendered
+   with no animation and no stuck-hidden state. Animates only transform/opacity.
+--------------------------------------------------------------------------- */
+.contents-js .contents-toc {
+	animation: contents-reveal 0.45s cubic-bezier( 0.22, 1, 0.36, 1 ) both;
+}
+
+@keyframes contents-reveal {
+	from {
+		opacity: 0;
+		transform: translate3d( 0, 8px, 0 );
+	}
+	to {
+		opacity: 1;
+		transform: translate3d( 0, 0, 0 );
+	}
+}
+
+/* ---------------------------------------------------------------------------
+   Collapse / expand.
+
+   Only surfaced on small screens (and only when JS is in control). We animate
+   the list open/closed with a grid-rows trick: the wrapper collapses from 1fr to
+   0fr, which is GPU-cheap and causes no layout shift in the surrounding article.
+--------------------------------------------------------------------------- */
+@media ( max-width: 640px ) {
+	.contents-toc__toggle {
+		cursor: pointer;
+	}
+
+	.contents-toc__chevron {
+		display: block;
+	}
+
+	/* When JS controls the collapse, the whole list is treated as a single
+	   collapsible region. We animate it with the grid-rows trick: a one-row grid
+	   whose track goes from 1fr (open) to 0fr (closed). Because there is exactly
+	   one grid child — the inner wrapper below — the entire list height
+	   interpolates smoothly with no layout shift in the surrounding article. */
+	.contents-toc--js .contents-toc__list {
+		display: grid;
+		grid-template-rows: 1fr;
+		transition: grid-template-rows 0.3s cubic-bezier( 0.22, 1, 0.36, 1 );
+	}
+
+	/* The single grid child must be allowed to shrink and clip for 0fr to take
+	   effect. min-height:0 defeats the default `auto` min track sizing. */
+	.contents-toc--js .contents-toc__inner {
+		min-height: 0;
+		overflow: hidden;
+	}
+
+	.contents-toc--js.is-collapsed .contents-toc__list {
+		grid-template-rows: 0fr;
+	}
+
+	.contents-toc--js.is-collapsed .contents-toc__chevron {
+		transform: rotate( -90deg );
+	}
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced-motion safety net (mirrors the JS gate in contents.js).
+
+   Kill the entrance, the chevron spin, and the collapse easing so the box and
+   list simply appear / snap. Belt-and-suspenders alongside the script.
+--------------------------------------------------------------------------- */
+@media ( prefers-reduced-motion: reduce ) {
+	.contents-js .contents-toc {
+		animation: none;
+	}
+
+	.contents-toc__link,
+	.contents-toc__chevron,
+	.contents-toc--js .contents-toc__list {
+		transition: none;
+	}
+}

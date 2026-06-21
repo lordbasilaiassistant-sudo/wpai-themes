@@ -35,8 +35,31 @@ function resolvePack(pack) {
 }
 
 
+// A heading-rich long-form post appended to every demo so the post-level
+// companions (Contents TOC, reading time, related posts) have substance to show.
+const GUIDE_POST = {
+  title: 'A field guide to building things that last',
+  excerpt: 'Four principles for making work that earns trust and ages well — whether you ship software, words, or a small business.',
+  content:
+    '<p>Most things we make are forgotten in a week. A few are still useful in a decade. The difference is rarely talent; it is a handful of quiet habits applied for longer than feels reasonable. Here are four that have held up.</p>' +
+    '<h2>Start smaller than feels safe</h2>' +
+    '<p>The smallest version that genuinely helps someone teaches you more than a year of planning. Ship it, watch what happens, and let the next step reveal itself. Scope is the enemy of finishing.</p>' +
+    '<h2>Make the right thing the easy thing</h2>' +
+    '<p>People follow the path of least resistance, including you. Design the defaults so the good choice is the effortless one, and you will rarely have to fall back on discipline.</p>' +
+    '<h2>Write it down</h2>' +
+    '<p>A decision you did not record is a decision you will relitigate. Notes are how a small team — or a future you — moves quickly without breaking what already works.</p>' +
+    '<h2>Leave it better than you found it</h2>' +
+    '<p>Every time you touch something, tidy one corner of it. Compounded over months, that habit becomes indistinguishable from craftsmanship.</p>',
+};
+
 function buildDemoPhp(pack) {
   const d = resolvePack(pack);
+  // Append the shared guide so Contents/reading-time/related have substance.
+  d.posts = [...d.posts, {
+    ...GUIDE_POST,
+    category: (pack.menuCategories && pack.menuCategories[0]) || 'Notes',
+    image: IMG('slate'),
+  }];
   return (
   "<?php\n" +
   "require_once '/wordpress/wp-load.php';\n" +
@@ -111,6 +134,24 @@ function demoSteps(slug) {
   return [{ step: 'runPHP', code: buildDemoPhp(pack) }];
 }
 
+// Companion plugins auto-installed into every THEME demo, so each preview shows
+// the full "packaged" experience. Only plugins that actually exist are included,
+// so this stays safe as the suite grows.
+const COMPANION_PLUGINS = [
+  'beacon-ai-seo', 'contents-toc', 'kindred-related',
+  'reading-time-badge', 'smooth-back-to-top',
+];
+const EXISTING_PLUGINS = new Set(listPlugins().map((p) => p.slug));
+function companionSteps(excludeSlug) {
+  return COMPANION_PLUGINS
+    .filter((s) => s !== excludeSlug && EXISTING_PLUGINS.has(s))
+    .map((s) => ({
+      step: 'installPlugin',
+      pluginZipFile: { resource: 'url', url: `${SITE_URL}downloads/${s}.zip` },
+      options: { activate: true },
+    }));
+}
+
 function writeBlueprint(slug, kind) {
   const zipUrl = `${SITE_URL}downloads/${slug}.zip`;
   const install = kind === 'theme'
@@ -121,7 +162,7 @@ function writeBlueprint(slug, kind) {
     landingPage: '/',
     preferredVersions: { php: '8.0', wp: 'latest' },
     features: { networking: true },
-    steps: [install, ...demoSteps(slug)],
+    steps: [install, ...(kind === 'theme' ? companionSteps(slug) : []), ...demoSteps(slug)],
   };
   writeFileSync(join(playgroundDir, `${slug}.json`), JSON.stringify(blueprint, null, 2));
 }

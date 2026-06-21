@@ -1,0 +1,130 @@
+/**
+ * Beacon — AI & SEO · settings-page styles.
+ *
+ * Scoped entirely under .beacon-wrap so nothing leaks into the rest of wp-admin.
+ * Colors derive from currentColor and a few scoped custom properties, so the
+ * card reads correctly in light admin, the dark "Modern" admin scheme, and any
+ * custom admin color scheme — never a hardcoded background that fights the UI.
+ *
+ * Any motion animates only transform/opacity and is disabled under
+ * prefers-reduced-motion. Focus states are always visible.
+ */
+
+.beacon-wrap {
+	/* Tunable surface, tinted from the current text color so it adapts to any
+	   admin color scheme without assuming a specific palette. */
+	--beacon-radius: 10px;
+	--beacon-border: color-mix(in srgb, currentColor 14%, transparent);
+	--beacon-bg: color-mix(in srgb, currentColor 4%, transparent);
+	--beacon-accent: color-mix(in srgb, currentColor 55%, transparent);
+}
+
+.beacon-card {
+	box-sizing: border-box;
+	max-width: 760px;
+	margin: 1.25em 0 1.75em;
+	padding: 1.25em 1.4em;
+	border: 1px solid var(--beacon-border);
+	border-left: 3px solid var(--beacon-accent);
+	border-radius: var(--beacon-radius);
+	background: var(--beacon-bg);
+	color: inherit;
+}
+
+/* Browsers without color-mix() get a subtle, still-adaptive fallback. */
+@supports not (background: color-mix(in srgb, currentColor 4%, transparent)) {
+	.beacon-card {
+		background: transparent;
+		border-color: currentColor;
+		border-left-color: currentColor;
+	}
+}
+
+.beacon-card__title {
+	margin: 0 0 0.35em;
+	padding: 0;
+	font-size: 1.05rem;
+	line-height: 1.3;
+}
+
+.beacon-card__desc {
+	margin: 0 0 0.9em;
+	opacity: 0.85;
+}
+
+.beacon-url-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.6em;
+}
+
+.beacon-url {
+	display: inline-block;
+	box-sizing: border-box;
+	max-width: 100%;
+	padding: 0.45em 0.7em;
+	border: 1px solid var(--beacon-border);
+	border-radius: 8px;
+	background: color-mix(in srgb, currentColor 6%, transparent);
+	color: inherit;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	font-size: 0.92rem;
+	text-decoration: none;
+	word-break: break-all;
+	transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.beacon-url:hover,
+.beacon-url:focus-visible {
+	border-color: var(--beacon-accent);
+	background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.beacon-copy {
+	flex: 0 0 auto;
+}
+
+/* The copy button briefly nudges to confirm success. Transform/opacity only. */
+.beacon-copy.is-copied {
+	transform: translateY(-1px);
+}
+
+.beacon-status {
+	min-height: 1.2em;
+	margin: 0.6em 0 0;
+	font-size: 0.88rem;
+	font-weight: 600;
+	opacity: 0;
+	transform: translateY(2px);
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.beacon-status.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* Always-visible keyboard focus, independent of theme defaults. */
+.beacon-card a:focus-visible,
+.beacon-card button:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.beacon-url,
+	.beacon-copy,
+	.beacon-status {
+		transition: none !important;
+	}
+
+	.beacon-copy.is-copied {
+		transform: none !important;
+	}
+
+	.beacon-status {
+		opacity: 1;
+		transform: none !important;
+	}
+}

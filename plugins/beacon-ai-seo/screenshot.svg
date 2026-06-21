@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Beacon — AI &amp; SEO preview">
+  <defs>
+    <linearGradient id="beacon-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#111c33"/>
+    </linearGradient>
+    <linearGradient id="beacon-beam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#38bdf8" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="beacon-glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#7dd3fc"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Page background -->
+  <rect width="1200" height="900" fill="url(#beacon-bg)"/>
+
+  <!-- Signal beam emanating from the beacon -->
+  <polygon points="600,150 360,470 840,470" fill="url(#beacon-beam)"/>
+  <polygon points="600,150 260,520 940,520" fill="url(#beacon-beam)" opacity="0.5"/>
+
+  <!-- The beacon mark: a lighthouse-like signal node -->
+  <circle cx="600" cy="150" r="70" fill="url(#beacon-glow)"/>
+  <circle cx="600" cy="150" r="30" fill="#38bdf8"/>
+  <circle cx="600" cy="150" r="14" fill="#e0f2fe"/>
+  <circle cx="600" cy="150" r="48" fill="none" stroke="#7dd3fc" stroke-width="3" opacity="0.6"/>
+  <circle cx="600" cy="150" r="62" fill="none" stroke="#7dd3fc" stroke-width="2" opacity="0.3"/>
+
+  <!-- Title -->
+  <text x="600" y="300" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="46" font-weight="800" fill="#f1f5f9" text-anchor="middle" letter-spacing="0.5">Beacon — AI &amp; SEO</text>
+  <text x="600" y="342" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="22" font-weight="500" fill="#94a3b8" text-anchor="middle">Discoverable by search engines AND AI agents — zero config</text>
+
+  <!-- LEFT CARD: the /llms.txt document -->
+  <g>
+    <rect x="92" y="400" width="500" height="430" rx="16" fill="#0f1a30" stroke="#1e293b" stroke-width="2"/>
+    <!-- card header -->
+    <rect x="92" y="400" width="500" height="52" rx="16" fill="#13213c"/>
+    <rect x="92" y="436" width="500" height="16" fill="#13213c"/>
+    <circle cx="120" cy="426" r="6" fill="#38bdf8"/>
+    <text x="140" y="432" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#7dd3fc">/llms.txt</text>
+    <rect x="470" y="414" width="98" height="24" rx="12" fill="#0c4a6e"/>
+    <text x="519" y="431" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#bae6fd" text-anchor="middle">text/plain</text>
+
+    <!-- markdown content -->
+    <text x="120" y="498" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#e2e8f0"># Acme Journal</text>
+    <text x="120" y="534" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#64748b">&gt; Notes on craft and code</text>
+
+    <text x="120" y="582" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#38bdf8">## Pages</text>
+    <text x="120" y="612" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#cbd5e1">- [About](/about): who we are</text>
+    <text x="120" y="638" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#cbd5e1">- [Contact](/contact): say hello</text>
+
+    <text x="120" y="686" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#38bdf8">## Recent posts</text>
+    <text x="120" y="716" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#cbd5e1">- [Shipping fast](/ship): how we…</text>
+    <text x="120" y="742" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#cbd5e1">- [On structure](/structure): the…</text>
+    <text x="120" y="768" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#cbd5e1">- [Clean code](/clean): why less…</text>
+    <text x="120" y="806" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#475569">Generated 2026-06-21 by Beacon.</text>
+  </g>
+
+  <!-- RIGHT CARD: structured data / head output -->
+  <g>
+    <rect x="608" y="400" width="500" height="430" rx="16" fill="#0f1a30" stroke="#1e293b" stroke-width="2"/>
+    <rect x="608" y="400" width="500" height="52" rx="16" fill="#13213c"/>
+    <rect x="608" y="436" width="500" height="16" fill="#13213c"/>
+    <circle cx="636" cy="426" r="6" fill="#34d399"/>
+    <text x="656" y="432" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#6ee7b7">&lt;head&gt;</text>
+    <rect x="978" y="414" width="106" height="24" rx="12" fill="#064e3b"/>
+    <text x="1031" y="431" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#a7f3d0" text-anchor="middle">JSON-LD</text>
+
+    <!-- meta + og pills -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">
+      <rect x="636" y="476" width="200" height="30" rx="8" fill="#1e293b"/>
+      <text x="650" y="496" fill="#93c5fd">meta description</text>
+      <rect x="848" y="476" width="150" height="30" rx="8" fill="#1e293b"/>
+      <text x="862" y="496" fill="#93c5fd">canonical</text>
+
+      <rect x="636" y="514" width="120" height="30" rx="8" fill="#1e293b"/>
+      <text x="650" y="534" fill="#c4b5fd">og:title</text>
+      <rect x="768" y="514" width="150" height="30" rx="8" fill="#1e293b"/>
+      <text x="782" y="534" fill="#c4b5fd">og:image</text>
+      <rect x="930" y="514" width="150" height="30" rx="8" fill="#1e293b"/>
+      <text x="944" y="534" fill="#c4b5fd">twitter:card</text>
+    </g>
+
+    <!-- @graph tree -->
+    <text x="636" y="588" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#6ee7b7">"@graph": [</text>
+
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#e2e8f0">
+      <circle cx="672" cy="619" r="4" fill="#38bdf8"/>
+      <text x="690" y="624">WebSite · SearchAction</text>
+      <circle cx="672" cy="651" r="4" fill="#a78bfa"/>
+      <text x="690" y="656">Organization · logo</text>
+      <circle cx="672" cy="683" r="4" fill="#34d399"/>
+      <text x="690" y="688">BlogPosting · author</text>
+      <circle cx="672" cy="715" r="4" fill="#fbbf24"/>
+      <text x="690" y="720">BreadcrumbList</text>
+    </g>
+    <text x="636" y="752" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#6ee7b7">]</text>
+
+    <!-- checkmarks: escaped + real-data-only -->
+    <g font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#64748b">
+      <text x="636" y="800">✓ escaped output</text>
+      <text x="800" y="800">✓ only real-data nodes</text>
+    </g>
+  </g>
+
+  <!-- Caption -->
+  <text x="600" y="872" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="600" fill="#64748b" text-anchor="middle">Auto meta · Open Graph · Twitter cards · JSON-LD @graph · machine-readable /llms.txt</text>
+</svg>

@@ -1,0 +1,292 @@
+/**
+ * Kindred — Related Posts
+ *
+ * A "You might also like" section shown after single-post content. Designed to
+ * look at home on ANY theme, light or dark.
+ *
+ * Design notes:
+ * - Colors derive from `currentColor` / `inherit`, so titles, dates, and the
+ *   card surfaces read correctly on both light and dark themes without
+ *   hardcoded grays. Themes can override any of the --kindred-* custom
+ *   properties to fully restyle the section.
+ * - The grid is responsive with no media queries: `auto-fill` + `minmax` lets
+ *   cards reflow from three across to one on narrow screens.
+ * - Posts without a featured image get a CSS gradient placeholder with the
+ *   title's first letter — no broken image, no blank box, no HTTP request.
+ * - The entrance animates only `transform` and `opacity` (GPU-friendly, no
+ *   reflow) and is pure progressive enhancement: cards are fully visible by
+ *   default and only hide-then-reveal when JS confirms it can run.
+ * - prefers-reduced-motion is honored at every layer (JS gate + the @media
+ *   block at the bottom of this file).
+ */
+
+.kindred {
+	/* Tunable surface — themes may override these custom properties. */
+	--kindred-gap: 1.25rem;
+	--kindred-radius: 14px;
+	--kindred-card-pad: 0.9rem;
+	--kindred-min: 200px;
+	/* Derive surfaces and borders from the surrounding text color so the
+	   section adapts to any theme rather than fighting it. */
+	--kindred-fg: currentColor;
+	--kindred-muted: color-mix( in srgb, currentColor 62%, transparent );
+	--kindred-card-bg: color-mix( in srgb, currentColor 4%, transparent );
+	--kindred-card-bg-hover: color-mix( in srgb, currentColor 8%, transparent );
+	--kindred-border: color-mix( in srgb, currentColor 12%, transparent );
+	--kindred-border-hover: color-mix( in srgb, currentColor 26%, transparent );
+	--kindred-shadow: color-mix( in srgb, currentColor 22%, transparent );
+
+	box-sizing: border-box;
+	margin: 2.75rem 0 0.5rem;
+	padding: 0;
+	color: var( --kindred-fg );
+	font-family: inherit;
+}
+
+.kindred *,
+.kindred *::before,
+.kindred *::after {
+	box-sizing: border-box;
+}
+
+.kindred__heading {
+	margin: 0 0 1.1rem;
+	padding-bottom: 0.6rem;
+	border-bottom: 1px solid var( --kindred-border );
+	color: inherit;
+	font-family: inherit;
+	font-size: 1.15rem;
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: 0.01em;
+}
+
+.kindred__grid {
+	display: grid;
+	grid-template-columns: repeat( auto-fill, minmax( var( --kindred-min ), 1fr ) );
+	gap: var( --kindred-gap );
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* Each card is a single full-card link, so the entire surface is clickable
+   and there is exactly one tab stop per card. */
+.kindred-card {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.kindred-card__link {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+	border: 1px solid var( --kindred-border );
+	border-radius: var( --kindred-radius );
+	background: var( --kindred-card-bg );
+	color: inherit;
+	text-decoration: none;
+	box-shadow: 0 1px 2px transparent;
+	transition:
+		transform 0.28s cubic-bezier( 0.22, 1, 0.36, 1 ),
+		border-color 0.2s ease,
+		background-color 0.2s ease,
+		box-shadow 0.28s cubic-bezier( 0.22, 1, 0.36, 1 );
+}
+
+.kindred-card__link:hover,
+.kindred-card__link:focus-visible {
+	transform: translateY( -3px );
+	border-color: var( --kindred-border-hover );
+	background: var( --kindred-card-bg-hover );
+	box-shadow: 0 10px 24px var( --kindred-shadow );
+}
+
+.kindred-card__link:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+
+/* Media area: fixed 16:9 box so cards line up and there is zero layout shift
+   whether a post has a featured image or a placeholder. */
+.kindred-card__media {
+	position: relative;
+	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+	background: color-mix( in srgb, currentColor 6%, transparent );
+}
+
+/* aspect-ratio fallback for older browsers: a padding-box ratio hack. */
+@supports not ( aspect-ratio: 16 / 9 ) {
+	.kindred-card__media {
+		height: 0;
+		padding-bottom: 56.25%;
+	}
+}
+
+.kindred-card__image {
+	position: absolute;
+	inset: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.4s cubic-bezier( 0.22, 1, 0.36, 1 );
+}
+
+.kindred-card__link:hover .kindred-card__image,
+.kindred-card__link:focus-visible .kindred-card__image {
+	transform: scale( 1.05 );
+}
+
+/* Gradient placeholder for posts with no featured image. The hue comes from a
+   per-post custom property so each placeholder is stable and distinct, and the
+   gradient is built from the theme's own text color so it never clashes. */
+.kindred-card__media--placeholder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-image:
+		linear-gradient(
+			135deg,
+			hsl( var( --kindred-hue, 220 ) 65% 55% / 0.92 ),
+			hsl( calc( var( --kindred-hue, 220 ) + 40 ) 70% 45% / 0.92 )
+		);
+}
+
+/* color-mix-free fallback: a neutral tint from currentColor. */
+@supports not ( background: color-mix( in srgb, currentColor 6%, transparent ) ) {
+	.kindred-card__link {
+		background: transparent;
+		border-color: currentColor;
+	}
+
+	.kindred-card__media {
+		background: rgba( 127, 127, 127, 0.12 );
+	}
+}
+
+.kindred-card__letter {
+	font-family: inherit;
+	font-size: clamp( 2rem, 6vw, 3rem );
+	font-weight: 800;
+	line-height: 1;
+	color: #fff;
+	text-transform: uppercase;
+	/* Subtle depth so the letter reads on any gradient. */
+	text-shadow: 0 2px 8px rgba( 0, 0, 0, 0.28 );
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.kindred-card__body {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	gap: 0.4rem;
+	padding: var( --kindred-card-pad );
+}
+
+.kindred-card__title {
+	display: -webkit-box;
+	overflow: hidden;
+	color: inherit;
+	font-family: inherit;
+	font-size: 0.98rem;
+	font-weight: 650;
+	line-height: 1.35;
+	/* Clamp to three lines so wildly different titles keep cards even. */
+	-webkit-line-clamp: 3;
+	line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+
+.kindred-card__link:hover .kindred-card__title,
+.kindred-card__link:focus-visible .kindred-card__title {
+	text-decoration: underline;
+	text-underline-offset: 0.15em;
+}
+
+.kindred-card__date {
+	margin-top: auto;
+	color: var( --kindred-muted );
+	font-family: inherit;
+	font-size: 0.8rem;
+	font-weight: 500;
+	letter-spacing: 0.01em;
+}
+
+/* color-mix-free fallback for the muted date. */
+@supports not ( color: color-mix( in srgb, currentColor 62%, transparent ) ) {
+	.kindred-card__date {
+		opacity: 0.7;
+	}
+}
+
+/* ---------------------------------------------------------------------------
+   Entrance motion (progressive enhancement)
+
+   Scoped to `.kindred-js [data-kindred-card].kindred-will-reveal` so it ONLY
+   applies when:
+     1. JavaScript is available (the head snippet set `.kindred-js`), and
+     2. the motion script has primed this specific card.
+   If either is false the cards keep their default, fully-visible styling above
+   and never move — no flash, no stuck-hidden cards, no layout shift.
+
+   We animate only `transform` and `opacity`. Cards reveal in a gentle stagger
+   driven by the per-card `--kindred-delay` set in JS.
+--------------------------------------------------------------------------- */
+.kindred-js [data-kindred-card].kindred-will-reveal {
+	opacity: 0;
+	transform: translate3d( 0, 14px, 0 );
+	will-change: transform, opacity;
+}
+
+.kindred-js [data-kindred-card].kindred-is-revealed {
+	opacity: 1;
+	transform: translate3d( 0, 0, 0 );
+	transition:
+		opacity 0.55s cubic-bezier( 0.22, 1, 0.36, 1 ) var( --kindred-delay, 0ms ),
+		transform 0.55s cubic-bezier( 0.22, 1, 0.36, 1 ) var( --kindred-delay, 0ms );
+}
+
+/* Once revealed, settle: clear the compositor hint so we don't keep a layer. */
+.kindred-js [data-kindred-card].kindred-is-revealed:not( .kindred-will-reveal ) {
+	will-change: auto;
+}
+
+/* The card-hover lift must survive the reveal transition once it's done. */
+.kindred-js [data-kindred-card].kindred-is-revealed .kindred-card__link {
+	transition:
+		transform 0.28s cubic-bezier( 0.22, 1, 0.36, 1 ),
+		border-color 0.2s ease,
+		background-color 0.2s ease,
+		box-shadow 0.28s cubic-bezier( 0.22, 1, 0.36, 1 );
+}
+
+/* Reduced-motion safety net (mirrors the JS gate in motion.js).
+
+   The script already skips all animation when reduced motion is requested, so
+   a card is never primed into the hidden state in the first place. This block
+   is belt-and-suspenders: even if a card somehow carries a motion class, force
+   it visible and kill every transition/animation so it simply appears. */
+@media ( prefers-reduced-motion: reduce ) {
+	.kindred-card__link,
+	.kindred-card__image,
+	.kindred-js [data-kindred-card].kindred-will-reveal,
+	.kindred-js [data-kindred-card].kindred-is-revealed {
+		opacity: 1 !important;
+		transform: none !important;
+		transition: none !important;
+		will-change: auto;
+	}
+
+	.kindred-card__link:hover .kindred-card__image,
+	.kindred-card__link:focus-visible .kindred-card__image {
+		transform: none;
+	}
+}
