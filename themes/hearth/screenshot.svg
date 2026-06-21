@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f3d6b6"/>
+      <stop offset="0.55" stop-color="#cf7a3f"/>
+      <stop offset="1" stop-color="#b5601f"/>
+    </linearGradient>
+    <linearGradient id="dishA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0d4b0"/>
+      <stop offset="1" stop-color="#c98142"/>
+    </linearGradient>
+    <linearGradient id="dishB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8d7a8"/>
+      <stop offset="1" stop-color="#bd9637"/>
+    </linearGradient>
+    <linearGradient id="dishC" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dfe0bf"/>
+      <stop offset="1" stop-color="#8f9a55"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Warm paper -->
+  <rect width="1200" height="900" fill="#f6ede0"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="100" fill="#fffaf2"/>
+  <line x1="0" y1="100" x2="1200" y2="100" stroke="#e6d6c0" stroke-width="2"/>
+  <!-- ticket-stitch accent -->
+  <g fill="#c2541f" opacity="0.5">
+    <rect x="0" y="100" width="14" height="3"/><rect x="28" y="100" width="14" height="3"/><rect x="56" y="100" width="14" height="3"/><rect x="84" y="100" width="14" height="3"/><rect x="112" y="100" width="14" height="3"/><rect x="140" y="100" width="14" height="3"/><rect x="168" y="100" width="14" height="3"/><rect x="196" y="100" width="14" height="3"/><rect x="224" y="100" width="14" height="3"/><rect x="252" y="100" width="14" height="3"/><rect x="280" y="100" width="14" height="3"/><rect x="308" y="100" width="14" height="3"/><rect x="336" y="100" width="14" height="3"/><rect x="364" y="100" width="14" height="3"/><rect x="392" y="100" width="14" height="3"/><rect x="420" y="100" width="14" height="3"/><rect x="448" y="100" width="14" height="3"/><rect x="476" y="100" width="14" height="3"/><rect x="504" y="100" width="14" height="3"/><rect x="532" y="100" width="14" height="3"/><rect x="560" y="100" width="14" height="3"/><rect x="588" y="100" width="14" height="3"/><rect x="616" y="100" width="14" height="3"/><rect x="644" y="100" width="14" height="3"/><rect x="672" y="100" width="14" height="3"/><rect x="700" y="100" width="14" height="3"/><rect x="728" y="100" width="14" height="3"/><rect x="756" y="100" width="14" height="3"/><rect x="784" y="100" width="14" height="3"/><rect x="812" y="100" width="14" height="3"/><rect x="840" y="100" width="14" height="3"/><rect x="868" y="100" width="14" height="3"/><rect x="896" y="100" width="14" height="3"/><rect x="924" y="100" width="14" height="3"/><rect x="952" y="100" width="14" height="3"/><rect x="980" y="100" width="14" height="3"/><rect x="1008" y="100" width="14" height="3"/><rect x="1036" y="100" width="14" height="3"/><rect x="1064" y="100" width="14" height="3"/><rect x="1092" y="100" width="14" height="3"/><rect x="1120" y="100" width="14" height="3"/><rect x="1148" y="100" width="14" height="3"/><rect x="1176" y="100" width="14" height="3"/>
+  </g>
+  <text x="80" y="56" font-size="34" font-weight="600" fill="#2a201a" letter-spacing="-0.5">The Ember Table</text>
+  <text x="80" y="80" font-family="Arial, Helvetica, sans-serif" font-size="14" font-style="italic" fill="#8a7461">A neighborhood kitchen &amp; café</text>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="600">
+    <text x="836" y="60" fill="#c2541f">Home</text>
+    <text x="918" y="60" fill="#5d4d40">Menu</text>
+    <text x="998" y="60" fill="#5d4d40">Story</text>
+    <text x="1078" y="60" fill="#5d4d40">Visit</text>
+  </g>
+
+  <!-- ===== HERO ===== -->
+  <!-- Copy column -->
+  <text x="80" y="180" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" letter-spacing="3.5" fill="#c2541f">— PULL UP A CHAIR</text>
+  <text x="80" y="240" font-size="58" font-weight="600" fill="#2a201a" letter-spacing="-1.5">Warm food, made</text>
+  <text x="80" y="300" font-size="58" font-weight="600" fill="#2a201a" letter-spacing="-1.5">by hand, in good</text>
+  <text x="80" y="360" font-size="58" font-weight="600" fill="#2a201a" letter-spacing="-1.5">company.</text>
+  <g font-size="22" fill="#5d4d40">
+    <text x="80" y="412">A neighborhood table where the coffee is hot,</text>
+    <text x="80" y="444">the bread is fresh, and you are always</text>
+    <text x="80" y="476">welcome to stay a while.</text>
+  </g>
+  <!-- CTAs -->
+  <rect x="80" y="510" width="220" height="50" rx="25" fill="#c2541f"/>
+  <text x="118" y="542" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#fffaf2">See what's cooking</text>
+  <rect x="316" y="510" width="140" height="50" rx="25" fill="none" stroke="#e8c2ac" stroke-width="2"/>
+  <text x="350" y="542" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#c2541f">Our story</text>
+
+  <!-- Hero photo frame -->
+  <rect x="700" y="150" width="420" height="470" rx="18" fill="url(#hero)"/>
+  <circle cx="800" cy="250" r="70" fill="#fffaf2" opacity="0.16"/>
+  <circle cx="1030" cy="540" r="96" fill="#7a3c12" opacity="0.18"/>
+  <text x="888" y="420" font-size="120" fill="#fffaf2" opacity="0.85">&#9749;</text>
+
+  <!-- SIGNATURE: Today's hours card (overlapping hero) -->
+  <rect x="724" y="470" width="250" height="132" rx="16" fill="#fffaf2" stroke="#e6d6c0" stroke-width="1.5"/>
+  <text x="746" y="502" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="1.6" fill="#8a7461">TODAY'S HOURS</text>
+  <!-- open pill -->
+  <rect x="858" y="486" width="96" height="24" rx="12" fill="#eef0e2" stroke="#d2d8bb" stroke-width="1"/>
+  <circle cx="876" cy="498" r="4.5" fill="#5f6b3a"/>
+  <circle cx="876" cy="498" r="9" fill="none" stroke="#5f6b3a" stroke-width="1.5" opacity="0.35"/>
+  <text x="886" y="503" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="0.6" fill="#404a26">OPEN NOW</text>
+  <text x="746" y="528" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="1.2" fill="#c2541f">THURSDAY</text>
+  <text x="746" y="556" font-size="26" font-weight="600" fill="#2a201a">8:00 – 22:00</text>
+  <line x1="746" y1="570" x2="952" y2="570" stroke="#efe4d3" stroke-width="1"/>
+  <text x="746" y="592" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#5d4d40">Fri</text>
+  <text x="952" y="592" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#5d4d40" text-anchor="end">8:00 – 22:00</text>
+
+  <!-- ===== MENU SECTION ===== -->
+  <text x="80" y="688" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" letter-spacing="3" fill="#c2541f">ON THE MENU</text>
+  <text x="80" y="724" font-size="34" font-weight="600" fill="#2a201a" letter-spacing="-0.5">Fresh from the kitchen</text>
+
+  <!-- Dish card 1 -->
+  <rect x="80" y="752" width="330" height="124" rx="16" fill="#fffaf2" stroke="#e6d6c0" stroke-width="1"/>
+  <rect x="80" y="752" width="120" height="124" rx="16" fill="url(#dishA)"/>
+  <rect x="180" y="752" width="20" height="124" fill="url(#dishA)"/>
+  <text x="222" y="788" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="1.2" fill="#5f6b3a">BREAKFAST</text>
+  <text x="222" y="814" font-size="20" font-weight="600" fill="#2a201a">Sunrise Sourdough</text>
+  <text x="222" y="838" font-family="Georgia, serif" font-size="13" fill="#5d4d40">Slow-fermented, blistered crust.</text>
+  <line x1="222" y1="852" x2="392" y2="852" stroke="#e6d6c0" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="222" y="870" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#8a7461">Jun 18</text>
+  <text x="392" y="870" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#c2541f" text-anchor="end">READ &#8594;</text>
+
+  <!-- Dish card 2 -->
+  <rect x="436" y="752" width="330" height="124" rx="16" fill="#fffaf2" stroke="#e6d6c0" stroke-width="1"/>
+  <rect x="436" y="752" width="120" height="124" rx="16" fill="url(#dishB)"/>
+  <rect x="536" y="752" width="20" height="124" fill="url(#dishB)"/>
+  <text x="578" y="788" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="1.2" fill="#5f6b3a">SMALL PLATES</text>
+  <text x="578" y="814" font-size="20" font-weight="600" fill="#2a201a">Charred Harvest Bowl</text>
+  <text x="578" y="838" font-family="Georgia, serif" font-size="13" fill="#5d4d40">Roasted roots, herb oil, lemon.</text>
+  <line x1="578" y1="852" x2="748" y2="852" stroke="#e6d6c0" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="578" y="870" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#8a7461">Jun 12</text>
+  <text x="748" y="870" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#c2541f" text-anchor="end">READ &#8594;</text>
+
+  <!-- Dish card 3 -->
+  <rect x="792" y="752" width="330" height="124" rx="16" fill="#fffaf2" stroke="#e6d6c0" stroke-width="1"/>
+  <rect x="792" y="752" width="120" height="124" rx="16" fill="url(#dishC)"/>
+  <rect x="892" y="752" width="20" height="124" fill="url(#dishC)"/>
+  <text x="934" y="788" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="1.2" fill="#5f6b3a">FROM THE BAR</text>
+  <text x="934" y="814" font-size="20" font-weight="600" fill="#2a201a">Spiced Cider Press</text>
+  <text x="934" y="838" font-family="Georgia, serif" font-size="13" fill="#5d4d40">Orchard apples, clove, star anise.</text>
+  <line x1="934" y1="852" x2="1104" y2="852" stroke="#e6d6c0" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="934" y="870" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#8a7461">Jun 09</text>
+  <text x="1104" y="870" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#c2541f" text-anchor="end">READ &#8594;</text>
+</svg>

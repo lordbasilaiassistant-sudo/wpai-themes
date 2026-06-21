@@ -1,0 +1,69 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "appearanceTools": true,
+    "layout": { "contentSize": "760px", "wideSize": "1024px" },
+    "color": {
+      "palette": [
+        { "slug": "ink", "color": "#16181d", "name": "Ink" },
+        { "slug": "soft", "color": "#3c4149", "name": "Soft ink" },
+        { "slug": "faint", "color": "#6b7280", "name": "Faint" },
+        { "slug": "line", "color": "#e0e3e8", "name": "Hairline" },
+        { "slug": "accent", "color": "#d6202b", "name": "Accent" },
+        { "slug": "accent-soft", "color": "#fae0e1", "name": "Accent soft" },
+        { "slug": "bar", "color": "#16181d", "name": "Bar" },
+        { "slug": "canvas", "color": "#f4f5f7", "name": "Canvas" },
+        { "slug": "surface", "color": "#ffffff", "name": "Surface" }
+      ],
+      "custom": false,
+      "customGradient": false
+    },
+    "typography": {
+      "customFontSize": false,
+      "fontFamilies": [
+        {
+          "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif",
+          "slug": "sans",
+          "name": "Sans"
+        },
+        {
+          "fontFamily": "\"Helvetica Neue\", \"Arial Narrow\", \"Roboto Condensed\", \"Segoe UI\", system-ui, ui-sans-serif, sans-serif",
+          "slug": "display",
+          "name": "Display"
+        },
+        {
+          "fontFamily": "ui-monospace, \"SFMono-Regular\", \"SF Mono\", Menlo, Consolas, \"Liberation Mono\", monospace",
+          "slug": "mono",
+          "name": "Mono"
+        }
+      ],
+      "fontSizes": [
+        { "slug": "small", "size": "0.85rem", "name": "Small" },
+        { "slug": "medium", "size": "1.075rem", "name": "Medium" },
+        { "slug": "large", "size": "1.45rem", "name": "Large" },
+        { "slug": "x-large", "size": "2.2rem", "name": "Extra large" },
+        { "slug": "xx-large", "size": "3.3rem", "name": "Huge" }
+      ]
+    },
+    "spacing": {
+      "units": ["px", "em", "rem", "%", "vw"]
+    }
+  },
+  "styles": {
+    "color": { "background": "#f4f5f7", "text": "#16181d" },
+    "typography": {
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif",
+      "lineHeight": "1.55"
+    },
+    "elements": {
+      "link": {
+        "color": { "text": "#d6202b" },
+        ":hover": { "color": { "text": "#a8141d" } }
+      },
+      "h1": { "typography": { "fontFamily": "var(--wp--preset--font-family--display)", "fontWeight": "800" } },
+      "h2": { "typography": { "fontFamily": "var(--wp--preset--font-family--display)", "fontWeight": "800" } },
+      "h3": { "typography": { "fontFamily": "var(--wp--preset--font-family--display)", "fontWeight": "800" } }
+    }
+  }
+}

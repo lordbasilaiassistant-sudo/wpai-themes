@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Lumen Image Lightbox preview">
+  <defs>
+    <linearGradient id="lumen-photo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="0.55" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="lumen-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fde68a"/>
+      <stop offset="1" stop-color="#fb7185"/>
+    </linearGradient>
+    <filter id="lumen-imgshadow" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="22" stdDeviation="34" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+    <clipPath id="lumen-imgclip">
+      <rect x="288" y="196" width="624" height="468" rx="14"/>
+    </clipPath>
+  </defs>
+
+  <!-- Dark full-screen backdrop -->
+  <rect width="1200" height="900" fill="#0b0e14"/>
+  <rect width="1200" height="900" fill="#0a0c10" opacity="0.35"/>
+
+  <!-- The focused image -->
+  <g filter="url(#lumen-imgshadow)">
+    <rect x="288" y="196" width="624" height="468" rx="14" fill="#11151c"/>
+  </g>
+  <g clip-path="url(#lumen-imgclip)">
+    <rect x="288" y="196" width="624" height="468" fill="url(#lumen-photo)"/>
+    <!-- a simple sunrise-over-hills scene to read as a photograph -->
+    <rect x="288" y="196" width="624" height="300" fill="url(#lumen-sky)" opacity="0.92"/>
+    <circle cx="600" cy="392" r="78" fill="#fff7ed" opacity="0.95"/>
+    <path d="M288 520 q120 -90 230 -20 q140 90 394 -30 v194 h-624 z" fill="#0f766e" opacity="0.95"/>
+    <path d="M288 560 q160 -60 320 10 q160 70 304 -20 v114 h-624 z" fill="#134e4a" opacity="0.95"/>
+  </g>
+
+  <!-- Caption -->
+  <text x="600" y="706" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="24" font-weight="500" fill="#e5e7eb" text-anchor="middle">Sunrise over the eastern ridge — full-size, focused, distraction-free.</text>
+
+  <!-- Close button (top-right) -->
+  <circle cx="1112" cy="92" r="30" fill="#ffffff" fill-opacity="0.12"/>
+  <line x1="1124" y1="80" x2="1100" y2="104" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round"/>
+  <line x1="1100" y1="80" x2="1124" y2="104" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round"/>
+
+  <!-- Prev button (left) -->
+  <circle cx="120" cy="430" r="34" fill="#ffffff" fill-opacity="0.12"/>
+  <polyline points="130 410 112 430 130 450" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Next button (right) -->
+  <circle cx="1080" cy="430" r="34" fill="#ffffff" fill-opacity="0.12"/>
+  <polyline points="1070 410 1088 430 1070 450" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Image counter pill -->
+  <rect x="548" y="754" width="104" height="40" rx="20" fill="#ffffff" fill-opacity="0.12"/>
+  <text x="600" y="780" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="19" font-weight="600" fill="#ffffff" text-anchor="middle">2 of 5</text>
+
+  <!-- Title caption strip -->
+  <text x="600" y="852" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="22" font-weight="600" fill="#94a3b8" text-anchor="middle">Lumen — accessible image lightbox: keyboard nav, focus trap, captions, reduced-motion safe.</text>
+</svg>

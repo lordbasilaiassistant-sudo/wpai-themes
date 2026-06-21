@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" font-family="'Segoe UI', system-ui, Arial, sans-serif">
+  <defs>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2ee6c8"/>
+      <stop offset="1" stop-color="#3aa0ff"/>
+    </linearGradient>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#0b1120"/>
+    </linearGradient>
+    <radialGradient id="heroGlow" cx="0.85" cy="0" r="0.9">
+      <stop offset="0" stop-color="#2ee6c8" stop-opacity="0.35"/>
+      <stop offset="0.5" stop-color="#3aa0ff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#3aa0ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cover" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14463f"/>
+      <stop offset="1" stop-color="#0c2440"/>
+    </linearGradient>
+    <linearGradient id="grid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16213b" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#16213b" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Deep space canvas -->
+  <rect width="1200" height="900" fill="#070b16"/>
+  <!-- faint engineered grid -->
+  <g stroke="#16213b" stroke-width="1" opacity="0.6">
+    <line x1="0" y1="180" x2="1200" y2="180"/>
+    <line x1="0" y1="226" x2="1200" y2="226"/>
+    <line x1="0" y1="272" x2="1200" y2="272"/>
+    <line x1="0" y1="318" x2="1200" y2="318"/>
+    <line x1="368" y1="104" x2="368" y2="900"/>
+    <line x1="600" y1="104" x2="600" y2="900"/>
+    <line x1="832" y1="104" x2="832" y2="900"/>
+  </g>
+  <rect width="1200" height="320" fill="url(#grid)"/>
+
+  <!-- Header (frosted) -->
+  <rect x="0" y="0" width="1200" height="80" fill="#070b16" opacity="0.85"/>
+  <line x1="0" y1="80" x2="1200" y2="80" stroke="#1e2a47" stroke-width="2"/>
+  <!-- orbit mark -->
+  <rect x="80" y="24" width="34" height="34" rx="9" fill="url(#accent)"/>
+  <ellipse cx="97" cy="41" rx="11" ry="5" fill="none" stroke="#04140f" stroke-width="2" transform="rotate(-28 97 41)"/>
+  <circle cx="97" cy="41" r="3.6" fill="#04140f"/>
+  <text x="128" y="46" font-size="26" font-weight="700" fill="#f2f6ff" letter-spacing="-1">Nebula</text>
+  <text x="128" y="64" font-family="ui-monospace, Consolas, monospace" font-size="11" fill="#7986a6">ship.faster()</text>
+  <g font-size="15" font-weight="600">
+    <text x="724" y="46" fill="#f2f6ff">Product</text>
+    <text x="812" y="46" fill="#aeb9d4">Docs</text>
+    <text x="876" y="46" fill="#aeb9d4">Pricing</text>
+    <text x="966" y="46" fill="#aeb9d4">Changelog</text>
+  </g>
+  <rect x="1064" y="26" width="56" height="30" rx="9" fill="url(#accent)"/>
+  <text x="1078" y="46" font-size="13" font-weight="700" fill="#04140f">Start</text>
+
+  <!-- HERO panel -->
+  <rect x="80" y="112" width="1040" height="332" rx="22" fill="url(#hero)" stroke="#1e2a47" stroke-width="1.5"/>
+  <rect x="80" y="112" width="1040" height="332" rx="22" fill="url(#heroGlow)"/>
+
+  <!-- starfield -->
+  <g fill="#ffffff">
+    <circle cx="180" cy="160" r="1.2" opacity="0.5"/>
+    <circle cx="320" cy="200" r="1" opacity="0.4"/>
+    <circle cx="250" cy="380" r="1.4" opacity="0.6"/>
+    <circle cx="520" cy="150" r="1" opacity="0.5"/>
+    <circle cx="430" cy="300" r="1.2" opacity="0.4"/>
+    <circle cx="640" cy="410" r="1" opacity="0.5"/>
+    <circle cx="150" cy="300" r="1" opacity="0.35"/>
+    <circle cx="700" cy="170" r="1.3" opacity="0.5"/>
+    <circle cx="560" cy="250" r="0.9" opacity="0.4"/>
+  </g>
+
+  <!-- orbit rings (right side) -->
+  <g transform="translate(1010 278)" opacity="0.55">
+    <circle r="150" fill="none" stroke="#2ee6c8" stroke-width="1" opacity="0.35"/>
+    <circle r="108" fill="none" stroke="#2ee6c8" stroke-width="1" opacity="0.35"/>
+    <circle r="66" fill="none" stroke="#3aa0ff" stroke-width="1" opacity="0.4"/>
+    <circle cx="150" cy="0" r="5" fill="#2ee6c8"/>
+    <circle cx="-108" cy="0" r="6" fill="#3aa0ff"/>
+    <circle cx="0" cy="-66" r="4" fill="#2ee6c8"/>
+  </g>
+
+  <!-- hero copy -->
+  <rect x="128" y="150" width="146" height="28" rx="14" fill="#0c2a26" stroke="#1c6f63" stroke-width="1"/>
+  <circle cx="146" cy="164" r="4" fill="#2ee6c8"/>
+  <text x="160" y="169" font-family="ui-monospace, Consolas, monospace" font-size="12" font-weight="600" letter-spacing="1.5" fill="#2ee6c8">V1.0 IS LIVE</text>
+
+  <text x="126" y="248" font-size="62" font-weight="700" fill="#f2f6ff" letter-spacing="-2">Ship faster with</text>
+  <text x="126" y="312" font-size="62" font-weight="700" letter-spacing="-2" fill="url(#accent)">Nebula</text>
+
+  <g font-size="19" fill="#aeb9d4">
+    <text x="128" y="360">The developer platform that turns ideas into</text>
+    <text x="128" y="386">shipping product — fast, observable, scalable.</text>
+  </g>
+
+  <rect x="128" y="404" width="210" height="44" rx="10" fill="url(#accent)"/>
+  <text x="160" y="432" font-size="15" font-weight="700" fill="#04140f">Read the changelog →</text>
+  <rect x="352" y="404" width="168" height="44" rx="10" fill="none" stroke="#1e2a47" stroke-width="1.5"/>
+  <text x="378" y="432" font-size="15" font-weight="700" fill="#f2f6ff">Explore the docs</text>
+
+  <!-- METRICS row (count-up) -->
+  <g>
+    <rect x="80" y="476" width="248" height="104" rx="16" fill="#0f172a" stroke="#1e2a47"/>
+    <rect x="80" y="476" width="248" height="3" rx="2" fill="url(#accent)"/>
+    <text x="104" y="534" font-size="40" font-weight="700" fill="#f2f6ff" letter-spacing="-1">99.99<tspan fill="#2ee6c8">%</tspan></text>
+    <text x="104" y="562" font-family="ui-monospace, Consolas, monospace" font-size="12" letter-spacing="1" fill="#7986a6">UPTIME SLA</text>
+
+    <rect x="344" y="476" width="248" height="104" rx="16" fill="#0f172a" stroke="#1e2a47"/>
+    <rect x="344" y="476" width="248" height="3" rx="2" fill="url(#accent)"/>
+    <text x="368" y="534" font-size="40" font-weight="700" fill="#f2f6ff" letter-spacing="-1">40<tspan fill="#2ee6c8">ms</tspan></text>
+    <text x="368" y="562" font-family="ui-monospace, Consolas, monospace" font-size="12" letter-spacing="1" fill="#7986a6">MEDIAN DEPLOY</text>
+
+    <rect x="608" y="476" width="248" height="104" rx="16" fill="#0f172a" stroke="#1e2a47"/>
+    <rect x="608" y="476" width="248" height="3" rx="2" fill="url(#accent)"/>
+    <text x="632" y="534" font-size="40" font-weight="700" fill="#f2f6ff" letter-spacing="-1">12<tspan fill="#2ee6c8">k</tspan></text>
+    <text x="632" y="562" font-family="ui-monospace, Consolas, monospace" font-size="12" letter-spacing="1" fill="#7986a6">TEAMS SHIPPING</text>
+
+    <rect x="872" y="476" width="248" height="104" rx="16" fill="#0f172a" stroke="#1e2a47"/>
+    <rect x="872" y="476" width="248" height="3" rx="2" fill="url(#accent)"/>
+    <text x="896" y="534" font-size="40" font-weight="700" fill="#f2f6ff" letter-spacing="-1">2.4<tspan fill="#2ee6c8">M</tspan></text>
+    <text x="896" y="562" font-family="ui-monospace, Consolas, monospace" font-size="12" letter-spacing="1" fill="#7986a6">BUILDS / WEEK</text>
+  </g>
+
+  <!-- FEATURE GRID -->
+  <text x="80" y="636" font-family="ui-monospace, Consolas, monospace" font-size="13" letter-spacing="2" fill="#2ee6c8">// WHY TEAMS SWITCH</text>
+  <text x="80" y="672" font-size="28" font-weight="700" fill="#f2f6ff" letter-spacing="-0.5">Everything you need to launch and keep shipping</text>
+
+  <g>
+    <!-- card 1 -->
+    <rect x="80" y="700" width="332" height="172" rx="16" fill="#0f172a" stroke="#1e2a47"/>
+    <rect x="104" y="724" width="44" height="44" rx="11" fill="#0c2a26" stroke="#1c6f63"/>
+    <rect x="116" y="738" width="20" height="16" rx="2" fill="none" stroke="#2ee6c8" stroke-width="2"/>
+    <text x="104" y="804" font-size="20" font-weight="700" fill="#f2f6ff">Instant previews</text>
+    <text x="104" y="834" font-size="14" fill="#aeb9d4">Every push spins up a live,</text>
+    <text x="104" y="854" font-size="14" fill="#aeb9d4">shareable environment in seconds.</text>
+
+    <!-- card 2 -->
+    <rect x="434" y="700" width="332" height="172" rx="16" fill="#0f172a" stroke="#2ee6c8" stroke-opacity="0.45"/>
+    <rect x="458" y="724" width="44" height="44" rx="11" fill="#0c2a26" stroke="#1c6f63"/>
+    <polyline points="466,752 474,742 482,748 492,736" fill="none" stroke="#2ee6c8" stroke-width="2"/>
+    <text x="458" y="804" font-size="20" font-weight="700" fill="#f2f6ff">Observability built in</text>
+    <text x="458" y="834" font-size="14" fill="#aeb9d4">Traces, logs, and metrics ship</text>
+    <text x="458" y="854" font-size="14" fill="#aeb9d4">with the runtime.</text>
+
+    <!-- card 3 -->
+    <rect x="788" y="700" width="332" height="172" rx="16" fill="#0f172a" stroke="#1e2a47"/>
+    <rect x="812" y="724" width="44" height="44" rx="11" fill="#0c2a26" stroke="#1c6f63"/>
+    <circle cx="834" cy="746" r="6" fill="#2ee6c8"/>
+    <text x="812" y="804" font-size="20" font-weight="700" fill="#f2f6ff">Scales on autopilot</text>
+    <text x="812" y="834" font-size="14" fill="#aeb9d4">From first commit to ten million</text>
+    <text x="812" y="854" font-size="14" fill="#aeb9d4">requests, no infra babysitting.</text>
+  </g>
+</svg>

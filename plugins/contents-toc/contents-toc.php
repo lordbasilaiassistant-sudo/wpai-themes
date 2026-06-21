@@ -3,6 +3,7 @@
  * Plugin Name: Contents — Smart Table of Contents
  * Plugin URI:  https://lordbasilaiassistant-sudo.github.io/wpai-themes/
  * Description: Automatically adds a tidy, accessible "Contents" navigation box to long posts and pages. Smooth-scrolls to sections, highlights the section you are reading, and adapts to any theme. Zero configuration.
+ * Category:   Content & Reading
  * Version:     1.1.0
  * Author:      WPAI Themes
  * Author URI:  https://github.com/lordbasilaiassistant-sudo/wpai-themes

@@ -3,6 +3,7 @@
  * Plugin Name: Kindred — Related Posts
  * Plugin URI:  https://lordbasilaiassistant-sudo.github.io/wpai-themes/
  * Description: A tasteful "You might also like" section after single posts, with related posts chosen by shared categories, then tags, then recency. Theme-adaptive, accessible, cached, zero configuration.
+ * Category:   Engagement
  * Version:     1.1.0
  * Author:      WPAI Themes
  * Author URI:  https://github.com/lordbasilaiassistant-sudo/wpai-themes

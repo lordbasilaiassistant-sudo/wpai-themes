@@ -172,6 +172,7 @@ function themeEntry(t) {
   writeBlueprint(t.slug, 'theme');
   return {
     slug: t.slug, type: 'theme',
+    category: h['Category'] || 'Other',
     name: h['Theme Name'] || t.slug,
     description: h['Description'] || '',
     version: h['Version'] || '1.0.0',
@@ -191,6 +192,7 @@ function pluginEntry(p) {
   writeBlueprint(p.slug, 'plugin');
   return {
     slug: p.slug, type: 'plugin',
+    category: h['Category'] || 'Other',
     name: h['Plugin Name'] || p.slug,
     description: h['Description'] || '',
     version: h['Version'] || '1.0.0',

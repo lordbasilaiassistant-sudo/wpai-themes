@@ -1,0 +1,76 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "appearanceTools": true,
+    "layout": { "contentSize": "760px", "wideSize": "1024px" },
+    "color": {
+      "palette": [
+        { "slug": "bg", "color": "#070b16", "name": "Space" },
+        { "slug": "surface", "color": "#0f172a", "name": "Surface" },
+        { "slug": "elevate", "color": "#18233f", "name": "Elevated" },
+        { "slug": "ink", "color": "#f2f6ff", "name": "Ink" },
+        { "slug": "soft", "color": "#aeb9d4", "name": "Soft ink" },
+        { "slug": "faint", "color": "#7986a6", "name": "Faint" },
+        { "slug": "line", "color": "#1e2a47", "name": "Hairline" },
+        { "slug": "accent", "color": "#2ee6c8", "name": "Accent" },
+        { "slug": "accent-2", "color": "#3aa0ff", "name": "Accent blue" }
+      ],
+      "gradients": [
+        {
+          "slug": "accent",
+          "gradient": "linear-gradient(135deg, #2ee6c8 0%, #3aa0ff 100%)",
+          "name": "Neon accent"
+        },
+        {
+          "slug": "space",
+          "gradient": "linear-gradient(180deg, #0f172a 0%, #070b16 100%)",
+          "name": "Deep space"
+        }
+      ],
+      "custom": false,
+      "customGradient": false
+    },
+    "typography": {
+      "customFontSize": false,
+      "fontFamilies": [
+        {
+          "fontFamily": "\"Space Grotesk\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+          "slug": "sans",
+          "name": "Sans"
+        },
+        {
+          "fontFamily": "ui-monospace, \"SFMono-Regular\", \"SF Mono\", \"JetBrains Mono\", Menlo, Consolas, \"Liberation Mono\", monospace",
+          "slug": "mono",
+          "name": "Mono"
+        }
+      ],
+      "fontSizes": [
+        { "slug": "small", "size": "0.875rem", "name": "Small" },
+        { "slug": "medium", "size": "1.0625rem", "name": "Medium" },
+        { "slug": "large", "size": "1.45rem", "name": "Large" },
+        { "slug": "x-large", "size": "2.3rem", "name": "Extra large" },
+        { "slug": "xx-large", "size": "3.5rem", "name": "Huge" }
+      ]
+    },
+    "spacing": {
+      "units": ["px", "em", "rem", "%", "vw"]
+    }
+  },
+  "styles": {
+    "color": { "background": "#070b16", "text": "#f2f6ff" },
+    "typography": {
+      "fontFamily": "\"Space Grotesk\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+      "lineHeight": "1.6"
+    },
+    "elements": {
+      "link": {
+        "color": { "text": "#2ee6c8" },
+        ":hover": { "color": { "text": "#7ff0dd" } }
+      },
+      "h1": { "typography": { "fontWeight": "700", "letterSpacing": "-0.02em" } },
+      "h2": { "typography": { "fontWeight": "700", "letterSpacing": "-0.02em" } },
+      "h3": { "typography": { "fontWeight": "700", "letterSpacing": "-0.02em" } }
+    }
+  }
+}

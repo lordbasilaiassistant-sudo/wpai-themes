@@ -3,76 +3,81 @@
 // cover by base name (see docs/demo/*.jpg); gen-gallery resolves them to URLs.
 // DEMO_PACKS is filled per-theme; anything missing falls back to DEFAULT_PACK.
 
-export const COVERS = ['ember', 'tide', 'grove', 'dusk', 'slate', 'sand'];
+export const COVERS = ["ember","tide","grove","dusk","slate","sand"];
 
 export const DEFAULT_PACK = {
-  site: { name: 'Northwind', tagline: 'Ideas worth shipping.' },
-  author: { name: 'Mara Ellison', bio: 'Designer and engineer writing about craft, code, and calm.' },
-  menuCategories: ['Design', 'Engineering'],
-  pages: [
-    {
-      title: 'About',
-      image: 'slate',
-      content:
-        '<p>Northwind is a small publication about craft, code, and calm — written for people who build things and care how they feel to use.</p>' +
-        '<p>It is run by <strong>Mara Ellison</strong>, a designer and engineer who has spent a decade shipping software and learning, slowly, that less is usually more.</p>' +
-        '<p>No trackers, no pop-ups, no newsletter to escape. Just writing, and the occasional good idea worth keeping.</p>',
-    },
+  "site": {
+    "name": "Northwind",
+    "tagline": "Ideas worth shipping."
+  },
+  "author": {
+    "name": "Mara Ellison",
+    "bio": "Designer and engineer writing about craft, code, and calm."
+  },
+  "menuCategories": [
+    "Design",
+    "Engineering"
   ],
-  posts: [
+  "pages": [
     {
-      title: 'Designing for calm', category: 'Design', image: 'dusk',
-      excerpt: 'Good software feels quiet. Here is how to build interfaces that get out of the way.',
-      content:
-        '<p>Good software feels quiet. It does the thing you asked, then steps out of the way and leaves room for your own thoughts.</p>' +
-        '<h2>Less, but better</h2>' +
-        '<p>Every element on a page is a small request for attention. The craft is deciding which requests are worth making.</p>' +
-        '<blockquote>Simplicity is not the absence of detail. It is detail spent only where it counts.</blockquote>' +
-        '<p>When in doubt, remove. The page that remains is almost always stronger.</p>',
-    },
-    {
-      title: 'The real cost of a slow website', category: 'Engineering', image: 'tide',
-      excerpt: 'Speed is a feeling before it is a number. Here is where the milliseconds hide.',
-      content:
-        '<p>Speed is a feature you feel before you can name it. A page that loads instantly feels trustworthy; a slow one feels broken even when everything works.</p>' +
-        '<h2>Where the milliseconds go</h2>' +
-        '<ul><li>Web fonts that block the first paint</li><li>Hero images larger than their container</li><li>Scripts that run before anyone has scrolled</li></ul>' +
-        '<p>Trim each one and the whole experience lightens.</p>',
-    },
-    {
-      title: 'Notes on shipping small', category: 'Craft', image: 'ember',
-      excerpt: 'The smallest version of an idea that still helps someone is the best place to start.',
-      content:
-        '<p>The smallest version of an idea that still helps someone is usually the right place to start. You learn more from one real user than from a month of speculation.</p>' +
-        '<h2>Ship, then listen</h2>' +
-        '<p>Release early, watch closely, and let the next step reveal itself. Momentum compounds.</p>',
-    },
-    {
-      title: 'A field guide to better mornings', category: 'Life', image: 'grove',
-      excerpt: 'Protect the first hour. The rest of the day tends to follow it.',
-      content:
-        '<p>The first hour sets the temperature for everything after it. Guard it like it matters, because it does.</p>' +
-        '<h2>Three small rituals</h2>' +
-        '<ul><li>Light before screens</li><li>One page of writing, badly, before the inbox</li><li>A walk short enough that you will actually take it</li></ul>',
-    },
-    {
-      title: 'What old maps teach us about design', category: 'Ideas', image: 'sand',
-      excerpt: 'The best maps leave things out on purpose. So should the best products.',
-      content:
-        '<p>A map that showed everything would be useless — and exactly the size of the world. Every great map is an argument about what matters.</p>' +
-        '<h2>The art of leaving out</h2>' +
-        '<p>Designers are mapmakers. We choose a scale, pick a projection, and decide which roads earn a line. The omissions are the design.</p>',
-    },
+      "title": "About",
+      "image": "slate",
+      "content": "<p>Northwind is a small publication about craft, code, and calm — written for people who build things and care how they feel to use.</p><p>It is run by <strong>Mara Ellison</strong>, a designer and engineer who has spent a decade shipping software and learning, slowly, that less is usually more.</p><p>No trackers, no pop-ups, no newsletter to escape. Just writing, and the occasional good idea worth keeping.</p>"
+    }
   ],
-  comments: [
-    { author: 'Jonah Reed', content: 'This put words to something I have felt for years but could not name.' },
-    { author: 'Priya Nair', content: '"Detail spent only where it counts" — stealing that for our review on Monday.' },
-    { author: 'Sam Okafor', content: 'Came for the typography, stayed for the philosophy. More of this, please.' },
+  "posts": [
+    {
+      "title": "Designing for calm",
+      "category": "Design",
+      "image": "dusk",
+      "excerpt": "Good software feels quiet. Here is how to build interfaces that get out of the way.",
+      "content": "<p>Good software feels quiet. It does the thing you asked, then steps out of the way and leaves room for your own thoughts.</p><h2>Less, but better</h2><p>Every element on a page is a small request for attention. The craft is deciding which requests are worth making.</p><blockquote>Simplicity is not the absence of detail. It is detail spent only where it counts.</blockquote><p>When in doubt, remove. The page that remains is almost always stronger.</p>"
+    },
+    {
+      "title": "The real cost of a slow website",
+      "category": "Engineering",
+      "image": "tide",
+      "excerpt": "Speed is a feeling before it is a number. Here is where the milliseconds hide.",
+      "content": "<p>Speed is a feature you feel before you can name it. A page that loads instantly feels trustworthy; a slow one feels broken even when everything works.</p><h2>Where the milliseconds go</h2><ul><li>Web fonts that block the first paint</li><li>Hero images larger than their container</li><li>Scripts that run before anyone has scrolled</li></ul><p>Trim each one and the whole experience lightens.</p>"
+    },
+    {
+      "title": "Notes on shipping small",
+      "category": "Craft",
+      "image": "ember",
+      "excerpt": "The smallest version of an idea that still helps someone is the best place to start.",
+      "content": "<p>The smallest version of an idea that still helps someone is usually the right place to start. You learn more from one real user than from a month of speculation.</p><h2>Ship, then listen</h2><p>Release early, watch closely, and let the next step reveal itself. Momentum compounds.</p>"
+    },
+    {
+      "title": "A field guide to better mornings",
+      "category": "Life",
+      "image": "grove",
+      "excerpt": "Protect the first hour. The rest of the day tends to follow it.",
+      "content": "<p>The first hour sets the temperature for everything after it. Guard it like it matters, because it does.</p><h2>Three small rituals</h2><ul><li>Light before screens</li><li>One page of writing, badly, before the inbox</li><li>A walk short enough that you will actually take it</li></ul>"
+    },
+    {
+      "title": "What old maps teach us about design",
+      "category": "Ideas",
+      "image": "sand",
+      "excerpt": "The best maps leave things out on purpose. So should the best products.",
+      "content": "<p>A map that showed everything would be useless — and exactly the size of the world. Every great map is an argument about what matters.</p><h2>The art of leaving out</h2><p>Designers are mapmakers. We choose a scale, pick a projection, and decide which roads earn a line. The omissions are the design.</p>"
+    }
   ],
+  "comments": [
+    {
+      "author": "Jonah Reed",
+      "content": "This put words to something I have felt for years but could not name."
+    },
+    {
+      "author": "Priya Nair",
+      "content": "\"Detail spent only where it counts\" — stealing that for our review on Monday."
+    },
+    {
+      "author": "Sam Okafor",
+      "content": "Came for the typography, stayed for the philosophy. More of this, please."
+    }
+  ]
 };
 
-// Per-theme packs (slug -> pack). Filled by the demo-tailoring pass; any theme
-// not listed here uses DEFAULT_PACK.
 export const DEMO_PACKS = {
   "aurora": {
     "site": {
@@ -484,7 +489,414 @@ export const DEMO_PACKS = {
         "content": "There is a generosity in the way you write that I find rare. This felt less like reading an essay and more like being kept company. I will be back at dusk tomorrow."
       }
     ]
+  },
+  "dispatch": {
+    "site": {
+      "name": "The Dispatch",
+      "tagline": "Clear reporting for a fast-moving city."
+    },
+    "author": {
+      "name": "Elena Vargas",
+      "bio": "Elena Vargas is the founding editor of The Dispatch. She spent a decade covering city hall and transit before building a newsroom focused on plain-language reporting that respects readers' time."
+    },
+    "menuCategories": [
+      "Politics",
+      "Tech",
+      "Climate",
+      "Culture"
+    ],
+    "pages": [
+      {
+        "title": "About The Dispatch",
+        "image": "slate",
+        "content": "<p>The Dispatch is an independent digital newsroom built on a simple promise: tell people what happened, why it matters, and what comes next, without the noise. We cover the city the way readers actually live in it, from the council chamber to the last train home.</p><h2>What we stand for</h2><p>We believe local reporting is infrastructure. A city that can see itself clearly makes better decisions. So we color-code our coverage by beat, keep our headlines honest, and never bury the point three paragraphs down.</p><blockquote>If a story can be told in plain language, it should be. Clarity is not the enemy of depth.</blockquote><h2>How we work</h2><ul><li>Every story names its sources and shows its math.</li><li>We correct mistakes openly and quickly.</li><li>We do not run anything we would not be comfortable explaining to a reader's face.</li></ul><p>Have a tip, a correction, or a story we missed? The newsroom reads everything. Reach out and tell us what is happening on your block.</p>"
+      }
+    ],
+    "posts": [
+      {
+        "title": "City unveils five-year transit overhaul plan",
+        "category": "Politics",
+        "image": "ember",
+        "excerpt": "The proposal would add three rapid lines and rebuild four aging stations over the next decade.",
+        "content": "<p>City officials on Friday unveiled the most ambitious transit plan in a generation, a five-year blueprint that would add three rapid bus lines, rebuild four aging stations, and extend service into two neighborhoods that have gone underserved for decades.</p><p>The plan, presented at a packed council session, carries an estimated cost of $2.4 billion, funded through a mix of state grants, federal infrastructure money, and a modest fare adjustment phased in over three years.</p><blockquote>This is not a patch. This is a rebuild of how the city moves.</blockquote><p>Supporters called it overdue. Critics questioned the timeline and pressed for guarantees that construction would not strangle the corridors it aims to fix. A final vote is expected before the end of the quarter.</p>"
+      },
+      {
+        "title": "Chipmaker beats quarterly forecast as demand holds",
+        "category": "Tech",
+        "image": "tide",
+        "excerpt": "Strong orders for data-center hardware pushed revenue past analyst expectations.",
+        "content": "<p>The region's largest semiconductor employer reported quarterly revenue well ahead of forecasts on Thursday, driven by stubbornly strong demand for data-center hardware even as consumer markets softened.</p><p>Executives credited a long-term supply agreement signed last spring and said hiring at the local fabrication plant would continue through the year.</p><ul><li>Revenue rose 14 percent year over year.</li><li>Data-center orders accounted for most of the gain.</li><li>The company reaffirmed its full-year outlook.</li></ul><p>Analysts cautioned that the broader market remains volatile, but for a city that has tied its fortunes to the plant, the results were a welcome signal.</p>"
+      },
+      {
+        "title": "How to read a heat advisory before the next wave hits",
+        "category": "Climate",
+        "image": "grove",
+        "excerpt": "A plain-language guide to the warnings, the risk levels, and what each one actually asks you to do.",
+        "content": "<p>Heat advisories arrive every summer, and every summer readers ask the same question: what am I actually supposed to do about it? Here is a guide that cuts through the jargon.</p><h2>What the levels mean</h2><p>The weather service issues three tiers, and they are not interchangeable. Knowing the difference tells you how seriously to take the forecast.</p><h3>Advisory</h3><p>Conditions are uncomfortable and risky for vulnerable people. Check on older neighbors and limit afternoon exertion.</p><h3>Warning</h3><p>Conditions are dangerous for everyone. Stay indoors during peak hours and hydrate well before you feel thirsty.</p><h2>Where to find relief</h2><ul><li>City cooling centers open when a warning is issued.</li><li>Libraries and recreation centers extend hours during extreme heat.</li><li>Transit hubs post the nearest center on station screens.</li></ul><blockquote>The danger is rarely the single hottest hour. It is the nights that never cool down.</blockquote><p>Bookmark this page before the next wave. When the alert lands, you will already know what it means.</p>"
+      },
+      {
+        "title": "The festival lineup is here, and it leans local",
+        "category": "Culture",
+        "image": "dusk",
+        "excerpt": "This year's bill puts homegrown acts on the main stage, a deliberate shift from the headliner formula.",
+        "content": "<p>Organizers released the full festival lineup this week, and the headline is the absence of one. Instead of a single marquee act, this year's bill stacks the main stage with homegrown talent.</p><p>It is a deliberate bet that the city's own scene can carry a three-day event, and early ticket numbers suggest audiences agree.</p><blockquote>We stopped asking who would fly in and started asking who was already here.</blockquote><p>The festival runs the last weekend of the month. Day passes go on sale Monday, with a portion of proceeds funding music programs in city schools.</p>"
+      }
+    ],
+    "comments": [
+      {
+        "author": "Marcus Lee",
+        "content": "Finally a transit plan that names the stations getting rebuilt. Sharing this with my whole block."
+      },
+      {
+        "author": "Priya Nair",
+        "content": "The heat advisory guide should be pinned every summer. Saved it for my parents."
+      },
+      {
+        "author": "Devon Brooks",
+        "content": "Love that the festival is going local this year. The scene here is overdue for a main stage."
+      }
+    ]
+  },
+  "atelier": {
+    "site": {
+      "name": "Maren & Vale",
+      "tagline": "Design studio for objects & identity"
+    },
+    "author": {
+      "name": "Maren Vale",
+      "bio": "Maren Vale is an industrial and graphic designer who runs a small two-person studio for considered objects, identities, and the spaces between them. She writes here about process, materials, and the discipline of leaving things out."
+    },
+    "menuCategories": [
+      "Identity",
+      "Objects",
+      "Spaces",
+      "Notes"
+    ],
+    "pages": [
+      {
+        "title": "Studio",
+        "image": "slate",
+        "content": "<p>Maren &amp; Vale is a small design studio working at the seam where graphic and industrial design meet. We make identities, objects, and the quiet systems that hold them together — wordmarks and packaging, tools and furniture, the signage that tells you where to stand.</p><h2>How we work</h2><p>Every project begins with a long look and a short list. We are suspicious of the second idea that arrives too quickly and loyal to the one that survives a week of doubt. We prototype early, in cardboard and ink, because a thing you can hold tells the truth faster than a thing you can only describe.</p><blockquote>Restraint is not the absence of decisions. It is the discipline of making fewer, better ones.</blockquote><h2>What we make</h2><ul><li><strong>Identity</strong> — wordmarks, type systems, packaging, and the small marks that carry a name.</li><li><strong>Objects</strong> — tools and tableware designed for the hand before the shelf.</li><li><strong>Spaces</strong> — wayfinding, exhibition design, and the graphics that live on a wall.</li></ul><p>We take on a handful of projects a year so each one gets the attention it asked for. If that sounds like the kind of work you are after, the door is open.</p>"
+      }
+    ],
+    "posts": [
+      {
+        "title": "Ferro & Salt — a maker's mark",
+        "category": "Identity",
+        "image": "ember",
+        "excerpt": "A full identity for a small-batch kitchen-tool studio: a wordmark, packaging, and a quiet catalogue.",
+        "content": "<p>Ferro &amp; Salt forge kitchen tools the slow way — one tang at a time, stamped and oiled by hand. They came to us with a drawer full of beautiful objects and no way to tell strangers why they mattered. The brief was simple and severe: make the brand feel like the steel, not like a startup.</p><p>We built the identity around a single struck mark — a wordmark cut as if it had been stamped into the metal itself, with the slight unevenness a real die would leave. Everything else stepped back to let the tools do the talking.</p><blockquote>The best packaging for an honest object is the one you almost don't notice until you need it.</blockquote><p>The catalogue is uncoated, single-ink, and bound to lie flat on a bench. It smells, faintly, of the workshop. That was not an accident.</p>"
+      },
+      {
+        "title": "The discipline of leaving things out",
+        "category": "Notes",
+        "image": "slate",
+        "excerpt": "Most design problems are subtraction problems wearing the costume of addition problems.",
+        "content": "<p>Clients rarely ask us to remove something. They ask for more — another option, a second logo, a louder call to action. But almost every project we have shipped got better the moment we started taking things away.</p><h2>Subtraction is a skill</h2><p>Anyone can add. Adding feels like progress; it produces visible artifacts you can point at in a meeting. Subtraction feels like loss until the moment it suddenly feels like clarity. Learning to sit in that uncomfortable middle is most of the job.</p><h2>A small test we use</h2><p>Before a layout leaves the studio, we run one pass with a single question for every element on the page:</p><ul><li>Does this earn its space, or is it just afraid of it?</li><li>If I delete it, does anyone notice — and do they miss it?</li><li>Is it here for the reader, or here for my comfort?</li></ul><h2>What's left</h2><p>What survives that pass is usually less than half of what we started with, and twice as confident. The white space we were so nervous about turns out to be the whole point. Quiet is not empty. Quiet is room to breathe.</p><blockquote>You are not finished when there is nothing left to add. You are finished when there is nothing left to take away — and the thing still works.</blockquote><p>It is the least glamorous part of design and the part I would defend to the end.</p>"
+      },
+      {
+        "title": "Bench notes: building the Hartwell table",
+        "category": "Objects",
+        "image": "grove",
+        "excerpt": "A dining table designed to be repaired, not replaced — and what that constraint taught us.",
+        "content": "<p>The Hartwell table started with a question from the client that we could not stop thinking about: <em>what happens when it breaks?</em> Most furniture is designed as if it never will. We decided to design ours as if it certainly would.</p><p>Every joint is mechanical — no glue where a bolt would do, no bolt where a wedge would do. A leg can be replaced in twenty minutes with one tool. The tabletop is a set of planks held in tension, so a scorched or split board lifts out without touching its neighbours.</p><blockquote>An object you can repair is an object you are allowed to love carelessly.</blockquote><p>It is heavier and slower to make than a glued equivalent, and it will outlive everyone in this room. That trade felt worth writing down.</p>"
+      },
+      {
+        "title": "Wayfinding for a building that hides its doors",
+        "category": "Spaces",
+        "image": "tide",
+        "excerpt": "A converted mill with no obvious entrance, and the sign system that learned to point.",
+        "content": "<p>The old Brearley mill is a gorgeous, baffling building. Three floors, four staircases, and an entrance that everyone — including the people who work there — walks past on their first visit. The owners didn't want signage so much as forgiveness for the architecture.</p><p>We resisted the urge to plaster the brick with arrows. Instead we built a system of low, painted thresholds: a single accent stripe at every decision point, always at hand height, always pointing the way you actually need to go rather than the way the corridor happens to run.</p><h2>Designing for the lost</h2><p>The trick with wayfinding is to design for the person who is already confused, not the person reading the map at the door. By the time someone needs a sign, they have stopped paying attention to anything subtle. So we made the marks quiet but unmissable — the visual equivalent of a hand on your shoulder.</p><p>Six months in, the owners tell us the running joke about the invisible door has finally died. We will take that as a review.</p>"
+      }
+    ],
+    "comments": [
+      {
+        "author": "Jonah Reyes",
+        "content": "The Ferro & Salt catalogue is the first piece of branding in years that made me want to touch a website. The restraint is doing a lot of quiet work here."
+      },
+      {
+        "author": "Priya Anand",
+        "content": "\"An object you can repair is an object you are allowed to love carelessly\" — I'm stealing this for every client conversation about cost from now on."
+      },
+      {
+        "author": "Tomas Lindqvist",
+        "content": "As someone who has been lost in the Brearley mill more than once, the threshold-stripe approach is genuinely clever. Subtle but you can't miss it once you know to look."
+      }
+    ]
+  },
+  "hearth": {
+    "site": {
+      "name": "The Ember Table",
+      "tagline": "Warm food, made by hand, in good company."
+    },
+    "author": {
+      "name": "Marisol Vega",
+      "bio": "Chef-owner of The Ember Table. Marisol learned to cook at her grandmother's wood stove in Oaxaca and spent a decade in bakery kitchens before opening a tiny corner café where the coffee is always on. She writes here about the dishes coming out of the kitchen, the farmers who grow them, and why a slow morning is worth protecting."
+    },
+    "menuCategories": [
+      "Breakfast",
+      "Small Plates",
+      "From the Bar",
+      "Sweets"
+    ],
+    "pages": [
+      {
+        "title": "Our Story",
+        "image": "ember",
+        "content": "<p>The Ember Table started with a single cast-iron pan and a stubborn belief: that a neighborhood deserves a kitchen that knows its name. We opened on a rainy Tuesday in a corner storefront with eleven seats, one espresso machine, and a sourdough starter named Hazel who is, frankly, older than the lease.</p><h2>What we believe</h2><p>Food is hospitality made edible. We cook the way we'd cook for someone we love &mdash; a little extra butter, a little more time, and never in a hurry. Almost everything on the menu is made in-house, from the bread we bake before sunrise to the cider we press by hand in the fall.</p><blockquote>We're not trying to be the fanciest table in town. We're trying to be the warmest.</blockquote><h2>Where it comes from</h2><p>We buy from growers we can drive to. The eggs come from a farm twenty minutes north, the greens from a rooftop two blocks over, and the honey from a beekeeper who trades jars for breakfast. When the season turns, the menu turns with it &mdash; so if your favorite dish disappears, trust that something just as good is on its way.</p><p>Pull up a chair. Stay as long as you like.</p>"
+      }
+    ],
+    "posts": [
+      {
+        "title": "Sunrise Sourdough: The Loaf That Runs Our Mornings",
+        "category": "Breakfast",
+        "image": "ember",
+        "excerpt": "Slow-fermented for two days, blistered in the oven, and gone by ten most mornings.",
+        "content": "<p>There's a reason we bake before the sun comes up. Our Sunrise Sourdough takes nearly two full days from flour to crust, and none of those hours can be rushed without the loaf knowing. Hazel, our starter, sets the pace &mdash; and Hazel does not care about your schedule.</p><h2>Two days, one loaf</h2><p>It begins the morning before with a build: a spoonful of starter fed and left to triple. By evening we mix the dough, fold it gently every half hour, and let it rest cold overnight. The slow chill is where the flavor lives &mdash; that faint tang, the open crumb, the crackle when you tear it.</p><ul><li>Stone-milled flour from a regional mill</li><li>A long, cold overnight fermentation</li><li>Baked in a screaming-hot cast-iron pot for that blistered crust</li></ul><h2>How we serve it</h2><p>Toasted thick, with cultured butter and a pinch of flaky salt. Or under two soft eggs and a spoonful of last summer's tomato jam. Either way, get here early &mdash; by ten most mornings, there's nothing left but crumbs and the smell.</p>"
+      },
+      {
+        "title": "The Charred Harvest Bowl Is Back for Autumn",
+        "category": "Small Plates",
+        "image": "grove",
+        "excerpt": "Roasted roots, herb oil, and a squeeze of lemon &mdash; the plate we wait all year for.",
+        "content": "<p>When the first crate of knobbly autumn roots lands at the back door, the whole kitchen exhales. The Charred Harvest Bowl is a seasonal regular, and it only shows up when the vegetables are good enough to carry it.</p><p>We roast carrots, beets, and squash hard &mdash; hot enough to caramelize the edges and concentrate the sweetness &mdash; then dress everything in a bright herb oil while it's still warm so the flavors soak in. A spoonful of whipped white beans goes underneath, and a squeeze of lemon wakes the whole thing up.</p><blockquote>The trick isn't a secret ingredient. It's heat, patience, and salt at the right moment.</blockquote><p>It's vegetarian without trying to prove a point, and it eats like a full meal. Come hungry; the bowl does not believe in small portions.</p>"
+      },
+      {
+        "title": "How We Press Spiced Cider by Hand Every Fall",
+        "category": "From the Bar",
+        "image": "dusk",
+        "excerpt": "Orchard apples, clove, and star anise, pressed in small batches when the weather turns.",
+        "content": "<p>Every autumn we haul in crates of orchard apples and turn the back of the café into a cider operation. It is sticky, it is loud, and it is one of our favorite weeks of the year.</p><h2>From orchard to glass</h2><p>We use a blend &mdash; tart, sweet, and one bitter variety for backbone &mdash; because a great cider, like a great loaf, is about balance. The apples are washed, crushed, and pressed in small batches the same day they arrive, so nothing sits long enough to dull.</p><h2>The warm version</h2><p>Once pressed, we gently warm the cider with whole spices and let it steep, never boiling.</p><ul><li>Whole cloves for warmth</li><li>Star anise for that faint licorice note</li><li>A strip of orange peel, added at the end</li></ul><p>We serve it steaming on cold afternoons, and spiked with a splash of dark rum once the sun's down. It tastes like the season is finally here.</p>"
+      },
+      {
+        "title": "A Slow Morning Is Worth Protecting",
+        "category": "Breakfast",
+        "image": "tide",
+        "excerpt": "On why we'll never rush you out the door, and why the second cup is on the house.",
+        "content": "<p>We get asked, sometimes, why we don't turn tables faster. The honest answer is that we built this place to be the opposite of fast.</p><p>A slow morning &mdash; the kind where the coffee goes cold because you're too deep in conversation to notice &mdash; is one of the small luxuries left that money barely touches. You just need a chair, a window, and someone who won't hover.</p><blockquote>Hospitality isn't speed. It's the feeling that you're allowed to stay.</blockquote><p>So linger. Read the whole paper. Let the kids have the second muffin. The second cup of drip is always on the house, because a refill is the easiest kindness we know how to give. The world will still be there when you're ready for it.</p>"
+      }
+    ],
+    "comments": [
+      {
+        "author": "Dana Whitfield",
+        "content": "The Sunrise Sourdough is the best loaf in the neighborhood, full stop. I plan my whole Saturday around getting there before it sells out."
+      },
+      {
+        "author": "Theo Nakamura",
+        "content": "Came for the cider, stayed for two hours, and nobody once made me feel like I should leave. That 'slow morning' post is exactly the vibe in person."
+      },
+      {
+        "author": "Priya Raman",
+        "content": "The Charred Harvest Bowl converted my very-much-a-meat-person partner. We've been back three times this month."
+      }
+    ]
+  },
+  "orbit": {
+    "site": {
+      "name": "Nebula",
+      "tagline": "The developer platform that turns ideas into shipping product."
+    },
+    "author": {
+      "name": "Dev Okafor",
+      "bio": "Founding engineer at Nebula. Writes about build systems, observability, and the unglamorous work of making software ship on time. Ex-platform team, recovering YAML maximalist."
+    },
+    "menuCategories": [
+      "Product",
+      "Engineering",
+      "Changelog",
+      "Guides"
+    ],
+    "pages": [
+      {
+        "title": "About Nebula",
+        "image": "dusk",
+        "content": "<p>Nebula started with a frustration every engineering team knows by heart: the distance between a good idea and a deployed feature is full of friction. Pipelines that flake. Preview environments that take ten minutes to spin up. Dashboards that tell you something broke, but never why.</p><h2>What we build</h2><p>Nebula is a developer platform that collapses that distance. Push a branch and you get a live, shareable preview in seconds. Ship to production and tracing, logs, and metrics are already wired in. Scale from your first commit to ten million requests without rewriting your infrastructure or hiring a platform team to babysit it.</p><h2>How we work</h2><p>We are a small, remote-first team of engineers who would rather show a working build than a polished deck. Every feature we ship runs on Nebula itself, so when something is slow or confusing, we feel it first. This blog is where we publish our changelog, our engineering write-ups, and the occasional honest post-mortem.</p><blockquote><p>The best infrastructure is the kind you stop thinking about.</p></blockquote><p>If that sounds like the platform you wish you had, you are exactly who we built it for.</p>"
+      }
+    ],
+    "posts": [
+      {
+        "title": "Nebula 1.0: instant previews for every push",
+        "category": "Changelog",
+        "image": "ember",
+        "excerpt": "Our biggest release yet: a live, shareable environment for every branch, in under five seconds.",
+        "content": "<p>Today we are shipping Nebula 1.0, and the headline feature is one we have wanted since day one: every push now spins up a fully live preview environment, not a static snapshot, in under five seconds.</p><p>Open a pull request and Nebula builds your branch, boots the runtime, and hands you a real URL your whole team can click. Reviewers stop guessing from a diff and start using the actual product.</p><h2>What changed under the hood</h2><p>Previews used to share a cold build cache. We rebuilt the layer caching so common dependencies are warm across branches, which is where most of the speedup comes from.</p><ul><li>Branch previews boot in a median of 4.1 seconds</li><li>Tracing and logs are attached to every preview automatically</li><li>Previews tear down on merge, so you are never billed for stale environments</li></ul><blockquote><p>A preview you can actually click changes how a team reviews work.</p></blockquote><p>Upgrade is automatic for all teams. Nothing to configure, nothing to migrate.</p>"
+      },
+      {
+        "title": "How we cut median deploy time to 40ms",
+        "category": "Engineering",
+        "image": "tide",
+        "excerpt": "A deep dive into the caching, diffing, and edge-routing work that made deploys feel instant.",
+        "content": "<p>When we say a deploy takes 40 milliseconds, people assume we are measuring something convenient. We are not. That is the median time from a healthy build artifact to live traffic on the new version. Here is how we got there.</p><h2>Content-addressed artifacts</h2><p>Every build produces a content-addressed bundle. If a file has not changed, its hash has not changed, so a deploy only moves the bytes that are actually new. Most deploys touch a handful of chunks.</p><h2>Atomic edge swaps</h2><p>The cutover itself is a pointer flip at the edge. Old version and new version both exist; we atomically repoint the router and drain the old one in the background.</p><h3>What this unlocks</h3><p>Rollbacks are also pointer flips, which means they are just as fast as deploys. There is no rebuild, no waiting.</p><ul><li>Deploys and rollbacks are symmetric and near-instant</li><li>No partial-deploy windows where two versions serve inconsistent assets</li><li>Traffic shifting is a routing decision, not a build decision</li></ul><blockquote><p>The fastest deploy is the one that moves almost nothing.</p></blockquote><p>The honest caveat: cold builds still take real time. The 40ms number is the cutover, not the build. But the cutover is the part your users feel, and that is the part we obsessed over.</p>"
+      },
+      {
+        "title": "Observability should ship with the runtime, not after it",
+        "category": "Product",
+        "image": "grove",
+        "excerpt": "Why we baked traces, logs, and metrics into the platform instead of selling them as an add-on.",
+        "content": "<p>Most teams bolt observability on after an outage. You ship the feature, it breaks in a way nobody predicted, and then you spend a weekend wiring up tracing so it never surprises you again. We think that order is backwards.</p><p>In Nebula, every service you deploy is instrumented from the first request. Distributed traces, structured logs, and the core metrics are there before you write a single line of monitoring code.</p><h2>Find the slow span first</h2><p>When a request is slow, you should not have to reproduce it locally to understand it. Click the trace, see the span tree, and the offending database call is right there with its timing and arguments.</p><p>It is the difference between debugging with evidence and debugging with a hunch.</p><blockquote><p>You cannot fix what you cannot see, and you should not have to pay extra to see it.</p></blockquote><p>This is included in every plan, including the free tier. Observability is not a premium feature. It is table stakes for running software you can trust.</p>"
+      },
+      {
+        "title": "A practical guide to scaling without a platform team",
+        "category": "Guides",
+        "image": "slate",
+        "excerpt": "Five habits that let a small team handle ten million requests without hiring infra specialists.",
+        "content": "<p>You do not need a dedicated platform team to run software at scale. You need a few good defaults and the discipline to lean on them. Here is what has worked for the teams shipping on Nebula.</p><h2>Let autoscaling do its job</h2><p>The most common scaling mistake is over-provisioning out of fear. Set sane minimums and maximums, then trust the platform to follow the traffic. Watch it for a week before you touch a knob.</p><h2>Make rollbacks boring</h2><p>If rolling back is scary, you will hesitate during an incident, and hesitation is what turns a blip into an outage. Practice rollbacks until they are a non-event.</p><h2>Budget your queries, not just your servers</h2><p>Compute is cheap to scale. The database is where small teams hit a wall. Put a ceiling on slow queries and treat that ceiling as a feature, not a limitation.</p><ul><li>Set autoscaling minimums and maximums, then leave them alone</li><li>Rehearse rollbacks until they are routine</li><li>Cap and alert on slow queries before they cascade</li><li>Cache aggressively at the edge for read-heavy paths</li><li>Run a load test before the launch, not after the incident</li></ul><p>None of this requires a specialist. It requires picking defaults you trust and resisting the urge to tinker.</p>"
+      }
+    ],
+    "comments": [
+      {
+        "author": "Priya Raman",
+        "content": "The 40ms deploy post is the most honest infra write-up I have read in a while. Appreciate that you separated the cutover from the cold build instead of hiding behind the headline number."
+      },
+      {
+        "author": "Marco Devlin",
+        "content": "We switched two services over last month purely for the instant previews. My reviewers actually click the links now instead of approving from the diff. Game changer for our PR process."
+      },
+      {
+        "author": "Sasha Lindqvist",
+        "content": "Bundling observability into the free tier is the right call. Every other platform treats traces like a luxury and then acts surprised when teams fly blind."
+      }
+    ]
+  },
+  "manual": {
+    "author": {
+      "name": "Priya Raman",
+      "bio": "Developer-experience engineer and technical writer. Priya builds the docs, SDKs, and onboarding flows that make a platform feel obvious in five minutes - and writes about doing it well."
+    },
+    "site": {
+      "name": "Northstar Docs",
+      "tagline": "Build, ship, and document - everything you need in one calm, searchable place."
+    },
+    "menuCategories": [
+      "Getting Started",
+      "Core Concepts",
+      "Guides",
+      "API Reference"
+    ],
+    "comments": [
+      {
+        "author": "Marcus Lee",
+        "content": "The five-minute deploy guide is exactly what I needed - had a live build before my coffee went cold. The copy button on every code block is a small thing that saves a lot of friction."
+      },
+      {
+        "author": "Dana Whitfield",
+        "content": "Bookmarking the data-model page. The \"keep the schema small on purpose\" section reframed how I was about to design our resources. More of this, please."
+      },
+      {
+        "author": "Priya Raman",
+        "content": "Thanks both! The webhooks reference is next on the list - if there's an event you wish we documented, drop it in the notes and I'll fold it in."
+      }
+    ],
+    "pages": [
+      {
+        "title": "About",
+        "image": "tide",
+        "content": "<p>Northstar Docs is the home for everything you need to build on the Northstar platform: setup guides, core concepts, hands-on tutorials, and a complete API reference - all in one calm, searchable place.</p><h2>What you'll find here</h2><p>The left-hand navigation tracks where you are in the docs at all times, and every long page carries an \"On this page\" outline so you can jump straight to the section you need. Code samples are copy-ready, and the search box (press <code>/</code> to focus it) reaches every page.</p><h2>Who writes it</h2><p>These docs are maintained by the developer-experience team, led by Priya Raman. We treat documentation as part of the product: if something here is unclear, wrong, or missing, that's a bug - and we want to hear about it.</p><blockquote><p>Good docs aren't a transcript of the code. They're the shortest honest path from a reader's question to a working result.</p></blockquote><h2>How to contribute</h2><ul><li>Found a typo or a broken example? Leave a note on the page.</li><li>Wish a concept were explained differently? Tell us what tripped you up.</li><li>Building something with Northstar? We love linking to community guides.</li></ul>"
+      }
+    ],
+    "posts": [
+      {
+        "title": "Your first deploy in five minutes",
+        "category": "Getting Started",
+        "image": "ember",
+        "excerpt": "From zero to a live build with one command - no config to write, nothing to wire up first.",
+        "content": "<p>The fastest way to understand Northstar is to ship something with it. This guide takes you from an empty folder to a live deployment in about five minutes, with a single command and no configuration to write up front.</p><h2>Install the CLI</h2><p>Everything starts with the command-line tool. You don't need to install it globally - <code>npx</code> will fetch it on demand:</p><pre><code>npx northstar init</code></pre><p>This scaffolds a minimal project and prints the two commands you'll use most: <code>dev</code> for local work and <code>deploy</code> when you're ready to go live.</p><h2>Run it locally</h2><p>Start the dev server and open the URL it prints. Changes reload instantly, so you can edit and watch in the same screen.</p><pre><code>npx northstar dev</code></pre><h2>Deploy</h2><p>When the local version looks right, one command pushes it to a real, sharable URL:</p><pre><code>npx northstar deploy</code></pre><blockquote><p>You can deploy as many times as you like - every deploy is immutable and gets its own URL, so rolling back is just pointing at an older one.</p></blockquote><p>That's the whole loop. From here, the <a href=\"#\">Configuration</a> guide shows how to tune builds, and <a href=\"#\">Core Concepts</a> explains what's happening under the hood.</p>"
+      },
+      {
+        "title": "The data model, and why we keep the schema small",
+        "category": "Core Concepts",
+        "image": "grove",
+        "excerpt": "How resources relate, and why the schema stays deliberately small.",
+        "content": "<p>Northstar has exactly three first-class resources: <strong>projects</strong>, <strong>builds</strong>, and <strong>deployments</strong>. Almost everything you do maps onto one of them, and that smallness is a feature, not a limitation.</p><h2>The three resources</h2><ul><li><strong>Project</strong> - the long-lived container. It owns settings, secrets, and history.</li><li><strong>Build</strong> - one immutable compilation of your source at a point in time.</li><li><strong>Deployment</strong> - a build that has been promoted to a live URL.</li></ul><h2>How they relate</h2><p>A project has many builds; a build can back many deployments. Promoting a build to production never mutates it - it creates a new deployment that points at the existing build. That's why rollbacks are instant and safe.</p><h2>Why so few?</h2><p>Every concept you add to a system is a concept every reader has to learn, every integration has to model, and every bug report has to disambiguate.</p><blockquote><p>A small schema is a promise: there are only a few moving parts, and you can hold all of them in your head.</p></blockquote><p>When you reach for a fourth resource, the question we ask first is whether it's really an attribute of one of these three. Usually it is.</p>"
+      },
+      {
+        "title": "Authentication: tokens, scopes, and rotation",
+        "category": "Guides",
+        "image": "dusk",
+        "excerpt": "Issue scoped tokens, use them safely in CI, and rotate them without downtime.",
+        "content": "<p>Northstar uses bearer tokens for every authenticated request. This guide covers how to create them, how to scope them tightly, and how to rotate them without breaking a running pipeline.</p><h2>Creating a token</h2><p>Generate a token from the CLI and copy it once - it is shown only at creation time:</p><pre><code>northstar tokens create --name ci --scope deploy:write</code></pre><h2>Scoping</h2><p>Always issue the narrowest scope that does the job. A deploy pipeline rarely needs read access to secrets, and a status checker never needs write access at all.</p><ul><li><code>deploy:write</code> - create and promote deployments.</li><li><code>builds:read</code> - inspect build status.</li><li><code>secrets:write</code> - manage environment secrets (use sparingly).</li></ul><h2>Using a token in CI</h2><p>Store the token as a secret in your CI provider and pass it through the environment, never inline:</p><pre><code>export NORTHSTAR_TOKEN=$CI_SECRET\nnorthstar deploy</code></pre><h2>Rotating without downtime</h2><p>Create the replacement token first, swap it into your secret store, confirm a deploy succeeds, and only then revoke the old one.</p><blockquote><p>Rotate on a schedule, not just after an incident. A token you rotate quarterly is one you already know how to rotate during a 2 a.m. emergency.</p></blockquote>"
+      },
+      {
+        "title": "Configuration reference",
+        "category": "Getting Started",
+        "image": "slate",
+        "excerpt": "Every option in northstar.config.js, with copy-paste defaults that just work.",
+        "content": "<p>Most projects need no configuration at all - the defaults are designed to be correct for a typical build. When you do need to tune something, it lives in a single file, <code>northstar.config.js</code>, at the root of your project.</p><h2>A complete example</h2><pre><code>module.exports = {\n  output: 'dist',\n  build: 'npm run build',\n  env: ['API_URL'],\n  regions: ['iad', 'fra'],\n};</code></pre><h2>The options that matter most</h2><ul><li><code>output</code> - the folder to deploy. Defaults to <code>dist</code>.</li><li><code>build</code> - the command that produces it. Defaults to your package's build script.</li><li><code>env</code> - names of environment variables to expose at build time.</li><li><code>regions</code> - where to serve from. More regions means lower latency, not more cost.</li></ul><h2>Per-environment overrides</h2><p>Anything in the config can be overridden per environment from the dashboard, so you don't have to fork the file for staging versus production.</p><blockquote><p>If you find yourself adding a lot of config, that's a signal worth listening to - tell us, because a sensible default probably belongs in the platform instead.</p></blockquote>"
+      }
+    ]
+  },
+  "almanac": {
+    "site": {
+      "name": "Fieldnotes",
+      "tagline": "Notes I tend in the open — interlinked, evergreen, always growing."
+    },
+    "author": {
+      "name": "Wren Calloway",
+      "bio": "Researcher and lifelong note-keeper. Wren tends a public second brain in the open, linking small ideas until they grow into bigger ones. Writes about thinking tools, attention, and the slow craft of keeping notes that link to other notes."
+    },
+    "menuCategories": [
+      "Second Brain",
+      "Practice",
+      "Tools",
+      "Field Reports"
+    ],
+    "pages": [
+      {
+        "title": "About this garden",
+        "image": "grove",
+        "content": "<p>This is a digital garden, not a blog. A blog is a stream — newest first, then gone. A garden is tended: notes are planted small, linked to their neighbours, and quietly revised for years. Some of what you read here is freshly seeded and rough. Some has been weeded and watered a dozen times. The stamps at the top of each note tell you which is which: <strong>Planted</strong> is the day an idea first went in the ground; <strong>Last tended</strong> appears only once I've genuinely come back and reworked it.</p><h2>How to wander</h2><p>Don't read top to bottom. Follow the threads. Every internal link is a path I've already walked between two ideas — the dotted underline lighting up means \"this connects to something.\" Tags are the other map: a tag like <em>#attention</em> or <em>#zettelkasten</em> gathers every note touching that thread, regardless of when it was planted.</p><blockquote><p>A note is only as alive as the links leaving it. The garden, not the note, is the unit of thought.</p></blockquote><h2>Why in public</h2><ul><li>Writing for an imagined reader forces me to actually finish a thought.</li><li>Public notes get corrected — kind strangers leave better sources in the margin.</li><li>Ideas compound when they can see each other. A private folder can't link to itself in surprising ways.</li></ul><p>If something here is wrong, half-baked, or missing a connection you can see — that's the point. Leave a note in the margin, and help me tend it.</p>"
+      }
+    ],
+    "posts": [
+      {
+        "title": "Notes that link to other notes",
+        "category": "Second Brain",
+        "image": "grove",
+        "excerpt": "A note is only as alive as the threads leaving it — tend the links, and the garden starts thinking for you.",
+        "content": "<p>The first year I kept notes, I kept them like a hoarder: capture everything, file it deep, never look again. The folder grew; the thinking didn't. The fix wasn't a better app. It was a single rule — <strong>every note must link to at least one other note before I close it.</strong></p><h2>Why the link matters more than the note</h2><p>A lone note is a fact. A linked note is a relationship, and relationships are where ideas actually live. When I force a link, I'm forced to ask: <em>what does this remind me of? what does it argue with? what does it depend on?</em> That question does the real work. The note is just the residue.</p><blockquote><p>You don't have a thought until you can say what it links to.</p></blockquote><h2>The practice, in three moves</h2><ul><li><strong>Capture small.</strong> One idea per note. If it has two ideas, it's two notes that link to each other.</li><li><strong>Link before you leave.</strong> Don't save a note until it points at a neighbour. No orphans.</li><li><strong>Tend on contact.</strong> Every time you re-open a note to link a new one, fix a sentence while you're there.</li></ul><p>Do this for a few weeks and the structure stops being a filing system and starts being a map. You'll search for one note and arrive, three links later, at a connection you never consciously made. That surprise is the garden thinking back at you.</p>"
+      },
+      {
+        "title": "Write the note before you forget the why",
+        "category": "Practice",
+        "image": "sand",
+        "excerpt": "Capture the reason a thing mattered, not just the thing — the why decays faster than the what.",
+        "content": "<p>The bookmark is a lie we tell ourselves. We save the article, the quote, the tab — and we believe we've saved the <em>insight</em>. We haven't. We've saved the artifact and lost the spark, because the reason it lit us up is already evaporating.</p><p>The half-life of a <em>why</em> is about a day. The <em>what</em> can wait; the <em>why</em> cannot. So I write the note while the feeling is still warm, and I lead with the reason: <strong>\"This matters because…\"</strong></p><blockquote><p>Future-you is a stranger who inherited your bookmarks with none of your context. Write for that stranger.</p></blockquote><p>It takes ninety seconds. One sentence of why, one line of what, one link to a neighbour. That's a real note. Everything I skipped this step on is now a graveyard of links I'm afraid to open, because I no longer remember the person who saved them.</p>"
+      },
+      {
+        "title": "Tending versus publishing",
+        "category": "Practice",
+        "image": "tide",
+        "excerpt": "A blog ships and forgets; a garden revisits — and the metadata should tell you which note is fresh.",
+        "content": "<p>Publishing is an event. You hit the button, the post goes out, and it begins its slow slide down the timeline into the dark. Tending is the opposite posture: you come <em>back</em>. You weed a paragraph that aged badly, you graft on a link to something you learned last month, you let the note keep up with you.</p><h2>The problem this theme solves</h2><p>Most blogs only show a publish date, which quietly punishes tended notes — a five-year-old note that you revised yesterday <em>looks</em> stale. So Almanac stamps two dates: when a note was <strong>planted</strong> and when it was <strong>last tended</strong>. The second only appears when there's a real revision behind it.</p><ul><li>Readers can trust that \"last tended yesterday\" means something living.</li><li>I'm rewarded for going back, not just for shipping something new.</li><li>Old notes get a second life instead of a slow burial.</li></ul><blockquote><p>Treat your best ideas like perennials, not cut flowers.</p></blockquote><p>It's a small UI choice with an outsized effect on behaviour. Show me a metric and I'll optimise for it. Show me \"last tended\" and I'll actually tend.</p>"
+      },
+      {
+        "title": "Tags are paths, not folders",
+        "category": "Tools",
+        "image": "dusk",
+        "excerpt": "A folder asks where a note belongs; a tag asks what it touches — and a note can touch many things at once.",
+        "content": "<p>Folders force a cruel question: <em>where does this one thing go?</em> But interesting notes refuse to live in one place. A note about deliberate practice is also a note about attention, also a note about teaching, also a note about how I learned to swim. A folder makes me amputate four of those to keep one. A tag keeps all five.</p><p>That's why every note here wears its tags out loud — little <em>#hash</em> rows on each card, a thread list at the foot of every note. They aren't decoration; they're the second navigation system, running underneath the links.</p><h2>How I tag without making a mess</h2><ul><li><strong>Tag the thread, not the topic.</strong> <em>#attention</em> is a thread that runs through many notes; <em>#blog-post-march</em> is noise.</li><li><strong>Reuse ruthlessly.</strong> A tag used once is a typo. A tag used thirty times is a map.</li><li><strong>Let tags retire.</strong> If a thread stops growing, stop tagging it. The garden can have fallow beds.</li></ul><blockquote><p>Folders are for things that are finished. Tags are for things that are still alive.</p></blockquote><p>Search finds the note you already know exists. Tags surface the notes you forgot you connected — which is the whole reason to keep a garden in the first place.</p>"
+      },
+      {
+        "title": "Field report: a month of tending in public",
+        "category": "Field Reports",
+        "image": "ember",
+        "excerpt": "Thirty days, sixty notes, and the surprising discovery that strangers weed your garden better than you do.",
+        "content": "<p>I spent thirty days publishing every note the day I planted it — rough edges and all — instead of hoarding drafts. Here's the honest field report.</p><p>What I expected: embarrassment. What I got: corrections. A reader pointed me to the original source for a quote I'd half-remembered. Another untangled a claim I'd made about memory that turned out to be folklore. The garden got <em>more</em> accurate by being public, not less.</p><h2>What worked</h2><ul><li>Notes published rough still got linked — done-and-visible beats perfect-and-hidden.</li><li>The \"last tended\" stamp made revisiting feel like progress, so I revisited.</li><li>Tags surfaced two notes I'd written months apart that turned out to be the same idea. I merged them.</li></ul><h2>What didn't</h2><p>I over-tagged in week one — thirty notes, forty tags, half of them used once. I spent a Sunday weeding the tag list down to twelve real threads, and the maps got legible again.</p><blockquote><p>A garden tended in public is slower to plant and faster to grow. The strangers are the gardeners you didn't know you'd hired.</p></blockquote><p>Next month's experiment: stop writing new notes entirely for two weeks and do nothing but tend the old ones. I suspect the best note in here is one I've already planted and simply haven't finished thinking about.</p>"
+      }
+    ],
+    "comments": [
+      {
+        "author": "Iris Tan",
+        "content": "The \"link before you leave\" rule reorganised my whole system in a week. I used to have 400 orphan notes; now everything points somewhere and I actually find things by accident."
+      },
+      {
+        "author": "Marcus Reyes",
+        "content": "Small correction for the field report — the memory-as-muscle quote is usually misattributed; the earliest version I can find is from a 1972 lecture, not the book you linked. Happy to send the source."
+      },
+      {
+        "author": "Wren Calloway",
+        "content": "Marcus, that's exactly the kind of weeding I hoped for — send it over and I'll tend the note and credit you in the margin. This is the garden working as intended."
+      }
+    ]
   }
 };
-
-

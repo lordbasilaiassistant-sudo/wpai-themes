@@ -1,0 +1,312 @@
+/**
+ * Cypher — Code Blocks
+ *
+ * Premium styling for <pre><code> blocks, with NO external highlighter library.
+ *
+ * Design notes:
+ * - Colors derive from `currentColor` / `inherit` plus a few scoped --cypher-*
+ *   custom properties, so blocks read correctly on light AND dark themes with no
+ *   hardcoded grays. A theme can override any --cypher-* property to fully
+ *   restyle the block without touching this file.
+ * - The block's surface is a translucent tint of the surrounding text color
+ *   (color-mix on currentColor), with a graceful @supports fallback for browsers
+ *   without color-mix. We never paint a solid background that fights the theme.
+ * - Line numbers are drawn with a CSS counter on the wrapper — no per-line markup
+ *   and no JavaScript — so they cost nothing and add zero layout shift.
+ * - Long lines scroll horizontally inside the block (not the page), with a tidy,
+ *   theme-tinted scrollbar.
+ * - The copy button is hidden until `.cypher-js` is set on <html> (before first
+ *   paint), so no-JS visitors never see a dead control. The only transition is a
+ *   compositor-friendly color/border state change (no layout-affecting or motion
+ *   properties are animated); prefers-reduced-motion is honored both here (the
+ *   @media block at the foot of this file) and by the JS gate.
+ */
+
+.cypher-block {
+	/* Tunable surface — themes may override these custom properties. */
+	--cypher-radius: 12px;
+	--cypher-pad: 1em 1.15em;
+	--cypher-gutter: 3.25em; /* Reserved line-number column; fixed = no shift. */
+
+	/* Tint everything from the surrounding text color so it adapts to any theme. */
+	--cypher-fg: currentColor;
+	--cypher-muted: color-mix( in srgb, currentColor 60%, transparent );
+	--cypher-bg: color-mix( in srgb, currentColor 5%, transparent );
+	--cypher-bar-bg: color-mix( in srgb, currentColor 8%, transparent );
+	--cypher-border: color-mix( in srgb, currentColor 14%, transparent );
+	--cypher-accent: color-mix( in srgb, currentColor 88%, transparent );
+	--cypher-btn-bg: color-mix( in srgb, currentColor 8%, transparent );
+	--cypher-btn-hover-bg: color-mix( in srgb, currentColor 16%, transparent );
+	--cypher-rule: color-mix( in srgb, currentColor 12%, transparent );
+	--cypher-num: color-mix( in srgb, currentColor 38%, transparent );
+	--cypher-ok: color-mix( in srgb, currentColor 78%, transparent );
+
+	box-sizing: border-box;
+	max-width: 100%;
+	margin: 0 0 1.6em;
+	border: 1px solid var( --cypher-border );
+	border-radius: var( --cypher-radius );
+	background: var( --cypher-bg );
+	color: var( --cypher-fg );
+	overflow: hidden; /* Clip children to the rounded corners. */
+}
+
+.cypher-block *,
+.cypher-block *::before,
+.cypher-block *::after {
+	box-sizing: border-box;
+}
+
+/* Browsers without color-mix() fall back to subtle, theme-safe values built from
+   a translucent currentColor and a transparent surface. */
+@supports not ( background: color-mix( in srgb, currentColor 5%, transparent ) ) {
+	.cypher-block {
+		--cypher-muted: inherit;
+		--cypher-bg: transparent;
+		--cypher-bar-bg: transparent;
+		--cypher-border: currentColor;
+		--cypher-accent: currentColor;
+		--cypher-btn-bg: transparent;
+		--cypher-btn-hover-bg: transparent;
+		--cypher-rule: currentColor;
+		--cypher-num: currentColor;
+		--cypher-ok: currentColor;
+		border-color: currentColor;
+	}
+}
+
+/* ---------------------------------------------------------------------------
+   Top bar: language label (left) + copy button (right).
+--------------------------------------------------------------------------- */
+.cypher-block__bar {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	min-height: 2.35em;
+	padding: 0.35em 0.55em 0.35em 0.95em;
+	background: var( --cypher-bar-bg );
+	border-bottom: 1px solid var( --cypher-rule );
+	font-family: inherit;
+}
+
+/* When the bar has no real content (no language, copy hidden), it is not
+   rendered at all by PHP; this keeps the spacer harmless when copy-only. */
+.cypher-block__bar-spacer {
+	flex: 1 1 auto;
+}
+
+.cypher-block__lang {
+	flex: 0 0 auto;
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+	color: var( --cypher-muted );
+	user-select: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Copy button.
+
+   A real <button>: keyboard operable, visible focus. Hidden until JS confirms
+   it can do something, so no-JS visitors never see a dead control.
+--------------------------------------------------------------------------- */
+.cypher-block__copy {
+	display: none; /* Revealed under .cypher-js below. */
+	align-items: center;
+	gap: 0.4em;
+	flex: 0 0 auto;
+	margin: 0;
+	padding: 0.3em 0.6em;
+	border: 1px solid var( --cypher-border );
+	border-radius: 8px;
+	background: var( --cypher-btn-bg );
+	color: inherit;
+	font: inherit;
+	font-size: 0.78rem;
+	line-height: 1.2;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+	transition:
+		background-color 0.18s ease,
+		border-color 0.18s ease,
+		color 0.18s ease;
+}
+
+.cypher-js .cypher-block__copy {
+	display: inline-flex;
+}
+
+.cypher-block__copy:hover {
+	background: var( --cypher-btn-hover-bg );
+}
+
+.cypher-block__copy:focus-visible {
+	outline: 2px solid var( --cypher-accent );
+	outline-offset: 2px;
+}
+
+.cypher-block__icon {
+	flex: 0 0 auto;
+	width: 1em;
+	height: 1em;
+}
+
+/* Idle vs. confirmed icon swap, driven by the button's data-copied state. */
+.cypher-block__icon--done {
+	display: none;
+	color: var( --cypher-ok );
+}
+
+.cypher-block__copy[data-copied="true"] .cypher-block__icon--copy {
+	display: none;
+}
+
+.cypher-block__copy[data-copied="true"] .cypher-block__icon--done {
+	display: inline;
+}
+
+.cypher-block__copy[data-copied="true"] {
+	color: var( --cypher-ok );
+	border-color: var( --cypher-ok );
+}
+
+.cypher-block__copy-label {
+	white-space: nowrap;
+}
+
+/* The aria-live status node is announced to AT but kept visually out of the way
+   (the visible button label already conveys state to sighted users). */
+.cypher-block__status {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	overflow: hidden;
+	clip: rect( 0 0 0 0 );
+	clip-path: inset( 50% );
+	white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------------
+   The scrolling viewport + the <pre><code> itself.
+
+   Long lines scroll horizontally inside the block, never the page. The <pre>
+   keeps a monospace stack and preserves whitespace; we never alter the code.
+--------------------------------------------------------------------------- */
+.cypher-block__scroll {
+	overflow-x: auto;
+	overflow-y: hidden;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	scrollbar-color: var( --cypher-num ) transparent;
+}
+
+.cypher-block__scroll::-webkit-scrollbar {
+	height: 9px;
+}
+
+.cypher-block__scroll::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.cypher-block__scroll::-webkit-scrollbar-thumb {
+	background: var( --cypher-num );
+	border-radius: 999px;
+}
+
+.cypher-block .cypher-pre {
+	margin: 0;
+	padding: var( --cypher-pad );
+	background: none;
+	border: 0;
+	border-radius: 0;
+	color: inherit;
+	font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+	font-size: 0.9rem;
+	line-height: 1.6;
+	tab-size: 4;
+	-moz-tab-size: 4;
+	white-space: pre; /* Preserve formatting; the wrapper handles overflow. */
+	min-width: 100%;
+	width: max-content; /* So the scroll container can measure long lines. */
+}
+
+.cypher-block .cypher-pre code {
+	font: inherit;
+	color: inherit;
+	background: none;
+	padding: 0;
+	border: 0;
+	white-space: inherit;
+}
+
+/* ---------------------------------------------------------------------------
+   Line numbers via a CSS counter.
+
+   We reserve a fixed-width gutter on the <pre> up front, so adding numbers never
+   shifts the layout. The behavior layer (cypher.js) wraps each source line in a
+   <span class="cypher-line"> WITHOUT changing a single character of the code, and
+   the counter below paints accurate, right-aligned ordinals into the reserved
+   gutter — purely in CSS, no per-line numbers baked into markup. If JavaScript is
+   absent (or the code was pre-highlighted, so we leave it untouched), the gutter
+   and its hairline rule still read as an intentional code margin: nothing breaks,
+   the numbers are simply not drawn.
+--------------------------------------------------------------------------- */
+.cypher-block--numbered .cypher-pre {
+	padding-left: calc( var( --cypher-gutter ) + 0.4em );
+	position: relative;
+	counter-reset: cypher-line;
+}
+
+/* A hairline rule separating the gutter from the code. */
+.cypher-block--numbered .cypher-pre::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: var( --cypher-gutter );
+	width: 1px;
+	background: var( --cypher-rule );
+	pointer-events: none;
+}
+
+/* Numbered lines: each .cypher-line (added by the behavior layer) gets an
+   incrementing counter rendered in the reserved gutter. If JS is absent the
+   gutter + rule still read as an intentional code margin (no broken layout). */
+.cypher-block--numbered .cypher-line {
+	display: block;
+	counter-increment: cypher-line;
+	position: relative;
+}
+
+.cypher-block--numbered .cypher-line::before {
+	content: counter( cypher-line );
+	position: absolute;
+	left: calc( ( var( --cypher-gutter ) + 0.4em ) * -1 );
+	width: var( --cypher-gutter );
+	padding-right: 0.85em;
+	text-align: right;
+	color: var( --cypher-num );
+	font-variant-numeric: tabular-nums;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Inline <code> (not inside a Cypher block) is intentionally left alone: we
+   only style block-level code so we never restyle the theme's inline code.
+--------------------------------------------------------------------------- */
+
+/* ---------------------------------------------------------------------------
+   Reduced-motion safety net (mirrors the JS gate in cypher.js).
+
+   Disable the copy button's state transition so the confirmation simply snaps.
+--------------------------------------------------------------------------- */
+@media ( prefers-reduced-motion: reduce ) {
+	.cypher-block__copy {
+		transition: none;
+	}
+}

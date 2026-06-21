@@ -1,0 +1,2396 @@
+/*
+Theme Name: Orbit
+Theme URI: https://lordbasilaiassistant-sudo.github.io/wpai-themes/
+Author: WPAI Themes
+Author URI: https://github.com/lordbasilaiassistant-sudo/wpai-themes
+Category: SaaS & Startup
+Description: A bold dark dev-tool and startup theme for product launches and engineering blogs. Deep space-navy near-black canvas, a glowing neon-cyan accent, and a confident geometric sans drive a high-energy homepage: an animated starfield/orbit hero, count-up metrics, a feature grid, and big magnetic CTAs. Luminous cards, code-friendly typography, and accessible focus states throughout. No external fonts, no tracking.
+Version: 1.0.0
+Requires at least: 5.0
+Tested up to: 6.5
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: orbit
+Tags: blog, business, landing, two-columns, right-sidebar, custom-menu, custom-logo, featured-images, threaded-comments, translation-ready, editor-style, block-styles, dark, accessibility-ready
+*/
+
+/* =========================================================================
+   1. Design tokens
+   ========================================================================= */
+:root {
+	/* Space & surfaces — deep navy near-black with luminous panels */
+	--o-bg: #070b16;
+	--o-bg-2: #0b1120;
+	--o-surface: #0f172a;
+	--o-surface-2: #131c33;
+	--o-elevate: #18233f;
+
+	/* Text */
+	--o-ink: #f2f6ff;
+	--o-ink-soft: #aeb9d4;
+	--o-faint: #7986a6;
+	--o-line: #1e2a47;
+	--o-line-soft: #16213b;
+
+	/* Accent — electric neon cyan. Derived shades are mixed from --o-accent so
+	   the single Accent control in the Customizer cascades everywhere. */
+	--o-accent: #2ee6c8;
+	--o-accent-2: #3aa0ff;
+	--o-accent-deep: color-mix(in srgb, var(--o-accent) 70%, #000);
+	--o-accent-soft: color-mix(in srgb, var(--o-accent) 18%, var(--o-surface));
+	--o-accent-wash: color-mix(in srgb, var(--o-accent) 10%, var(--o-surface));
+	--o-on-accent: #04140f;
+
+	/* Type — bold geometric system sans + a real mono for the dev-tool voice */
+	--o-sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	--o-display: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI Variable Display", "Segoe UI", Roboto, sans-serif;
+	--o-mono: ui-monospace, "SFMono-Regular", "SF Mono", "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+	/* Modular type scale */
+	--o-fs-base: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+	--o-fs-sm: 0.875rem;
+	--o-fs-xs: 0.76rem;
+	--o-fs-lg: clamp(1.2rem, 1.05rem + 0.6vw, 1.45rem);
+	--o-fs-xl: clamp(1.6rem, 1.2rem + 1.7vw, 2.3rem);
+	--o-fs-2xl: clamp(2.1rem, 1.4rem + 3.2vw, 3.5rem);
+	--o-fs-3xl: clamp(2.8rem, 1.7rem + 5vw, 5rem);
+
+	/* Measure & rhythm */
+	--o-measure: 70ch;
+	--o-shell: 78rem;
+	--o-gap: clamp(2rem, 5vw, 4rem);
+	--o-radius: 16px;
+	--o-radius-lg: 22px;
+	--o-radius-sm: 10px;
+
+	--o-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 60px -32px rgba(0, 0, 0, 0.85);
+	--o-shadow-soft: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 16px 40px -28px rgba(0, 0, 0, 0.8);
+	--o-glow: 0 0 0 1px color-mix(in srgb, var(--o-accent) 35%, transparent), 0 0 32px -6px color-mix(in srgb, var(--o-accent) 55%, transparent);
+
+	--o-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* =========================================================================
+   2. Base & reset
+   ========================================================================= */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	background: var(--o-bg);
+	color: var(--o-ink);
+	font-family: var(--o-sans);
+	font-size: var(--o-fs-base);
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	/* A faint engineered grid + radial wash on the deep navy canvas. */
+	background-image:
+		radial-gradient(120% 80% at 50% -10%, color-mix(in srgb, var(--o-accent-2) 12%, transparent) 0%, transparent 60%),
+		linear-gradient(var(--o-line-soft) 1px, transparent 1px),
+		linear-gradient(90deg, var(--o-line-soft) 1px, transparent 1px);
+	background-size: 100% 100%, 46px 46px, 46px 46px;
+	background-position: center top, center top, center top;
+	background-attachment: fixed, fixed, fixed;
+}
+
+a {
+	color: var(--o-accent);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.18em;
+	transition: color 0.18s var(--o-ease);
+}
+
+a:hover,
+a:focus {
+	color: color-mix(in srgb, var(--o-accent) 80%, #fff);
+}
+
+img,
+svg,
+video {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+p {
+	margin: 0 0 1.2em;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	font-family: var(--o-display);
+	font-weight: 700;
+	line-height: 1.1;
+	letter-spacing: -0.02em;
+	color: var(--o-ink);
+	text-wrap: balance;
+}
+
+hr {
+	border: 0;
+	height: 1px;
+	background: var(--o-line);
+	margin: 2.5rem 0;
+}
+
+::selection {
+	background: color-mix(in srgb, var(--o-accent) 35%, transparent);
+	color: #fff;
+}
+
+/* =========================================================================
+   3. Accessibility
+   ========================================================================= */
+.screen-reader-text {
+	position: absolute !important;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.skip-link.screen-reader-text:focus {
+	position: fixed !important;
+	clip: auto;
+	clip-path: none;
+	width: auto;
+	height: auto;
+	margin: 0;
+	top: 1rem;
+	left: 1rem;
+	z-index: 1000;
+	background: var(--o-accent);
+	color: var(--o-on-accent);
+	padding: 0.7rem 1.1rem;
+	border-radius: var(--o-radius-sm);
+	font-weight: 700;
+	font-size: var(--o-fs-sm);
+	box-shadow: var(--o-glow);
+}
+
+:focus-visible {
+	outline: 2px solid var(--o-accent);
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+
+/* =========================================================================
+   4. Layout shells
+   ========================================================================= */
+.site-wrap {
+	width: 100%;
+	max-width: var(--o-shell);
+	margin-inline: auto;
+	padding-inline: clamp(1.25rem, 5vw, 3rem);
+}
+
+.site-main {
+	padding-block: clamp(2rem, 5vw, 3.5rem) clamp(3rem, 7vw, 5.5rem);
+}
+
+.layout {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--o-gap);
+	align-items: start;
+}
+
+.layout__main {
+	min-width: 0;
+}
+
+@media (min-width: 64rem) {
+	.layout {
+		grid-template-columns: minmax(0, 1fr) 18rem;
+	}
+
+	.orbit-no-sidebar .layout {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.layout__aside {
+		position: sticky;
+		top: 2rem;
+	}
+}
+
+/* =========================================================================
+   5. Header & navigation
+   ========================================================================= */
+.site-header {
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	background: color-mix(in srgb, var(--o-bg) 82%, transparent);
+	backdrop-filter: saturate(140%) blur(12px);
+	-webkit-backdrop-filter: saturate(140%) blur(12px);
+	border-bottom: 1px solid var(--o-line);
+}
+
+.site-header__inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem 2rem;
+	padding-block: clamp(0.9rem, 2vw, 1.25rem);
+	flex-wrap: wrap;
+}
+
+.site-branding {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	min-width: 0;
+}
+
+.site-logo img {
+	border-radius: 10px;
+}
+
+/* The orbit glyph mark beside the wordmark */
+.site-mark {
+	flex: 0 0 auto;
+	width: 2.2rem;
+	height: 2.2rem;
+	display: grid;
+	place-items: center;
+	border-radius: 10px;
+	background: linear-gradient(135deg, var(--o-accent), var(--o-accent-2));
+	box-shadow: var(--o-glow);
+}
+
+.site-mark svg {
+	width: 1.35rem;
+	height: 1.35rem;
+	color: var(--o-on-accent);
+}
+
+.site-branding__text {
+	min-width: 0;
+}
+
+.site-title {
+	font-family: var(--o-display);
+	font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.6rem);
+	font-weight: 700;
+	letter-spacing: -0.03em;
+	margin: 0;
+	line-height: 1.05;
+}
+
+.site-title a {
+	color: var(--o-ink);
+	text-decoration: none;
+}
+
+.site-title a:hover {
+	color: var(--o-accent);
+}
+
+.site-description {
+	color: var(--o-faint);
+	font-size: var(--o-fs-xs);
+	letter-spacing: 0.02em;
+	margin: 0.1rem 0 0;
+	font-family: var(--o-mono);
+}
+
+/* Primary nav */
+.main-nav {
+	display: flex;
+	align-items: center;
+	gap: 1.4rem;
+}
+
+.main-nav__list {
+	list-style: none;
+	display: flex;
+	align-items: center;
+	gap: clamp(0.9rem, 1.8vw, 1.7rem);
+	margin: 0;
+	padding: 0;
+	flex-wrap: wrap;
+}
+
+.main-nav__list a {
+	display: inline-block;
+	color: var(--o-ink-soft);
+	font-size: var(--o-fs-sm);
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	text-decoration: none;
+	padding: 0.3rem 0;
+	position: relative;
+}
+
+.main-nav__list a::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -0.15rem;
+	height: 2px;
+	border-radius: 2px;
+	background: linear-gradient(90deg, var(--o-accent), var(--o-accent-2));
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 0.22s var(--o-ease);
+}
+
+.main-nav__list a:hover,
+.main-nav__list a:focus {
+	color: var(--o-ink);
+}
+
+.main-nav__list a:hover::after,
+.main-nav__list a:focus::after,
+.main-nav__list .current-menu-item > a::after,
+.main-nav__list .current_page_item > a::after {
+	transform: scaleX(1);
+}
+
+.main-nav__list .current-menu-item > a,
+.main-nav__list .current_page_item > a {
+	color: var(--o-ink);
+}
+
+.main-nav__list ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* A header CTA appended after the menu */
+.header-cta {
+	display: none;
+}
+
+@media (min-width: 48rem) {
+	.header-cta {
+		display: inline-flex;
+	}
+}
+
+/* Mobile toggle */
+.nav-toggle {
+	display: none;
+	align-items: center;
+	justify-content: center;
+	width: 2.7rem;
+	height: 2.7rem;
+	padding: 0;
+	background: var(--o-surface);
+	border: 1px solid var(--o-line);
+	border-radius: var(--o-radius-sm);
+	color: var(--o-ink);
+	cursor: pointer;
+}
+
+.nav-toggle__bar,
+.nav-toggle__bar::before,
+.nav-toggle__bar::after {
+	content: "";
+	display: block;
+	width: 19px;
+	height: 2px;
+	background: currentColor;
+	border-radius: 2px;
+	transition: transform 0.22s var(--o-ease), opacity 0.18s var(--o-ease);
+}
+
+.nav-toggle__bar {
+	position: relative;
+}
+
+.nav-toggle__bar::before {
+	position: absolute;
+	top: -6px;
+}
+
+.nav-toggle__bar::after {
+	position: absolute;
+	top: 6px;
+}
+
+.main-nav.is-open .nav-toggle__bar {
+	background: transparent;
+}
+
+.main-nav.is-open .nav-toggle__bar::before {
+	top: 0;
+	transform: rotate(45deg);
+}
+
+.main-nav.is-open .nav-toggle__bar::after {
+	top: 0;
+	transform: rotate(-45deg);
+}
+
+@media (max-width: 47.99rem) {
+	.main-nav.has-js {
+		position: relative;
+	}
+
+	.main-nav.has-js .nav-toggle {
+		display: inline-flex;
+		order: 2;
+	}
+
+	.main-nav.has-js .main-nav__list {
+		position: absolute;
+		right: 0;
+		top: calc(100% + 0.7rem);
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.1rem;
+		background: var(--o-surface);
+		border: 1px solid var(--o-line);
+		border-radius: var(--o-radius);
+		box-shadow: var(--o-shadow);
+		padding: 0.7rem 1.1rem;
+		min-width: 13rem;
+		z-index: 50;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-6px);
+		transition: opacity 0.18s var(--o-ease), transform 0.18s var(--o-ease), visibility 0.18s;
+	}
+
+	.main-nav.has-js.is-open .main-nav__list {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+
+	.main-nav.has-js .main-nav__list a {
+		display: block;
+		width: 100%;
+		padding-block: 0.55rem;
+	}
+
+	.main-nav.has-js .main-nav__list a::after {
+		display: none;
+	}
+}
+
+/* =========================================================================
+   6. Hero — the signature starfield / orbit launch panel
+   ========================================================================= */
+.hero {
+	position: relative;
+	overflow: hidden;
+	margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+	border: 1px solid var(--o-line);
+	border-radius: var(--o-radius-lg);
+	background:
+		radial-gradient(110% 130% at 85% -10%, color-mix(in srgb, var(--o-accent) 22%, transparent) 0%, transparent 45%),
+		radial-gradient(90% 120% at 0% 110%, color-mix(in srgb, var(--o-accent-2) 22%, transparent) 0%, transparent 50%),
+		linear-gradient(180deg, var(--o-surface), var(--o-bg-2));
+	box-shadow: var(--o-shadow);
+	isolation: isolate;
+}
+
+.hero__inner {
+	position: relative;
+	z-index: 2;
+	padding: clamp(2.25rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+	max-width: 56rem;
+}
+
+/* The animated starfield canvas (CSS-only fallback dots; motion.js drifts orbits). */
+.hero__field {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	overflow: hidden;
+}
+
+.hero__field svg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* Orbit rings drawn behind the copy */
+.hero__orbits {
+	position: absolute;
+	right: clamp(-12rem, -8vw, -6rem);
+	top: 50%;
+	width: min(42rem, 70%);
+	aspect-ratio: 1;
+	transform: translateY(-50%);
+	z-index: 1;
+	opacity: 0.55;
+	pointer-events: none;
+	color: var(--o-accent);
+}
+
+.hero__orbits svg {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+.hero__orbit-ring {
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1;
+	opacity: 0.35;
+}
+
+.hero__planet {
+	fill: currentColor;
+	filter: drop-shadow(0 0 6px currentColor);
+}
+
+.hero__planet--b {
+	color: var(--o-accent-2);
+}
+
+.hero__badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5em;
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--o-accent);
+	background: var(--o-accent-wash);
+	border: 1px solid color-mix(in srgb, var(--o-accent) 35%, transparent);
+	padding: 0.4em 0.9em;
+	border-radius: 999px;
+	margin: 0 0 1.4rem;
+}
+
+.hero__badge-dot {
+	width: 0.5em;
+	height: 0.5em;
+	border-radius: 50%;
+	background: var(--o-accent);
+	box-shadow: 0 0 0 0 color-mix(in srgb, var(--o-accent) 70%, transparent);
+}
+
+.hero__title {
+	font-size: var(--o-fs-3xl);
+	line-height: 0.98;
+	margin: 0 0 1rem;
+	letter-spacing: -0.035em;
+}
+
+.hero__title .hero__grad {
+	background: linear-gradient(100deg, var(--o-accent), var(--o-accent-2));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+.hero__lead {
+	font-size: var(--o-fs-lg);
+	line-height: 1.5;
+	color: var(--o-ink-soft);
+	margin: 0 0 2rem;
+	max-width: 44ch;
+}
+
+.hero__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.8rem 1rem;
+	align-items: center;
+}
+
+/* =========================================================================
+   7. Metrics — count-up signature
+   ========================================================================= */
+.metrics {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: clamp(0.8rem, 2vw, 1.4rem);
+	margin: clamp(2.5rem, 6vw, 4rem) 0;
+}
+
+@media (min-width: 40rem) {
+	.metrics {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+.metric {
+	background: var(--o-surface);
+	border: 1px solid var(--o-line);
+	border-radius: var(--o-radius);
+	padding: clamp(1.1rem, 3vw, 1.6rem);
+	text-align: left;
+	position: relative;
+	overflow: hidden;
+}
+
+.metric::before {
+	content: "";
+	position: absolute;
+	inset: 0 0 auto 0;
+	height: 2px;
+	background: linear-gradient(90deg, var(--o-accent), var(--o-accent-2));
+	opacity: 0.7;
+}
+
+.metric__value {
+	font-family: var(--o-display);
+	font-size: clamp(1.8rem, 1.2rem + 2vw, 2.6rem);
+	font-weight: 700;
+	letter-spacing: -0.03em;
+	line-height: 1;
+	color: var(--o-ink);
+}
+
+.metric__value .metric__suffix {
+	color: var(--o-accent);
+}
+
+.metric__label {
+	margin: 0.5rem 0 0;
+	font-size: var(--o-fs-xs);
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--o-faint);
+}
+
+/* =========================================================================
+   8. Feature grid
+   ========================================================================= */
+.feature-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: clamp(1rem, 2.5vw, 1.4rem);
+	margin: clamp(2.5rem, 6vw, 4rem) 0;
+}
+
+@media (min-width: 40rem) {
+	.feature-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.section-head {
+	max-width: 40rem;
+	margin-bottom: clamp(1.6rem, 4vw, 2.5rem);
+}
+
+.section-head__kicker {
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	font-weight: 600;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--o-accent);
+	margin: 0 0 0.6rem;
+}
+
+.section-head__title {
+	font-size: var(--o-fs-xl);
+	margin: 0;
+}
+
+.feature {
+	background: var(--o-surface);
+	border: 1px solid var(--o-line);
+	border-radius: var(--o-radius);
+	padding: clamp(1.3rem, 3vw, 1.8rem);
+	transition: border-color 0.2s var(--o-ease), transform 0.2s var(--o-ease), box-shadow 0.2s var(--o-ease);
+}
+
+.feature:hover,
+.feature:focus-within {
+	border-color: color-mix(in srgb, var(--o-accent) 45%, var(--o-line));
+	transform: translateY(-3px);
+	box-shadow: var(--o-shadow-soft);
+}
+
+.feature__icon {
+	width: 2.8rem;
+	height: 2.8rem;
+	display: grid;
+	place-items: center;
+	border-radius: 12px;
+	background: var(--o-accent-wash);
+	border: 1px solid color-mix(in srgb, var(--o-accent) 30%, transparent);
+	color: var(--o-accent);
+	margin-bottom: 1rem;
+}
+
+.feature__icon svg {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+.feature__title {
+	font-size: var(--o-fs-lg);
+	margin: 0 0 0.4rem;
+}
+
+.feature__text {
+	margin: 0;
+	color: var(--o-ink-soft);
+	font-size: var(--o-fs-sm);
+	line-height: 1.55;
+}
+
+/* =========================================================================
+   9. Section: latest posts heading
+   ========================================================================= */
+.posts-head {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 1rem;
+	flex-wrap: wrap;
+	margin-bottom: clamp(1.6rem, 4vw, 2.4rem);
+}
+
+/* =========================================================================
+   10. Archive page header
+   ========================================================================= */
+.page-header {
+	margin-bottom: clamp(2rem, 4vw, 3rem);
+	padding-bottom: 1.5rem;
+	border-bottom: 1px solid var(--o-line);
+}
+
+.page-header__title {
+	font-size: var(--o-fs-xl);
+	margin: 0;
+}
+
+.page-header__title span {
+	background: linear-gradient(100deg, var(--o-accent), var(--o-accent-2));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+.page-header__desc {
+	color: var(--o-ink-soft);
+	margin-top: 0.6rem;
+}
+
+/* =========================================================================
+   11. Entry meta primitives
+   ========================================================================= */
+.entry-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.55rem 0.7rem;
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	color: var(--o-faint);
+	letter-spacing: 0.02em;
+	margin-bottom: 0.85rem;
+}
+
+.entry-meta a {
+	color: var(--o-faint);
+	text-decoration: none;
+}
+
+.entry-meta a:hover {
+	color: var(--o-ink-soft);
+}
+
+.entry-meta__sep {
+	color: var(--o-line);
+}
+
+.entry-cat {
+	display: inline-block;
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--o-accent) !important;
+	background: var(--o-accent-wash);
+	border: 1px solid color-mix(in srgb, var(--o-accent) 30%, transparent);
+	padding: 0.22em 0.7em;
+	border-radius: 999px;
+	text-decoration: none;
+	transition: background 0.18s var(--o-ease), color 0.18s var(--o-ease), border-color 0.18s var(--o-ease);
+}
+
+.entry-cat:hover,
+.entry-cat:focus {
+	background: var(--o-accent);
+	color: var(--o-on-accent) !important;
+	border-color: var(--o-accent);
+}
+
+/* =========================================================================
+   12. Featured media (image or graceful placeholder)
+   ========================================================================= */
+.entry-media {
+	display: block;
+	position: relative;
+	border-radius: var(--o-radius);
+	overflow: hidden;
+	background: var(--o-surface-2);
+	border: 1px solid var(--o-line);
+	box-shadow: var(--o-shadow-soft);
+	aspect-ratio: 16 / 10;
+	isolation: isolate;
+}
+
+.entry-media__img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.5s var(--o-ease);
+}
+
+a.entry-media:hover .entry-media__img,
+a.entry-media:focus .entry-media__img {
+	transform: scale(1.04);
+}
+
+/* Placeholder: a deep nebula gradient with a mono glyph */
+.entry-media.is-placeholder {
+	display: grid;
+	place-items: center;
+	background:
+		radial-gradient(120% 120% at 0% 0%, hsl(var(--orbit-hue, 180) 70% 22%) 0%, transparent 55%),
+		radial-gradient(120% 120% at 100% 100%, hsl(calc(var(--orbit-hue, 180) + 40) 65% 24%) 0%, transparent 55%),
+		linear-gradient(135deg, var(--o-surface-2), var(--o-bg-2));
+}
+
+.entry-media__glyph {
+	font-family: var(--o-display);
+	font-size: clamp(3rem, 10vw, 5.5rem);
+	font-weight: 700;
+	color: hsl(var(--orbit-hue, 180) 80% 70%);
+	opacity: 0.7;
+	line-height: 1;
+	user-select: none;
+	text-shadow: 0 0 24px hsl(var(--orbit-hue, 180) 80% 55% / 0.5);
+}
+
+/* =========================================================================
+   13. Entry — list card
+   ========================================================================= */
+.entry {
+	margin: 0;
+}
+
+.entry--list {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1.2rem;
+	background: var(--o-surface);
+	border: 1px solid var(--o-line);
+	border-radius: var(--o-radius);
+	padding: clamp(1rem, 2.5vw, 1.4rem);
+	margin-bottom: clamp(1rem, 2.5vw, 1.4rem);
+	transition: border-color 0.2s var(--o-ease), transform 0.2s var(--o-ease), box-shadow 0.2s var(--o-ease);
+}
+
+.entry--list:hover,
+.entry--list:focus-within {
+	border-color: color-mix(in srgb, var(--o-accent) 40%, var(--o-line));
+	transform: translateY(-2px);
+	box-shadow: var(--o-shadow-soft);
+}
+
+.entry--list:last-of-type {
+	margin-bottom: 0;
+}
+
+.entry--list .entry-media {
+	aspect-ratio: 16 / 10;
+}
+
+.entry--list .entry-title {
+	font-size: var(--o-fs-lg);
+	margin: 0 0 0.5rem;
+}
+
+@media (min-width: 34rem) {
+	.entry--list {
+		grid-template-columns: 13rem 1fr;
+		gap: 1.4rem;
+		align-items: center;
+	}
+
+	.entry--list .entry-media {
+		aspect-ratio: 4 / 3;
+	}
+}
+
+/* =========================================================================
+   14. Entry — lead story
+   ========================================================================= */
+.entry--lead {
+	margin-bottom: clamp(1.4rem, 3vw, 2rem);
+	background: var(--o-surface);
+	border: 1px solid var(--o-line);
+	border-radius: var(--o-radius-lg);
+	padding: clamp(1.2rem, 3vw, 1.8rem);
+	box-shadow: var(--o-shadow-soft);
+}
+
+.entry--lead .entry-media {
+	aspect-ratio: 16 / 9;
+	margin-bottom: clamp(1.4rem, 3vw, 2rem);
+}
+
+.entry--lead .entry__body {
+	max-width: 48ch;
+}
+
+.entry--lead .entry-title {
+	font-size: var(--o-fs-2xl);
+	line-height: 1.02;
+	margin: 0 0 0.7rem;
+}
+
+.entry--lead .entry-content {
+	font-size: var(--o-fs-lg);
+	line-height: 1.5;
+	color: var(--o-ink-soft);
+}
+
+.entry--lead .entry-content p {
+	margin-bottom: 0.8em;
+}
+
+@media (min-width: 50rem) {
+	.entry--lead {
+		display: grid;
+		grid-template-columns: 1.1fr 1fr;
+		gap: clamp(1.6rem, 4vw, 2.6rem);
+		align-items: center;
+	}
+
+	.entry--lead .entry-media {
+		margin-bottom: 0;
+		aspect-ratio: 5 / 4;
+		height: 100%;
+	}
+
+	.entry--lead .entry__body {
+		max-width: none;
+	}
+}
+
+/* =========================================================================
+   15. Entry titles & read-more
+   ========================================================================= */
+.entry-title {
+	font-family: var(--o-display);
+	margin: 0 0 0.45rem;
+}
+
+.entry-title a {
+	color: var(--o-ink);
+	text-decoration: none;
+	background-image: linear-gradient(var(--o-accent), var(--o-accent));
+	background-size: 0% 2px;
+	background-position: 0 100%;
+	background-repeat: no-repeat;
+	transition: background-size 0.3s var(--o-ease), color 0.18s var(--o-ease);
+}
+
+.entry-title a:hover,
+.entry-title a:focus {
+	color: var(--o-accent);
+	background-size: 100% 2px;
+}
+
+.read-more {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45em;
+	margin-top: 0.4rem;
+	font-size: var(--o-fs-sm);
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	color: var(--o-accent);
+	text-decoration: none;
+}
+
+.read-more__arrow {
+	transition: transform 0.22s var(--o-ease);
+}
+
+.read-more:hover .read-more__arrow,
+.read-more:focus .read-more__arrow {
+	transform: translateX(0.3em);
+}
+
+/* =========================================================================
+   16. List excerpt typography
+   ========================================================================= */
+.entry--list .entry-content,
+.entry--lead .entry-content {
+	color: var(--o-ink-soft);
+}
+
+.entry--list .entry-content {
+	font-size: var(--o-fs-sm);
+	line-height: 1.55;
+}
+
+.entry--list .entry-content p:last-of-type {
+	margin-bottom: 0.6em;
+}
+
+/* =========================================================================
+   17. Single & page — the reading experience
+   ========================================================================= */
+.entry--singular {
+	max-width: var(--o-measure);
+	background: var(--o-surface);
+	border: 1px solid var(--o-line);
+	border-radius: var(--o-radius-lg);
+	padding: clamp(1.4rem, 4vw, 3rem);
+}
+
+.entry--singular .entry-header {
+	margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.entry--singular .entry-title {
+	font-size: var(--o-fs-2xl);
+	line-height: 1.04;
+	margin: 0.3rem 0 0;
+}
+
+.entry-standfirst {
+	font-size: var(--o-fs-lg);
+	line-height: 1.45;
+	color: var(--o-ink-soft);
+	margin: 0.9rem 0 0;
+	max-width: 56ch;
+}
+
+.entry--singular .entry-media {
+	aspect-ratio: 16 / 9;
+	margin-bottom: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.entry--singular .entry-content {
+	font-size: 1.075rem;
+	line-height: 1.75;
+	color: var(--o-ink);
+}
+
+.entry--singular .entry-content > * {
+	max-width: var(--o-measure);
+}
+
+.entry-content p {
+	margin: 0 0 1.35em;
+}
+
+.entry-content h2 {
+	font-size: clamp(1.5rem, 1.2rem + 1.2vw, 1.95rem);
+	margin: 2.1em 0 0.6em;
+	line-height: 1.18;
+}
+
+.entry-content h3 {
+	font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+	margin: 1.8em 0 0.5em;
+}
+
+.entry-content a {
+	text-decoration: underline;
+	text-decoration-color: color-mix(in srgb, var(--o-accent) 45%, transparent);
+}
+
+.entry-content a:hover,
+.entry-content a:focus {
+	text-decoration-color: var(--o-accent);
+}
+
+.entry-content ul,
+.entry-content ol {
+	margin: 0 0 1.35em;
+	padding-left: 1.4em;
+}
+
+.entry-content li {
+	margin-bottom: 0.4em;
+}
+
+.entry-content ul li::marker {
+	color: var(--o-accent);
+}
+
+.entry-content blockquote {
+	margin: 1.8em 0;
+	padding: 0.6em 0 0.6em 1.5rem;
+	border-left: 3px solid var(--o-accent);
+	color: var(--o-ink-soft);
+	font-size: 1.1em;
+	background: linear-gradient(90deg, var(--o-accent-wash), transparent);
+	border-radius: 0 var(--o-radius-sm) var(--o-radius-sm) 0;
+}
+
+.entry-content blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+.entry-content blockquote cite {
+	display: block;
+	margin-top: 0.5em;
+	font-style: normal;
+	font-size: 0.82em;
+	font-family: var(--o-mono);
+	color: var(--o-faint);
+}
+
+.entry-content figure {
+	margin: 2em 0;
+}
+
+.entry-content img {
+	border-radius: var(--o-radius-sm);
+}
+
+.entry-content figcaption,
+.wp-caption-text {
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	color: var(--o-faint);
+	text-align: center;
+	margin-top: 0.6em;
+}
+
+.entry-content pre {
+	font-family: var(--o-mono);
+	background: var(--o-bg-2);
+	color: #d6e2ff;
+	padding: 1.1rem 1.3rem;
+	border-radius: var(--o-radius-sm);
+	border: 1px solid var(--o-line);
+	overflow: auto;
+	font-size: 0.9rem;
+	line-height: 1.6;
+	margin: 1.6em 0;
+}
+
+.entry-content code {
+	font-family: var(--o-mono);
+	background: var(--o-accent-wash);
+	color: var(--o-accent);
+	padding: 0.12em 0.4em;
+	border-radius: 5px;
+	font-size: 0.88em;
+	border: 1px solid color-mix(in srgb, var(--o-accent) 22%, transparent);
+}
+
+.entry-content pre code {
+	background: none;
+	color: inherit;
+	padding: 0;
+	font-size: inherit;
+	border: 0;
+}
+
+.entry-content > .alignwide {
+	max-width: min(100%, 62rem);
+	margin-inline: auto;
+}
+
+.entry-content table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.95rem;
+	margin: 1.6em 0;
+}
+
+.entry-content th,
+.entry-content td {
+	border-bottom: 1px solid var(--o-line);
+	padding: 0.6rem 0.7rem;
+	text-align: left;
+}
+
+.entry-content th {
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--o-faint);
+}
+
+/* Filed-under tags */
+.entry-footer {
+	margin-top: clamp(2rem, 4vw, 3rem);
+	padding-top: 1.4rem;
+	border-top: 1px solid var(--o-line);
+	max-width: var(--o-measure);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 0.7rem;
+}
+
+.entry-tags__label {
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--o-faint);
+}
+
+.entry-tags {
+	list-style: none;
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	margin: 0;
+	padding: 0;
+}
+
+.entry-tags a {
+	display: inline-block;
+	font-size: var(--o-fs-sm);
+	color: var(--o-ink-soft);
+	background: var(--o-surface-2);
+	border: 1px solid var(--o-line);
+	padding: 0.18em 0.7em;
+	border-radius: 999px;
+	text-decoration: none;
+	transition: border-color 0.18s var(--o-ease), color 0.18s var(--o-ease);
+}
+
+.entry-tags a:hover,
+.entry-tags a:focus {
+	color: var(--o-accent);
+	border-color: color-mix(in srgb, var(--o-accent) 40%, transparent);
+}
+
+.page-links {
+	margin-top: 1.6rem;
+	font-size: var(--o-fs-sm);
+	font-weight: 600;
+}
+
+.page-links a,
+.page-links > span {
+	display: inline-block;
+	min-width: 2rem;
+	padding: 0.25rem 0.55rem;
+	margin: 0 0.2rem;
+	text-align: center;
+	border: 1px solid var(--o-line);
+	border-radius: var(--o-radius-sm);
+	text-decoration: none;
+}
+
+/* =========================================================================
+   18. Post navigation (prev/next)
+   ========================================================================= */
+.post-navigation {
+	max-width: var(--o-measure);
+	margin: clamp(2rem, 5vw, 3rem) 0 0;
+}
+
+.post-navigation .nav-links {
+	display: grid;
+	gap: 1rem;
+}
+
+@media (min-width: 34rem) {
+	.post-navigation .nav-links {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.post-navigation .nav-next {
+		text-align: right;
+	}
+}
+
+.post-navigation a {
+	display: block;
+	text-decoration: none;
+	color: var(--o-ink);
+	padding: 0.9rem 1.1rem;
+	border: 1px solid var(--o-line);
+	border-radius: var(--o-radius);
+	background: var(--o-surface);
+	transition: border-color 0.18s var(--o-ease), transform 0.18s var(--o-ease);
+}
+
+.post-navigation a:hover,
+.post-navigation a:focus {
+	border-color: color-mix(in srgb, var(--o-accent) 45%, transparent);
+	transform: translateY(-2px);
+}
+
+.post-nav__label {
+	display: block;
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--o-accent);
+	margin-bottom: 0.25rem;
+}
+
+.post-nav__title {
+	font-family: var(--o-display);
+	font-size: 1.05rem;
+	color: var(--o-ink);
+	line-height: 1.3;
+}
+
+/* =========================================================================
+   19. Pagination (archive)
+   ========================================================================= */
+.pagination {
+	max-width: var(--o-shell);
+	margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.pagination .nav-links {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.4rem;
+}
+
+.pagination .page-numbers {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 2.6rem;
+	height: 2.6rem;
+	padding: 0 0.6rem;
+	font-weight: 700;
+	font-size: var(--o-fs-sm);
+	color: var(--o-ink-soft);
+	background: var(--o-surface);
+	border: 1px solid var(--o-line);
+	border-radius: var(--o-radius-sm);
+	text-decoration: none;
+	transition: border-color 0.18s var(--o-ease), color 0.18s var(--o-ease), background 0.18s var(--o-ease);
+}
+
+.pagination .page-numbers:hover,
+.pagination .page-numbers:focus {
+	color: var(--o-accent);
+	border-color: color-mix(in srgb, var(--o-accent) 45%, transparent);
+}
+
+.pagination .page-numbers.current {
+	background: linear-gradient(135deg, var(--o-accent), var(--o-accent-2));
+	border-color: transparent;
+	color: var(--o-on-accent);
+}
+
+.pagination .page-numbers.dots {
+	border-color: transparent;
+	background: transparent;
+}
+
+.posts-navigation .nav-links {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+/* =========================================================================
+   20. Sidebar widgets
+   ========================================================================= */
+.widget-area {
+	font-size: var(--o-fs-sm);
+}
+
+.widget {
+	background: var(--o-surface);
+	border: 1px solid var(--o-line);
+	border-radius: var(--o-radius);
+	padding: clamp(1.1rem, 2.5vw, 1.5rem);
+	margin-bottom: clamp(1.2rem, 2.5vw, 1.6rem);
+}
+
+.widget:last-child {
+	margin-bottom: 0;
+}
+
+.widget-title {
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--o-faint);
+	margin: 0 0 1rem;
+	padding-bottom: 0.6rem;
+	border-bottom: 1px solid var(--o-line);
+}
+
+.widget ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.widget ul li {
+	padding: 0.5rem 0;
+	border-bottom: 1px solid var(--o-line-soft);
+	line-height: 1.4;
+}
+
+.widget ul li:last-child {
+	border-bottom: 0;
+}
+
+.widget ul ul {
+	margin-top: 0.4rem;
+	padding-left: 1rem;
+	border-top: 1px solid var(--o-line-soft);
+}
+
+.widget a {
+	color: var(--o-ink-soft);
+	text-decoration: none;
+}
+
+.widget a:hover,
+.widget a:focus {
+	color: var(--o-accent);
+}
+
+.widget li > a + span,
+.widget .post-date,
+.widget .rss-date {
+	color: var(--o-faint);
+	font-size: var(--o-fs-xs);
+}
+
+.widget_recent_comments li,
+.widget_recent_entries li {
+	color: var(--o-ink-soft);
+}
+
+/* =========================================================================
+   21. Search form
+   ========================================================================= */
+.search-form {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.search-field {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.search-submit {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	padding-inline: 0.9rem;
+}
+
+.search-submit__icon {
+	display: block;
+}
+
+/* =========================================================================
+   22. Form controls
+   ========================================================================= */
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select {
+	width: 100%;
+	padding: 0.65rem 0.85rem;
+	font: inherit;
+	font-size: var(--o-fs-sm);
+	color: var(--o-ink);
+	background: var(--o-bg-2);
+	border: 1px solid var(--o-line);
+	border-radius: var(--o-radius-sm);
+	transition: border-color 0.18s var(--o-ease), box-shadow 0.18s var(--o-ease);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+	outline: none;
+	border-color: var(--o-accent);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--o-accent) 25%, transparent);
+}
+
+textarea {
+	min-height: 9rem;
+	resize: vertical;
+}
+
+::placeholder {
+	color: var(--o-faint);
+	opacity: 1;
+}
+
+/* Buttons */
+.button,
+.wp-block-button__link,
+button[type="submit"],
+input[type="submit"] {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.45em;
+	font-family: var(--o-sans);
+	font-size: var(--o-fs-sm);
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	color: var(--o-on-accent);
+	background: linear-gradient(135deg, var(--o-accent), var(--o-accent-2));
+	border: 1px solid transparent;
+	padding: 0.7rem 1.4rem;
+	border-radius: var(--o-radius-sm);
+	cursor: pointer;
+	text-decoration: none;
+	transition: transform 0.16s var(--o-ease), box-shadow 0.2s var(--o-ease), filter 0.18s var(--o-ease);
+}
+
+.button:hover,
+.wp-block-button__link:hover,
+button[type="submit"]:hover,
+input[type="submit"]:hover,
+.button:focus,
+button[type="submit"]:focus {
+	color: var(--o-on-accent);
+	filter: brightness(1.08);
+	box-shadow: var(--o-glow);
+}
+
+.button:active,
+button[type="submit"]:active {
+	transform: translateY(1px);
+}
+
+/* Secondary / ghost button */
+.button--ghost {
+	background: transparent;
+	color: var(--o-ink);
+	border-color: var(--o-line);
+	box-shadow: none;
+}
+
+.button--ghost:hover,
+.button--ghost:focus {
+	color: var(--o-ink);
+	background: var(--o-surface);
+	border-color: color-mix(in srgb, var(--o-accent) 45%, var(--o-line));
+	filter: none;
+	box-shadow: none;
+}
+
+/* Magnetic CTA (signature) — wrapper lets the inner glow track the cursor. */
+.cta-magnetic {
+	position: relative;
+	will-change: transform;
+}
+
+.cta-magnetic::before {
+	content: "";
+	position: absolute;
+	inset: -2px;
+	border-radius: inherit;
+	background: radial-gradient(120px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--o-accent) 55%, transparent), transparent 60%);
+	opacity: 0;
+	transition: opacity 0.25s var(--o-ease);
+	pointer-events: none;
+	z-index: -1;
+}
+
+.cta-magnetic:hover::before,
+.cta-magnetic:focus-within::before {
+	opacity: 1;
+}
+
+/* =========================================================================
+   23. Comments
+   ========================================================================= */
+.comments-area {
+	max-width: var(--o-measure);
+	margin-top: clamp(2.5rem, 5vw, 3.5rem);
+	padding: clamp(1.4rem, 4vw, 2.5rem);
+	background: var(--o-surface);
+	border: 1px solid var(--o-line);
+	border-radius: var(--o-radius-lg);
+}
+
+.comments-title,
+.comment-reply-title {
+	font-size: var(--o-fs-lg);
+	margin: 0 0 1.5rem;
+}
+
+.comment-list {
+	list-style: none;
+	margin: 0 0 2.5rem;
+	padding: 0;
+}
+
+.comment-list ol,
+.comment-list ul {
+	list-style: none;
+}
+
+.comment-list .children {
+	margin: 0;
+	padding-left: clamp(1rem, 4vw, 2.25rem);
+	border-left: 1px solid var(--o-line);
+}
+
+.comment-body {
+	padding: 1.3rem 0;
+	border-bottom: 1px solid var(--o-line-soft);
+}
+
+.comment-meta {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	margin-bottom: 0.6rem;
+}
+
+.comment-author {
+	display: flex;
+	align-items: center;
+	gap: 0.7rem;
+	font-weight: 600;
+	font-size: 0.95rem;
+}
+
+.comment-author .avatar {
+	border-radius: 50%;
+	width: 44px;
+	height: 44px;
+}
+
+.comment-author .fn {
+	font-style: normal;
+	font-family: var(--o-display);
+	font-size: 1.02rem;
+	color: var(--o-ink);
+}
+
+.comment-author .says {
+	display: none;
+}
+
+.comment-metadata {
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	color: var(--o-faint);
+}
+
+.comment-metadata a {
+	color: var(--o-faint);
+	text-decoration: none;
+}
+
+.comment-content {
+	color: var(--o-ink-soft);
+	line-height: 1.6;
+}
+
+.comment-content p {
+	margin: 0 0 0.8em;
+}
+
+.comment-content p:last-child {
+	margin-bottom: 0;
+}
+
+.reply {
+	margin-top: 0.4rem;
+}
+
+.comment-reply-link {
+	display: inline-block;
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--o-accent);
+	text-decoration: none;
+}
+
+.bypostauthor > .comment-body {
+	position: relative;
+}
+
+.bypostauthor > .comment-body .fn::after {
+	content: "Author";
+	display: inline-block;
+	margin-left: 0.5rem;
+	font-family: var(--o-mono);
+	font-size: 0.6rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--o-accent);
+	background: var(--o-accent-wash);
+	padding: 0.1em 0.5em;
+	border-radius: 999px;
+	vertical-align: middle;
+}
+
+.comment-respond {
+	margin-top: 2rem;
+}
+
+.comment-form {
+	display: grid;
+	gap: 0.4rem;
+}
+
+.comment-form p {
+	margin: 0 0 0.9rem;
+}
+
+.comment-form label {
+	display: block;
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--o-ink-soft);
+	margin-bottom: 0.3rem;
+}
+
+.comment-form .comment-form-cookies-consent label,
+.comment-notes {
+	font-family: var(--o-sans);
+	font-size: var(--o-fs-sm);
+	font-weight: 400;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--o-faint);
+}
+
+.comment-form-cookies-consent {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5rem;
+}
+
+.comment-form-cookies-consent input {
+	width: auto;
+	margin-top: 0.2rem;
+}
+
+.comment-form-author,
+.comment-form-email {
+	display: inline-block;
+}
+
+@media (min-width: 34rem) {
+	.comment-form-author,
+	.comment-form-email,
+	.comment-form-url {
+		width: calc(50% - 0.5rem);
+	}
+
+	.comment-form-author,
+	.comment-form-email {
+		display: inline-block;
+		vertical-align: top;
+	}
+
+	.comment-form-author {
+		margin-right: 0.9rem;
+	}
+}
+
+.no-comments {
+	color: var(--o-faint);
+	font-style: italic;
+}
+
+/* =========================================================================
+   24. Footer
+   ========================================================================= */
+.site-footer {
+	background: var(--o-bg-2);
+	border-top: 1px solid var(--o-line);
+	padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+.site-footer__inner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1.2rem;
+	text-align: center;
+}
+
+.site-footer__brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.7rem;
+	margin: 0;
+	font-family: var(--o-display);
+	font-size: 1.4rem;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+
+.site-footer__brand a {
+	color: var(--o-ink);
+	text-decoration: none;
+}
+
+.site-footer__brand a:hover {
+	color: var(--o-accent);
+}
+
+.footer-nav__list {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1rem 1.6rem;
+	margin: 0;
+	padding: 0;
+}
+
+.footer-nav__list a {
+	color: var(--o-ink-soft);
+	font-size: var(--o-fs-sm);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.footer-nav__list a:hover,
+.footer-nav__list a:focus {
+	color: var(--o-accent);
+}
+
+.site-footer__credit {
+	margin: 0;
+	color: var(--o-faint);
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	letter-spacing: 0.02em;
+}
+
+.site-footer__sep {
+	margin-inline: 0.4rem;
+	color: var(--o-line);
+}
+
+/* =========================================================================
+   25. 404
+   ========================================================================= */
+.error-404 {
+	max-width: 44rem;
+	margin-inline: auto;
+	text-align: center;
+	padding-block: clamp(2rem, 6vw, 4rem);
+}
+
+.error-404__code {
+	font-family: var(--o-display);
+	font-size: var(--o-fs-3xl);
+	font-weight: 700;
+	line-height: 1;
+	margin: 0;
+	letter-spacing: -0.04em;
+	background: linear-gradient(120deg, var(--o-accent), var(--o-accent-2));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+.error-404__title {
+	font-size: var(--o-fs-xl);
+	margin: 0.5rem 0 0.8rem;
+}
+
+.error-404__lead {
+	color: var(--o-ink-soft);
+	font-size: var(--o-fs-lg);
+	line-height: 1.5;
+	max-width: 40ch;
+	margin-inline: auto;
+}
+
+.error-404__search {
+	max-width: 24rem;
+	margin: 2rem auto 1.5rem;
+}
+
+.error-404__home {
+	margin: 0;
+}
+
+/* Empty-state card */
+.entry--empty {
+	background: var(--o-surface);
+	border: 1px solid var(--o-line);
+	border-radius: var(--o-radius);
+	padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.entry--empty .search-form {
+	margin-top: 1.2rem;
+	max-width: 22rem;
+}
+
+/* =========================================================================
+   26. WP core alignment & caption helpers
+   ========================================================================= */
+.alignleft {
+	float: left;
+	margin: 0.4rem 1.4rem 1rem 0;
+	max-width: 50%;
+}
+
+.alignright {
+	float: right;
+	margin: 0.4rem 0 1rem 1.4rem;
+	max-width: 50%;
+}
+
+.aligncenter {
+	display: block;
+	margin-inline: auto;
+}
+
+.wp-caption {
+	max-width: 100%;
+}
+
+.sticky .entry-title::before {
+	content: "★ ";
+	color: var(--o-accent);
+}
+
+.gallery {
+	display: grid;
+	gap: 0.6rem;
+	grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+	margin: 1.6em 0;
+}
+
+.gallery-item img {
+	border-radius: var(--o-radius-sm);
+}
+
+/* =========================================================================
+   27. Motion system
+   -------------------------------------------------------------------------
+   Progressive enhancement contract:
+   - Without JS, none of these start-states apply, so all content is visible.
+   - `.js` is added synchronously by a tiny inline script in <head>. The
+     `.orbit-motion` class is added by motion.js itself, only when
+     IntersectionObserver is supported and reduced motion is NOT requested.
+     Start-states are scoped to `.js.orbit-motion`, so if motion.js never runs
+     (or bails), the class is absent and ALL content stays fully visible.
+   - We animate only transform & opacity. No layout properties, no CLS.
+   ========================================================================= */
+
+/* --- Scroll reveals: gentle fade + rise ------------------------------------ */
+.js.orbit-motion [data-orbit-reveal] {
+	opacity: 0;
+	transform: translateY(20px);
+	transition:
+		opacity 0.7s var(--o-ease),
+		transform 0.7s var(--o-ease);
+}
+
+.js.orbit-motion [data-orbit-reveal]:not(.is-inview) {
+	will-change: opacity, transform;
+}
+
+.js.orbit-motion [data-orbit-reveal].is-inview {
+	opacity: 1;
+	transform: none;
+}
+
+/* Keyboard safety: reveal immediately if focus enters a still-hidden block. */
+.js.orbit-motion [data-orbit-reveal]:focus-within,
+.js.orbit-motion [data-orbit-reveal]:focus {
+	opacity: 1;
+	transform: none;
+	transition: none;
+}
+
+/* Stagger consecutive cards. */
+.js.orbit-motion [data-orbit-stagger] > * {
+	opacity: 0;
+	transform: translateY(20px);
+	transition:
+		opacity 0.6s var(--o-ease),
+		transform 0.6s var(--o-ease);
+}
+
+.js.orbit-motion [data-orbit-stagger].is-inview > * {
+	opacity: 1;
+	transform: none;
+}
+
+.js.orbit-motion [data-orbit-stagger].is-inview > *:nth-child(2) { transition-delay: 0.06s; }
+.js.orbit-motion [data-orbit-stagger].is-inview > *:nth-child(3) { transition-delay: 0.12s; }
+.js.orbit-motion [data-orbit-stagger].is-inview > *:nth-child(4) { transition-delay: 0.18s; }
+.js.orbit-motion [data-orbit-stagger].is-inview > *:nth-child(n+5) { transition-delay: 0.24s; }
+
+.js.orbit-motion [data-orbit-stagger]:focus-within > * {
+	opacity: 1;
+	transform: none;
+	transition: none;
+}
+
+/* --- Hero badge pulse ------------------------------------------------------ */
+.hero__badge-dot {
+	animation: orbit-pulse 2.4s var(--o-ease) infinite;
+}
+
+@keyframes orbit-pulse {
+	0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--o-accent) 60%, transparent); }
+	70%  { box-shadow: 0 0 0 0.5em transparent; }
+	100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* --- Signature: drifting orbit rings + planets ----------------------------- */
+.js.orbit-motion .hero__orbit-group {
+	transform-box: fill-box;
+	transform-origin: center;
+}
+
+.hero__orbit-group--1 { animation: orbit-spin 60s linear infinite; transform-box: fill-box; transform-origin: center; }
+.hero__orbit-group--2 { animation: orbit-spin 42s linear infinite reverse; transform-box: fill-box; transform-origin: center; }
+.hero__orbit-group--3 { animation: orbit-spin 30s linear infinite; transform-box: fill-box; transform-origin: center; }
+
+@keyframes orbit-spin {
+	to { transform: rotate(360deg); }
+}
+
+/* Twinkle for the starfield dots (motion.js seeds per-star delays). */
+.hero__star {
+	animation: orbit-twinkle 4s ease-in-out infinite;
+}
+
+@keyframes orbit-twinkle {
+	0%, 100% { opacity: 0.25; }
+	50%      { opacity: 0.9; }
+}
+
+/* --- Reading-progress bar (single posts) ----------------------------------- */
+.reading-progress {
+	position: fixed;
+	inset: 0 0 auto 0;
+	height: 3px;
+	z-index: 900;
+	pointer-events: none;
+	background: transparent;
+}
+
+.reading-progress__bar {
+	display: block;
+	height: 100%;
+	width: 100%;
+	transform: scaleX(0);
+	transform-origin: 0 50%;
+	background: linear-gradient(90deg, var(--o-accent), var(--o-accent-2));
+	box-shadow: 0 0 12px -1px color-mix(in srgb, var(--o-accent) 60%, transparent);
+	will-change: transform;
+}
+
+/* --- Link micro-interaction in widgets & comments -------------------------- */
+.comment-content a,
+.widget a {
+	background-image: linear-gradient(var(--o-accent), var(--o-accent));
+	background-size: 0% 1.5px;
+	background-position: 0 100%;
+	background-repeat: no-repeat;
+	transition:
+		background-size 0.3s var(--o-ease),
+		color 0.18s var(--o-ease);
+}
+
+.comment-content a:hover,
+.comment-content a:focus,
+.widget a:hover,
+.widget a:focus {
+	background-size: 100% 1.5px;
+}
+
+/* =========================================================================
+   28. Motion preferences
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+		scroll-behavior: auto !important;
+	}
+
+	a.entry-media:hover .entry-media__img,
+	a.entry-media:focus .entry-media__img {
+		transform: none;
+	}
+
+	.js.orbit-motion [data-orbit-reveal],
+	.js.orbit-motion [data-orbit-stagger] > * {
+		opacity: 1 !important;
+		transform: none !important;
+	}
+
+	.hero__orbit-group--1,
+	.hero__orbit-group--2,
+	.hero__orbit-group--3,
+	.hero__star,
+	.hero__badge-dot {
+		animation: none !important;
+	}
+
+	.reading-progress__bar {
+		transition: none !important;
+	}
+
+	.feature:hover,
+	.feature:focus-within,
+	.entry--list:hover,
+	.entry--list:focus-within,
+	.post-navigation a:hover,
+	.post-navigation a:focus {
+		transform: none;
+	}
+}
+
+/* =========================================================================
+   29. WPAI companion plugins — native skin
+   -------------------------------------------------------------------------
+   Orbit declares add_theme_support( 'wpai-companions' ), so the free
+   companion plugins render their output through the theme's own
+   `wpai_entry_top` / `wpai_entry_bottom` action hooks (fired in
+   template-parts/content.php), OUTSIDE the .entry-content prose wrapper.
+   We map each plugin's theming custom properties onto Orbit's dark,
+   neon-accented tokens so the badge, Contents box, and related-posts grid
+   read as native parts of the theme.
+   ========================================================================= */
+
+.entry--singular .rtb-badge,
+.entry--singular .contents-toc,
+.entry--singular .kindred {
+	font-family: var(--o-sans);
+}
+
+/* --- Reading Time Badge --------------------------------------------------- */
+.entry--singular .rtb-badge {
+	--rtb-fg: var(--o-accent);
+	--rtb-bg: var(--o-accent-wash);
+	--rtb-border: color-mix(in srgb, var(--o-accent) 30%, transparent);
+	--rtb-radius: 999px;
+	--rtb-pad-y: 0.32em;
+	--rtb-pad-x: 0.85em;
+
+	margin: 0 0 clamp(1.4rem, 3vw, 2rem);
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	transition: background 0.18s var(--o-ease), border-color 0.18s var(--o-ease), color 0.18s var(--o-ease);
+}
+
+.entry--singular .rtb-badge__icon {
+	opacity: 0.9;
+}
+
+/* --- Contents (table of contents) box ------------------------------------- */
+.entry--singular .contents-toc {
+	--contents-radius: var(--o-radius);
+	--contents-pad: clamp(1rem, 2.5vw, 1.4rem) clamp(1.1rem, 3vw, 1.5rem);
+	--contents-gap: 0.4em;
+	--contents-fg: var(--o-ink);
+	--contents-muted: var(--o-faint);
+	--contents-bg: var(--o-bg-2);
+	--contents-border: var(--o-line);
+	--contents-accent: var(--o-accent);
+	--contents-hover-bg: var(--o-accent-wash);
+	--contents-marker: var(--o-line);
+
+	margin: 0 0 clamp(1.75rem, 4vw, 2.5rem);
+	box-shadow: var(--o-shadow-soft);
+	font-size: var(--o-fs-sm);
+	line-height: 1.5;
+}
+
+.entry--singular .contents-toc__title {
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--o-faint);
+}
+
+.entry--singular .contents-toc__link {
+	color: var(--o-ink-soft);
+	border-radius: var(--o-radius-sm);
+}
+
+.entry--singular .contents-toc__link:hover {
+	color: var(--o-accent);
+}
+
+.entry--singular .contents-toc__link.is-active,
+.entry--singular .contents-toc__link[aria-current="true"] {
+	color: var(--o-accent);
+}
+
+.entry--singular .contents-toc__chevron {
+	color: var(--o-faint);
+}
+
+.entry--singular .contents-toc__sublist {
+	border-left-color: var(--o-line);
+}
+
+/* --- Kindred (related posts) — full article width ------------------------- */
+.entry--singular .kindred {
+	--kindred-radius: var(--o-radius);
+	--kindred-gap: clamp(1rem, 2.5vw, 1.6rem);
+	--kindred-card-pad: 1rem 1.05rem;
+	--kindred-min: 13rem;
+	--kindred-fg: var(--o-ink);
+	--kindred-muted: var(--o-faint);
+	--kindred-card-bg: var(--o-bg-2);
+	--kindred-card-bg-hover: var(--o-surface-2);
+	--kindred-border: var(--o-line);
+	--kindred-border-hover: color-mix(in srgb, var(--o-accent) 45%, transparent);
+
+	width: 100%;
+	margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+	padding-top: clamp(1.6rem, 3vw, 2.2rem);
+	border-top: 1px solid var(--o-line);
+}
+
+.entry--singular .kindred__heading {
+	margin: 0 0 clamp(1.1rem, 3vw, 1.5rem);
+	padding-bottom: 0;
+	border-bottom: 0;
+	font-family: var(--o-display);
+	font-size: var(--o-fs-lg);
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	color: var(--o-ink);
+	text-wrap: balance;
+}
+
+.entry--singular .kindred-card__link {
+	box-shadow: var(--o-shadow-soft);
+	transition:
+		transform 0.22s var(--o-ease),
+		border-color 0.18s var(--o-ease),
+		box-shadow 0.2s var(--o-ease);
+}
+
+.entry--singular .kindred-card__link:hover,
+.entry--singular .kindred-card__link:focus-visible {
+	transform: translateY(-2px);
+	border-color: color-mix(in srgb, var(--o-accent) 45%, transparent);
+	box-shadow: var(--o-shadow);
+}
+
+.entry--singular .kindred-card__link:focus-visible {
+	outline: 2px solid var(--o-accent);
+	outline-offset: 3px;
+}
+
+.entry--singular .kindred-card__title {
+	font-family: var(--o-display);
+	font-size: 1.02rem;
+	font-weight: 700;
+	line-height: 1.3;
+	color: var(--o-ink);
+	letter-spacing: -0.01em;
+}
+
+.entry--singular .kindred-card__link:hover .kindred-card__title,
+.entry--singular .kindred-card__link:focus-visible .kindred-card__title {
+	color: var(--o-accent);
+}
+
+.entry--singular .kindred-card__date {
+	font-family: var(--o-mono);
+	font-size: var(--o-fs-xs);
+	letter-spacing: 0.02em;
+	color: var(--o-faint);
+}
+
+/* Image-less cards: recolour the placeholder into Orbit's nebula palette. */
+.entry--singular .kindred-card__media--placeholder {
+	background-image:
+		radial-gradient(120% 120% at 0% 0%, hsl(var(--kindred-hue, 180) 70% 24%) 0%, transparent 55%),
+		radial-gradient(120% 120% at 100% 100%, hsl(calc(var(--kindred-hue, 180) + 40) 65% 26%) 0%, transparent 55%),
+		linear-gradient(135deg, var(--o-surface-2), var(--o-bg-2));
+}
+
+.entry--singular .kindred-card__letter {
+	color: hsl(var(--kindred-hue, 180) 80% 72%);
+	font-family: var(--o-display);
+	font-weight: 700;
+	opacity: 0.7;
+	text-shadow: 0 0 18px hsl(var(--kindred-hue, 180) 80% 55% / 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.entry--singular .kindred-card__link:hover,
+	.entry--singular .kindred-card__link:focus-visible {
+		transform: none;
+	}
+}

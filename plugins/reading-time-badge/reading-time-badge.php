@@ -3,6 +3,7 @@
  * Plugin Name: Reading Time Badge
  * Plugin URI:  https://lordbasilaiassistant-sudo.github.io/wpai-themes/
  * Description: Adds a tasteful "X min read" badge with a small clock glyph above the content of single posts. Theme-adaptive (light & dark), accessible, zero configuration.
+ * Category:   Content & Reading
  * Version:     1.4.0
  * Author:      WPAI Themes
  * Author URI:  https://github.com/lordbasilaiassistant-sudo/wpai-themes

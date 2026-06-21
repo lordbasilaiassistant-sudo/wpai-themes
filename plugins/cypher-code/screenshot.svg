@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Cypher — Code Blocks preview">
+  <defs>
+    <linearGradient id="cypher-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#eef2f7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Page background -->
+  <rect width="1200" height="900" fill="url(#cypher-bg)"/>
+
+  <!-- Browser chrome -->
+  <rect x="80" y="64" width="1040" height="772" rx="18" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="80" y="64" width="1040" height="56" rx="18" fill="#f1f5f9"/>
+  <rect x="80" y="102" width="1040" height="18" fill="#f1f5f9"/>
+  <circle cx="116" cy="92" r="8" fill="#f87171"/>
+  <circle cx="144" cy="92" r="8" fill="#fbbf24"/>
+  <circle cx="172" cy="92" r="8" fill="#34d399"/>
+  <rect x="210" y="80" width="820" height="24" rx="12" fill="#e2e8f0"/>
+
+  <!-- Article headline -->
+  <rect x="140" y="160" width="430" height="30" rx="8" fill="#1f2937"/>
+
+  <!-- ===================== Light-theme code block ===================== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+    <!-- Block shell -->
+    <rect x="140" y="216" width="920" height="266" rx="12" fill="#1f29370d" stroke="#1f293724" stroke-width="2"/>
+
+    <!-- Top bar -->
+    <rect x="142" y="218" width="916" height="46" rx="10" fill="#1f293714"/>
+    <rect x="142" y="248" width="916" height="16" fill="#1f293714"/>
+    <!-- Language label (left) -->
+    <text x="166" y="248" font-size="15" font-weight="700" letter-spacing="1.4" fill="#64748b">JAVASCRIPT</text>
+    <!-- Copy button (right): pill + clipboard glyph + label -->
+    <rect x="930" y="228" width="108" height="28" rx="8" fill="#1f293714" stroke="#1f293724" stroke-width="1.5"/>
+    <rect x="946" y="236" width="11" height="12" rx="2" fill="none" stroke="#475569" stroke-width="2"/>
+    <rect x="942" y="232" width="9" height="11" rx="2" fill="#1f29370d" stroke="#475569" stroke-width="2"/>
+    <text x="966" y="247" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" font-weight="600" fill="#475569">Copy</text>
+
+    <!-- Gutter rule -->
+    <line x1="206" y1="266" x2="206" y2="480" stroke="#1f293724" stroke-width="1.5"/>
+
+    <!-- Line numbers -->
+    <g font-size="15" fill="#94a3b8" text-anchor="end">
+      <text x="190" y="298">1</text>
+      <text x="190" y="326">2</text>
+      <text x="190" y="354">3</text>
+      <text x="190" y="382">4</text>
+      <text x="190" y="410">5</text>
+      <text x="190" y="438">6</text>
+    </g>
+
+    <!-- Code "tokens" as bars (no real highlighter — premium plain styling) -->
+    <g fill="#334155">
+      <rect x="224" y="288" width="120" height="13" rx="4"/>
+      <rect x="356" y="288" width="180" height="13" rx="4"/>
+      <rect x="248" y="316" width="90" height="13" rx="4"/>
+      <rect x="350" y="316" width="240" height="13" rx="4"/>
+      <rect x="248" y="344" width="160" height="13" rx="4"/>
+      <rect x="224" y="372" width="70" height="13" rx="4"/>
+      <rect x="248" y="400" width="220" height="13" rx="4"/>
+      <rect x="600" y="400" width="120" height="13" rx="4"/>
+      <rect x="224" y="428" width="40" height="13" rx="4"/>
+    </g>
+  </g>
+
+  <!-- ===================== Dark-theme code block ===================== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+    <rect x="140" y="516" width="920" height="208" rx="12" fill="#0f172a"/>
+
+    <!-- Top bar on dark -->
+    <rect x="142" y="518" width="916" height="44" rx="10" fill="#ffffff14"/>
+    <rect x="142" y="546" width="916" height="16" fill="#ffffff14"/>
+    <text x="166" y="546" font-size="15" font-weight="700" letter-spacing="1.4" fill="#94a3b8">PYTHON</text>
+
+    <!-- Copy button, confirmed state (check + "Copied!") -->
+    <rect x="918" y="528" width="120" height="28" rx="8" fill="#ffffff14" stroke="#ffffff33" stroke-width="1.5"/>
+    <polyline points="936,542 942,548 952,536" fill="none" stroke="#34d399" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="962" y="547" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" font-weight="600" fill="#34d399">Copied!</text>
+
+    <!-- Gutter rule -->
+    <line x1="206" y1="564" x2="206" y2="722" stroke="#ffffff1f" stroke-width="1.5"/>
+
+    <!-- Line numbers -->
+    <g font-size="15" fill="#64748b" text-anchor="end">
+      <text x="190" y="596">1</text>
+      <text x="190" y="624">2</text>
+      <text x="190" y="652">3</text>
+      <text x="190" y="680">4</text>
+    </g>
+
+    <!-- Code tokens -->
+    <g fill="#cbd5e1">
+      <rect x="224" y="586" width="80" height="13" rx="4"/>
+      <rect x="316" y="586" width="160" height="13" rx="4"/>
+      <rect x="248" y="614" width="200" height="13" rx="4"/>
+      <rect x="248" y="642" width="120" height="13" rx="4"/>
+      <rect x="380" y="642" width="180" height="13" rx="4"/>
+      <rect x="224" y="670" width="60" height="13" rx="4"/>
+    </g>
+  </g>
+
+  <!-- Caption -->
+  <text x="600" y="800" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="26" font-weight="700" fill="#1f2937" text-anchor="middle">Copy button · language label · line numbers</text>
+  <text x="600" y="836" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="19" font-weight="500" fill="#64748b" text-anchor="middle">Cypher — Code Blocks · no highlighter library, theme-adaptive, accessible, zero config</text>
+</svg>

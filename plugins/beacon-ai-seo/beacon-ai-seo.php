@@ -3,6 +3,7 @@
  * Plugin Name: Beacon — AI & SEO
  * Plugin URI:  https://lordbasilaiassistant-sudo.github.io/wpai-themes/
  * Description: Makes your site discoverable by search engines AND AI agents, zero config. Auto meta tags, Open Graph, Twitter cards, JSON-LD structured data, and a machine-readable /llms.txt for LLMs. Works on any theme.
+ * Category:   SEO & AI
  * Version:     1.0.0
  * Author:      WPAI Themes
  * Author URI:  https://github.com/lordbasilaiassistant-sudo/wpai-themes

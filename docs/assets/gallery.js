@@ -17,6 +17,11 @@ const $ = (s, r = document) => r.querySelector(s);
 const grid = $('#grid');
 const tpl = $('#card-tpl');
 
+const CATEGORY_ORDER = {
+  themes: ['Blog & Personal', 'Magazine & Editorial', 'Portfolio & Creative', 'Business & Local', 'SaaS & Startup', 'Docs & Knowledge'],
+  plugins: ['SEO & AI', 'Content & Reading', 'Engagement', 'Media & UX'],
+};
+
 function items() {
   return (state.data?.[state.view] ?? []);
 }
@@ -88,14 +93,42 @@ function render() {
   renderChips();
   const list = filtered();
   grid.innerHTML = '';
-  list.forEach((it, i) => {
-    const node = card(it);
-    node.classList.add('reveal');
-    node.style.setProperty('--i', i % 8);
-    grid.appendChild(node);
-    if (revealObserver) revealObserver.observe(node);
-    else node.classList.add('is-in');
+
+  // Group the filtered items by category.
+  const groups = new Map();
+  for (const it of list) {
+    const cat = it.category || 'Other';
+    if (!groups.has(cat)) groups.set(cat, []);
+    groups.get(cat).push(it);
+  }
+  const order = CATEGORY_ORDER[state.view] || [];
+  const cats = [...groups.keys()].sort((a, b) => {
+    const ia = order.indexOf(a), ib = order.indexOf(b);
+    return (ia < 0 ? 999 : ia) - (ib < 0 ? 999 : ib) || a.localeCompare(b);
   });
+
+  let idx = 0;
+  for (const cat of cats) {
+    const section = document.createElement('section');
+    section.className = 'cat';
+    const head = document.createElement('div');
+    head.className = 'cat__head';
+    head.innerHTML = `<h2 class="cat__title">${cat}</h2><span class="cat__count">${groups.get(cat).length}</span>`;
+    section.appendChild(head);
+    const cg = document.createElement('div');
+    cg.className = 'grid cat__grid';
+    for (const it of groups.get(cat)) {
+      const node = card(it);
+      node.classList.add('reveal');
+      node.style.setProperty('--i', idx % 8);
+      cg.appendChild(node);
+      if (revealObserver) revealObserver.observe(node);
+      else node.classList.add('is-in');
+      idx++;
+    }
+    section.appendChild(cg);
+    grid.appendChild(section);
+  }
   $('#empty').hidden = list.length > 0;
 }
 

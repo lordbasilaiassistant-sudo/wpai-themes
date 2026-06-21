@@ -1,0 +1,326 @@
+/**
+ * Lumen — Image Lightbox
+ *
+ * A self-contained, accessible full-screen image viewer. The overlay is its own
+ * fixed surface, so it is intentionally NOT theme-tinted from currentColor — a
+ * lightbox should read the same (dark, focused, distraction-free) on every site,
+ * light or dark. The only theme-adaptive surfaces are the in-content trigger
+ * affordances (focus ring, hover cursor), which derive from `currentColor`.
+ *
+ * Design notes:
+ * - The overlay sits above everything via a high z-index and `position: fixed`.
+ *   It is hidden with the `hidden` attribute (no display) until opened, then
+ *   fades + zooms in. Animation is transform/opacity ONLY (no layout properties)
+ *   so there is no jank and no cumulative layout shift.
+ * - Scoped --lumen-* custom properties tune the look; a site can override them.
+ * - prefers-reduced-motion is honored by the JS guard AND the @media block at the
+ *   bottom of this file — reduced-motion visitors get an instant open/close.
+ * - All controls are real <button>s with visible focus and comfortable hit areas.
+ */
+
+/* ---------------------------------------------------------------------------
+   In-content trigger affordances (theme-adaptive)
+--------------------------------------------------------------------------- */
+.lumen-trigger {
+	cursor: zoom-in;
+}
+
+.lumen-trigger:focus-visible {
+	outline: 3px solid currentColor;
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
+/* Prevent background scroll/jump while the overlay is open. */
+.lumen-locked {
+	overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Overlay surface
+--------------------------------------------------------------------------- */
+.lumen-overlay {
+	/* Tunable surface — themes/sites may override these. */
+	--lumen-backdrop: rgba( 10, 12, 16, 0.92 );
+	--lumen-control-bg: rgba( 255, 255, 255, 0.1 );
+	--lumen-control-bg-hover: rgba( 255, 255, 255, 0.2 );
+	--lumen-control-fg: #ffffff;
+	--lumen-control-size: 48px;
+	--lumen-radius: 12px;
+	--lumen-gap: clamp( 0.75rem, 3vw, 2rem );
+	--lumen-duration: 0.32s;
+	--lumen-ease: cubic-bezier( 0.22, 1, 0.36, 1 );
+
+	position: fixed;
+	inset: 0;
+	z-index: 999999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	padding: var( --lumen-gap );
+	font-family: inherit;
+
+	/* Entrance: start invisible; the .is-open class fades the surface in. */
+	opacity: 0;
+	transition: opacity var( --lumen-duration ) var( --lumen-ease );
+}
+
+.lumen-overlay *,
+.lumen-overlay *::before,
+.lumen-overlay *::after {
+	box-sizing: border-box;
+}
+
+.lumen-overlay.is-open {
+	opacity: 1;
+}
+
+/* The `hidden` attribute removes the overlay entirely until JS opens it. */
+.lumen-overlay[hidden] {
+	display: none;
+}
+
+.lumen-overlay__backdrop {
+	position: absolute;
+	inset: 0;
+	background: var( --lumen-backdrop );
+	cursor: zoom-out;
+}
+
+/* ---------------------------------------------------------------------------
+   Image viewport + figure
+--------------------------------------------------------------------------- */
+.lumen-overlay__viewport {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.lumen-overlay__figure {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	align-items: center;
+	justify-content: center;
+	max-width: 100%;
+	max-height: 100%;
+	margin: 0;
+}
+
+.lumen-overlay__image {
+	display: block;
+	max-width: min( 92vw, 1600px );
+	/* Leave room for the caption and breathing space below. */
+	max-height: 82vh;
+	width: auto;
+	height: auto;
+	object-fit: contain;
+	border-radius: var( --lumen-radius );
+	background: rgba( 255, 255, 255, 0.04 );
+	box-shadow: 0 24px 64px rgba( 0, 0, 0, 0.5 );
+
+	/* The image scales up from a slightly smaller state as it loads/opens. */
+	opacity: 0;
+	transform: scale( 0.96 );
+	transition:
+		opacity var( --lumen-duration ) var( --lumen-ease ),
+		transform var( --lumen-duration ) var( --lumen-ease );
+}
+
+.lumen-overlay.is-open .lumen-overlay__image.is-loaded,
+.lumen-overlay.is-open .lumen-overlay__image {
+	opacity: 1;
+	transform: scale( 1 );
+}
+
+.lumen-overlay__caption {
+	max-width: min( 92vw, 1600px );
+	margin: 0;
+	color: rgba( 255, 255, 255, 0.92 );
+	font-family: inherit;
+	font-size: 0.95rem;
+	line-height: 1.5;
+	text-align: center;
+	text-wrap: balance;
+}
+
+.lumen-overlay__caption[hidden] {
+	display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Controls: close, prev/next, counter
+--------------------------------------------------------------------------- */
+.lumen-overlay__close,
+.lumen-overlay__nav {
+	position: absolute;
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: var( --lumen-control-size );
+	height: var( --lumen-control-size );
+	padding: 0;
+	margin: 0;
+	border: 0;
+	border-radius: 50%;
+	background: var( --lumen-control-bg );
+	color: var( --lumen-control-fg );
+	cursor: pointer;
+	-webkit-appearance: none;
+	appearance: none;
+	transition:
+		background-color 0.2s ease,
+		transform 0.2s var( --lumen-ease );
+}
+
+.lumen-overlay__close svg,
+.lumen-overlay__nav svg {
+	display: block;
+}
+
+.lumen-overlay__close:hover,
+.lumen-overlay__nav:hover {
+	background: var( --lumen-control-bg-hover );
+}
+
+.lumen-overlay__close:active,
+.lumen-overlay__nav:active {
+	transform: scale( 0.94 );
+}
+
+.lumen-overlay__close:focus-visible,
+.lumen-overlay__nav:focus-visible {
+	outline: 3px solid #ffffff;
+	outline-offset: 3px;
+}
+
+.lumen-overlay__close {
+	top: clamp( 0.75rem, 2vw, 1.25rem );
+	right: clamp( 0.75rem, 2vw, 1.25rem );
+}
+
+.lumen-overlay__nav {
+	top: 50%;
+	transform: translateY( -50% );
+}
+
+.lumen-overlay__nav:active {
+	transform: translateY( -50% ) scale( 0.94 );
+}
+
+.lumen-overlay__nav--prev {
+	left: clamp( 0.5rem, 2vw, 1.5rem );
+}
+
+.lumen-overlay__nav--next {
+	right: clamp( 0.5rem, 2vw, 1.5rem );
+}
+
+.lumen-overlay__nav[hidden] {
+	display: none;
+}
+
+.lumen-overlay__counter {
+	position: absolute;
+	bottom: clamp( 0.5rem, 2vw, 1.25rem );
+	left: 50%;
+	z-index: 2;
+	margin: 0;
+	padding: 0.3rem 0.85rem;
+	transform: translateX( -50% );
+	border-radius: 999px;
+	background: var( --lumen-control-bg );
+	color: var( --lumen-control-fg );
+	font-family: inherit;
+	font-size: 0.8rem;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+}
+
+.lumen-overlay__counter[hidden] {
+	display: none;
+}
+
+/* Visually-hidden live region for screen-reader position announcements. */
+.lumen-overlay__live {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect( 0, 0, 0, 0 );
+	white-space: nowrap;
+	border: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Small screens: move the nav buttons to the bottom so they don't overlap a
+   wide image, and shrink controls slightly.
+--------------------------------------------------------------------------- */
+@media ( max-width: 600px ) {
+	.lumen-overlay {
+		--lumen-control-size: 44px;
+	}
+
+	.lumen-overlay__image {
+		max-height: 74vh;
+	}
+
+	.lumen-overlay__nav {
+		top: auto;
+		bottom: clamp( 0.5rem, 3vw, 1.25rem );
+		transform: none;
+	}
+
+	.lumen-overlay__nav:active {
+		transform: scale( 0.94 );
+	}
+
+	.lumen-overlay__counter {
+		bottom: auto;
+		top: clamp( 0.75rem, 2vw, 1.25rem );
+		left: clamp( 0.75rem, 2vw, 1.25rem );
+		transform: none;
+	}
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced-motion safety net (mirrors the JS guard in lumen-lightbox.js).
+
+   The script already finishes the close instantly when reduced motion is
+   requested; this block kills every transition/transform so the overlay and
+   image simply appear and disappear with no animation at all.
+--------------------------------------------------------------------------- */
+@media ( prefers-reduced-motion: reduce ) {
+	.lumen-overlay,
+	.lumen-overlay__image,
+	.lumen-overlay__close,
+	.lumen-overlay__nav {
+		transition: none !important;
+	}
+
+	.lumen-overlay__image {
+		opacity: 1 !important;
+		transform: none !important;
+	}
+
+	.lumen-overlay__close:active,
+	.lumen-overlay__nav:active {
+		transform: none;
+	}
+
+	.lumen-overlay__nav {
+		transform: translateY( -50% );
+	}
+
+	@media ( max-width: 600px ) {
+		.lumen-overlay__nav {
+			transform: none;
+		}
+	}
+}

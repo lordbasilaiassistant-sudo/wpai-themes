@@ -1,0 +1,232 @@
+/**
+ * Relay — Social Share
+ *
+ * A tasteful, privacy-first share bar shown after single-post content. Designed
+ * to look at home on ANY theme, light or dark, with no external assets.
+ *
+ * Design notes:
+ * - Colors derive from `currentColor` / `inherit`, so labels, icons, and button
+ *   surfaces read correctly on both light and dark themes without hardcoded
+ *   grays. Themes can override any of the --relay-* custom properties to fully
+ *   restyle the bar.
+ * - Icons are inline SVG drawn with `currentColor` — no icon font, no CDN, no
+ *   network request.
+ * - The buttons wrap responsively with flexbox; nothing depends on JS for
+ *   layout. The hover lift animates only `transform` (GPU-friendly, no reflow,
+ *   zero layout shift).
+ * - prefers-reduced-motion is honored via the @media block at the bottom of this
+ *   file (and mirrored by the JS).
+ */
+
+.relay {
+	/* Tunable surface — themes may override these custom properties. */
+	--relay-gap: 0.6rem;
+	--relay-radius: 999px;
+	--relay-pad-y: 0.5rem;
+	--relay-pad-x: 0.85rem;
+	/* Derive surfaces and borders from the surrounding text color so the bar
+	   adapts to any theme rather than fighting it. */
+	--relay-fg: currentColor;
+	--relay-muted: color-mix( in srgb, currentColor 64%, transparent );
+	--relay-btn-bg: color-mix( in srgb, currentColor 5%, transparent );
+	--relay-btn-bg-hover: color-mix( in srgb, currentColor 11%, transparent );
+	--relay-border: color-mix( in srgb, currentColor 16%, transparent );
+	--relay-border-hover: color-mix( in srgb, currentColor 34%, transparent );
+	--relay-shadow: color-mix( in srgb, currentColor 18%, transparent );
+	--relay-accent: color-mix( in srgb, currentColor 8%, transparent );
+
+	box-sizing: border-box;
+	margin: 2.5rem 0 0.5rem;
+	padding: 1.1rem 0 0;
+	border-top: 1px solid var( --relay-border );
+	color: var( --relay-fg );
+	font-family: inherit;
+}
+
+.relay *,
+.relay *::before,
+.relay *::after {
+	box-sizing: border-box;
+}
+
+.relay__heading {
+	margin: 0 0 0.85rem;
+	padding: 0;
+	border: 0;
+	color: var( --relay-muted );
+	font-family: inherit;
+	font-size: 0.78rem;
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+/* color-mix-free fallback for the muted heading. */
+@supports not ( color: color-mix( in srgb, currentColor 64%, transparent ) ) {
+	.relay__heading {
+		color: inherit;
+		opacity: 0.7;
+	}
+}
+
+.relay__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var( --relay-gap );
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.relay__item {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* Both the <a> links and the <button> actions share one pill style so the bar
+   reads as a single, even row regardless of element type. */
+.relay__btn {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	margin: 0;
+	padding: var( --relay-pad-y ) var( --relay-pad-x );
+	border: 1px solid var( --relay-border );
+	border-radius: var( --relay-radius );
+	background: var( --relay-btn-bg );
+	color: inherit;
+	font-family: inherit;
+	font-size: 0.86rem;
+	font-weight: 600;
+	line-height: 1.2;
+	text-decoration: none;
+	cursor: pointer;
+	-webkit-appearance: none;
+	appearance: none;
+	transition:
+		transform 0.2s cubic-bezier( 0.22, 1, 0.36, 1 ),
+		border-color 0.2s ease,
+		background-color 0.2s ease,
+		box-shadow 0.2s cubic-bezier( 0.22, 1, 0.36, 1 );
+}
+
+.relay__btn:hover,
+.relay__btn:focus-visible {
+	transform: translateY( -2px );
+	border-color: var( --relay-border-hover );
+	background: var( --relay-btn-bg-hover );
+	box-shadow: 0 6px 16px var( --relay-shadow );
+}
+
+.relay__btn:active {
+	transform: translateY( 0 );
+}
+
+.relay__btn:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+
+/* color-mix-free fallback: a neutral tint from a translucent gray. */
+@supports not ( background: color-mix( in srgb, currentColor 5%, transparent ) ) {
+	.relay__btn {
+		background: rgba( 127, 127, 127, 0.08 );
+		border-color: rgba( 127, 127, 127, 0.32 );
+	}
+
+	.relay__btn:hover,
+	.relay__btn:focus-visible {
+		background: rgba( 127, 127, 127, 0.16 );
+		border-color: rgba( 127, 127, 127, 0.52 );
+	}
+}
+
+.relay__icon {
+	flex: 0 0 auto;
+	width: 1.05em;
+	height: 1.05em;
+	/* The check swaps in for the copy glyph after a successful copy. */
+	transition: transform 0.2s cubic-bezier( 0.22, 1, 0.36, 1 );
+}
+
+.relay__btn:hover .relay__icon,
+.relay__btn:focus-visible .relay__icon {
+	transform: scale( 1.08 );
+}
+
+.relay__label {
+	white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Copy confirmation
+
+   The status region is visually swapped in for the label on a successful copy.
+   We keep both in the same pill and toggle a data attribute set by JS so the
+   width settles with no layout jump. The aria-live region announces "Copied!"
+   to assistive tech.
+-------------------------------------------------------------------------- */
+.relay__status {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.45rem;
+	border-radius: inherit;
+	background: var( --relay-btn-bg-hover );
+	color: inherit;
+	font-weight: 700;
+	opacity: 0;
+	transform: scale( 0.96 );
+	pointer-events: none;
+	transition:
+		opacity 0.18s ease,
+		transform 0.18s cubic-bezier( 0.22, 1, 0.36, 1 );
+}
+
+.relay__item--copy .relay__btn[data-relay-copied="true"] .relay__status {
+	opacity: 1;
+	transform: scale( 1 );
+}
+
+.relay__item--copy .relay__btn[data-relay-copied="true"] .relay__icon,
+.relay__item--copy .relay__btn[data-relay-copied="true"] .relay__label {
+	/* Hide the underlying label while the confirmation shows, without changing
+	   the pill's box so there is no width shift. */
+	opacity: 0;
+}
+
+@supports not ( background: color-mix( in srgb, currentColor 11%, transparent ) ) {
+	.relay__status {
+		background: rgba( 127, 127, 127, 0.16 );
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Reduced-motion safety net (mirrors the JS / OS preference).
+
+   Kill every transform/transition so controls simply appear and the copy
+   confirmation cross-fades without movement. Hover still recolors; it just
+   doesn't lift.
+-------------------------------------------------------------------------- */
+@media ( prefers-reduced-motion: reduce ) {
+	.relay__btn,
+	.relay__icon,
+	.relay__status {
+		transition: none !important;
+		transform: none !important;
+	}
+
+	.relay__btn:hover,
+	.relay__btn:focus-visible {
+		transform: none !important;
+	}
+
+	.relay__item--copy .relay__btn[data-relay-copied="true"] .relay__status {
+		transform: none !important;
+	}
+}

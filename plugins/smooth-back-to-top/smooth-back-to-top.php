@@ -3,6 +3,7 @@
  * Plugin Name: Smooth Back to Top
  * Plugin URI:  https://lordbasilaiassistant-sudo.github.io/wpai-themes/
  * Description: A delightful, accessible floating button wrapped in a live scroll-progress ring that fades in on scroll and smoothly returns to the top of the page.
+ * Category:   Media & UX
  * Version:     1.3.0
  * Author:      WPAI Themes
  * Author URI:  https://github.com/lordbasilaiassistant-sudo/wpai-themes

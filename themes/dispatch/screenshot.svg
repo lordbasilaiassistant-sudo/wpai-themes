@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="cover" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6c9cb"/>
+      <stop offset="1" stop-color="#e07a80"/>
+    </linearGradient>
+    <linearGradient id="thumbBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#cfe0f3"/>
+      <stop offset="1" stop-color="#8ab0e0"/>
+    </linearGradient>
+    <linearGradient id="thumbGreen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#cfe9dd"/>
+      <stop offset="1" stop-color="#86c7a8"/>
+    </linearGradient>
+    <linearGradient id="thumbAmber" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4e0c2"/>
+      <stop offset="1" stop-color="#dcab63"/>
+    </linearGradient>
+    <linearGradient id="cardA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e0d3f0"/>
+      <stop offset="1" stop-color="#a98ccd"/>
+    </linearGradient>
+    <linearGradient id="cardB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c9e6ea"/>
+      <stop offset="1" stop-color="#79bcc4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Canvas -->
+  <rect width="1200" height="900" fill="#f4f5f7"/>
+
+  <!-- Breaking bar -->
+  <rect x="0" y="0" width="1200" height="34" fill="#16181d"/>
+  <circle cx="92" cy="17" r="4" fill="#d6202b"/>
+  <text x="106" y="22" font-size="13" font-weight="800" letter-spacing="2" fill="#ffffff">BREAKING</text>
+  <text x="1010" y="22" font-size="12" font-weight="600" letter-spacing="1.5" fill="#9aa0aa">SAT, JUN 21, 2026</text>
+
+  <!-- Masthead -->
+  <rect x="0" y="34" width="1200" height="92" fill="#ffffff"/>
+  <rect x="0" y="123" width="1200" height="3" fill="#16181d"/>
+  <text x="80" y="92" font-size="42" font-weight="900" letter-spacing="-2" fill="#16181d">THE DISPATCH</text>
+  <g font-size="15" font-weight="700" letter-spacing="1">
+    <text x="838" y="86" fill="#d6202b">POLITICS</text>
+    <text x="952" y="86" fill="#16181d">TECH</text>
+    <text x="1024" y="86" fill="#16181d">CLIMATE</text>
+  </g>
+
+  <!-- Ticker -->
+  <rect x="0" y="126" width="1200" height="42" fill="#ffffff"/>
+  <rect x="0" y="167" width="1200" height="1" fill="#e0e3e8"/>
+  <path d="M0 126 L150 126 L138 168 L0 168 Z" fill="#d6202b"/>
+  <text x="40" y="153" font-size="14" font-weight="800" letter-spacing="2" fill="#ffffff">LATEST</text>
+  <g font-size="15" font-weight="600" fill="#3c4149">
+    <circle cx="184" cy="147" r="3" fill="#d6202b"/>
+    <text x="198" y="153">Council approves transit budget</text>
+    <circle cx="520" cy="147" r="3" fill="#d6202b"/>
+    <text x="534" y="153">Quarterly chips report beats forecast</text>
+    <circle cx="906" cy="147" r="3" fill="#d6202b"/>
+    <text x="920" y="153">Heat advisory extended through</text>
+  </g>
+
+  <!-- ===================== NEWS GRID ===================== -->
+  <!-- HERO LEAD -->
+  <!-- Cover with red category rail -->
+  <rect x="80" y="200" width="620" height="300" rx="6" fill="url(#cover)"/>
+  <rect x="80" y="200" width="620" height="4" fill="#d6202b"/>
+  <!-- Lead meta -->
+  <rect x="80" y="520" width="96" height="24" rx="4" fill="#d6202b"/>
+  <text x="94" y="537" font-size="12" font-weight="800" letter-spacing="1.5" fill="#ffffff">POLITICS</text>
+  <text x="190" y="537" font-size="13" fill="#6b7280" letter-spacing="0.5">BY ELENA VARGAS &#183; JUN 21, 2026</text>
+  <!-- Lead headline (condensed bold) -->
+  <text x="78" y="588" font-size="44" font-weight="800" letter-spacing="-1.5" fill="#16181d">City unveils five-year</text>
+  <text x="78" y="630" font-size="44" font-weight="800" letter-spacing="-1.5" fill="#16181d">transit overhaul plan</text>
+  <g font-size="18" fill="#3c4149">
+    <text x="80" y="668">The proposal would add three rapid lines and</text>
+    <text x="80" y="694">rebuild four stations over the next decade.</text>
+  </g>
+  <text x="80" y="730" font-size="15" font-weight="800" letter-spacing="1" fill="#d6202b">FULL STORY  &#8594;</text>
+
+  <!-- SECONDARY COLUMN (3 stacked stories, color-coded) -->
+  <!-- Secondary 1 (tech / blue) -->
+  <rect x="744" y="200" width="120" height="120" rx="6" fill="url(#thumbBlue)"/>
+  <rect x="744" y="200" width="120" height="4" fill="#2f7fd6"/>
+  <rect x="884" y="202" width="64" height="22" rx="4" fill="#2f7fd6"/>
+  <text x="896" y="218" font-size="11" font-weight="800" letter-spacing="1" fill="#ffffff">TECH</text>
+  <text x="884" y="254" font-size="22" font-weight="800" letter-spacing="-0.5" fill="#16181d">Chipmaker beats</text>
+  <text x="884" y="278" font-size="22" font-weight="800" letter-spacing="-0.5" fill="#16181d">quarterly forecast</text>
+  <line x1="744" y1="338" x2="1120" y2="338" stroke="#e0e3e8" stroke-width="1"/>
+
+  <!-- Secondary 2 (climate / green) -->
+  <rect x="744" y="356" width="120" height="120" rx="6" fill="url(#thumbGreen)"/>
+  <rect x="744" y="356" width="120" height="4" fill="#1a9e6a"/>
+  <rect x="884" y="358" width="92" height="22" rx="4" fill="#1a9e6a"/>
+  <text x="896" y="374" font-size="11" font-weight="800" letter-spacing="1" fill="#ffffff">CLIMATE</text>
+  <text x="884" y="410" font-size="22" font-weight="800" letter-spacing="-0.5" fill="#16181d">Heat advisory</text>
+  <text x="884" y="434" font-size="22" font-weight="800" letter-spacing="-0.5" fill="#16181d">extends to Friday</text>
+  <line x1="744" y1="494" x2="1120" y2="494" stroke="#e0e3e8" stroke-width="1"/>
+
+  <!-- Secondary 3 (culture / amber) -->
+  <rect x="744" y="512" width="120" height="120" rx="6" fill="url(#thumbAmber)"/>
+  <rect x="744" y="512" width="120" height="4" fill="#d99a2b"/>
+  <rect x="884" y="514" width="86" height="22" rx="4" fill="#d99a2b"/>
+  <text x="896" y="530" font-size="11" font-weight="800" letter-spacing="1" fill="#ffffff">CULTURE</text>
+  <text x="884" y="566" font-size="22" font-weight="800" letter-spacing="-0.5" fill="#16181d">Festival lineup</text>
+  <text x="884" y="590" font-size="22" font-weight="800" letter-spacing="-0.5" fill="#16181d">drops this week</text>
+
+  <!-- Grid bottom rule -->
+  <rect x="80" y="762" width="1040" height="3" fill="#16181d"/>
+
+  <!-- MORE STORIES kicker -->
+  <rect x="80" y="792" width="4" height="20" fill="#d6202b"/>
+  <text x="98" y="808" font-size="14" font-weight="800" letter-spacing="2" fill="#16181d">MORE STORIES</text>
+  <line x1="252" y1="802" x2="1120" y2="802" stroke="#e0e3e8" stroke-width="1"/>
+
+  <!-- TWO-UP CARD RIVER -->
+  <!-- Card A (purple) -->
+  <rect x="80" y="828" width="510" height="64" rx="6" fill="#ffffff" stroke="#e0e3e8" stroke-width="1"/>
+  <rect x="80" y="828" width="150" height="64" fill="url(#cardA)"/>
+  <rect x="80" y="828" width="150" height="3" fill="#8a5fc0"/>
+  <rect x="250" y="842" width="80" height="18" rx="3" fill="#8a5fc0"/>
+  <text x="260" y="855" font-size="9" font-weight="800" letter-spacing="1" fill="#ffffff">OPINION</text>
+  <text x="250" y="884" font-size="18" font-weight="800" letter-spacing="-0.5" fill="#16181d">Why the budget math holds</text>
+
+  <!-- Card B (teal) -->
+  <rect x="610" y="828" width="510" height="64" rx="6" fill="#ffffff" stroke="#e0e3e8" stroke-width="1"/>
+  <rect x="610" y="828" width="150" height="64" fill="url(#cardB)"/>
+  <rect x="610" y="828" width="150" height="3" fill="#1f9aa6"/>
+  <rect x="780" y="842" width="64" height="18" rx="3" fill="#1f9aa6"/>
+  <text x="790" y="855" font-size="9" font-weight="800" letter-spacing="1" fill="#ffffff">TECH</text>
+  <text x="780" y="884" font-size="18" font-weight="800" letter-spacing="-0.5" fill="#16181d">Inside the new rail app</text>
+</svg>
