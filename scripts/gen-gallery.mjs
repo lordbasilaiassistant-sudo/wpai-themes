@@ -141,10 +141,19 @@ const COMPANION_PLUGINS = [
   'beacon-ai-seo', 'contents-toc', 'kindred-related',
   'reading-time-badge', 'smooth-back-to-top',
 ];
+
+// Some themes want a different companion set than the blog default. Emporium is
+// a storefront, so it installs the commerce plugins (Till first, so Keepsake can
+// hook into it) and store-appropriate niceties instead of the post-content ones.
+const THEME_COMPANIONS = {
+  emporium: ['till', 'keepsake', 'lumen-lightbox', 'smooth-back-to-top', 'beacon-ai-seo'],
+};
+
 const EXISTING_PLUGINS = new Set(listPlugins().map((p) => p.slug));
-function companionSteps(excludeSlug) {
-  return COMPANION_PLUGINS
-    .filter((s) => s !== excludeSlug && EXISTING_PLUGINS.has(s))
+function companionSteps(slug) {
+  const list = THEME_COMPANIONS[slug] || COMPANION_PLUGINS.filter((s) => s !== slug);
+  return list
+    .filter((s) => EXISTING_PLUGINS.has(s))
     .map((s) => ({
       step: 'installPlugin',
       pluginZipFile: { resource: 'url', url: `${SITE_URL}downloads/${s}.zip` },
@@ -152,17 +161,94 @@ function companionSteps(excludeSlug) {
     }));
 }
 
+// Enable pretty permalinks so /shop/, /product/<slug>/, and /wishlist/ resolve
+// in the preview — Till and Keepsake register custom rewrites on activation.
+function prettyPermalinkStep() {
+  return {
+    step: 'runPHP',
+    code:
+      "<?php\n" +
+      "require_once '/wordpress/wp-load.php';\n" +
+      "global $wp_rewrite;\n" +
+      "update_option( 'permalink_structure', '/%postname%/' );\n" +
+      "$wp_rewrite->set_permalink_structure( '/%postname%/' );\n" +
+      "$wp_rewrite->flush_rules( true );\n",
+  };
+}
+
+// Emporium-specific finishing: a static storefront front page, a Journal posts
+// page, and a real store menu (Home, Shop, product categories, Journal, About)
+// assigned to the theme's nav locations. Runs after the demo content + Till's
+// activation seeding, so the shop page and product categories already exist.
+function emporiumStoreStep() {
+  return {
+    step: 'runPHP',
+    code:
+      "<?php\n" +
+      "require_once '/wordpress/wp-load.php';\n" +
+      "$home = get_page_by_path( 'home' );\n" +
+      "$hid = $home ? $home->ID : wp_insert_post( array( 'post_type' => 'page', 'post_title' => 'Home', 'post_name' => 'home', 'post_status' => 'publish', 'post_content' => '' ) );\n" +
+      "$journal = get_page_by_path( 'journal' );\n" +
+      "$jid = $journal ? $journal->ID : wp_insert_post( array( 'post_type' => 'page', 'post_title' => 'Journal', 'post_name' => 'journal', 'post_status' => 'publish', 'post_content' => '' ) );\n" +
+      "update_option( 'show_on_front', 'page' );\n" +
+      "update_option( 'page_on_front', (int) $hid );\n" +
+      "update_option( 'page_for_posts', (int) $jid );\n" +
+      "$menu = wp_get_nav_menu_object( 'Store Menu' );\n" +
+      "$menu_id = $menu ? $menu->term_id : wp_create_nav_menu( 'Store Menu' );\n" +
+      "if ( ! is_wp_error( $menu_id ) ) {\n" +
+      "  $items = wp_get_nav_menu_items( $menu_id );\n" +
+      "  if ( $items ) { foreach ( $items as $it ) { wp_delete_post( $it->ID, true ); } }\n" +
+      "  wp_update_nav_menu_item( $menu_id, 0, array( 'menu-item-title' => 'Home', 'menu-item-url' => home_url( '/' ), 'menu-item-status' => 'publish' ) );\n" +
+      "  $shop = (int) get_option( 'till_page_shop' );\n" +
+      "  if ( $shop ) { wp_update_nav_menu_item( $menu_id, 0, array( 'menu-item-title' => 'Shop', 'menu-item-object' => 'page', 'menu-item-object-id' => $shop, 'menu-item-type' => 'post_type', 'menu-item-status' => 'publish' ) ); }\n" +
+      "  foreach ( array( 'living' => 'Living', 'kitchen' => 'Kitchen', 'lighting' => 'Lighting' ) as $cslug => $clabel ) {\n" +
+      "    $t = get_term_by( 'slug', $cslug, 'product_cat' );\n" +
+      "    if ( $t ) { wp_update_nav_menu_item( $menu_id, 0, array( 'menu-item-title' => $clabel, 'menu-item-object' => 'product_cat', 'menu-item-object-id' => $t->term_id, 'menu-item-type' => 'taxonomy', 'menu-item-status' => 'publish' ) ); }\n" +
+      "  }\n" +
+      "  wp_update_nav_menu_item( $menu_id, 0, array( 'menu-item-title' => 'Journal', 'menu-item-object' => 'page', 'menu-item-object-id' => (int) $jid, 'menu-item-type' => 'post_type', 'menu-item-status' => 'publish' ) );\n" +
+      "  $about = get_page_by_path( 'about' );\n" +
+      "  if ( $about ) { wp_update_nav_menu_item( $menu_id, 0, array( 'menu-item-title' => 'About', 'menu-item-object' => 'page', 'menu-item-object-id' => $about->ID, 'menu-item-type' => 'post_type', 'menu-item-status' => 'publish' ) ); }\n" +
+      "  $locs = get_theme_mod( 'nav_menu_locations' );\n" +
+      "  if ( ! is_array( $locs ) ) { $locs = array(); }\n" +
+      "  $locs['primary'] = $menu_id; $locs['footer'] = $menu_id;\n" +
+      "  set_theme_mod( 'nav_menu_locations', $locs );\n" +
+      "}\n",
+  };
+}
+
+// Some store items preview best landing on a store page rather than the home.
+const LANDING_PAGE = {
+  till: '/shop/',
+  keepsake: '/wishlist/',
+};
+
+// Items whose preview involves Till's custom rewrites need pretty permalinks.
+const NEEDS_PERMALINKS = new Set(['emporium', 'till', 'keepsake']);
+
 function writeBlueprint(slug, kind) {
   const zipUrl = `${SITE_URL}downloads/${slug}.zip`;
   const install = kind === 'theme'
     ? { step: 'installTheme', themeZipFile: { resource: 'url', url: zipUrl }, options: { activate: true } }
     : { step: 'installPlugin', pluginZipFile: { resource: 'url', url: zipUrl }, options: { activate: true } };
+
+  const steps = [
+    install,
+    ...(kind === 'theme' ? companionSteps(slug) : []),
+    ...demoSteps(slug),
+  ];
+  if (slug === 'emporium') {
+    steps.push(emporiumStoreStep());
+  }
+  if (NEEDS_PERMALINKS.has(slug)) {
+    steps.push(prettyPermalinkStep());
+  }
+
   const blueprint = {
     $schema: 'https://playground.wordpress.net/blueprint-schema.json',
-    landingPage: '/',
+    landingPage: LANDING_PAGE[slug] || '/',
     preferredVersions: { php: '8.0', wp: 'latest' },
     features: { networking: true },
-    steps: [install, ...(kind === 'theme' ? companionSteps(slug) : []), ...demoSteps(slug)],
+    steps,
   };
   writeFileSync(join(playgroundDir, `${slug}.json`), JSON.stringify(blueprint, null, 2));
 }

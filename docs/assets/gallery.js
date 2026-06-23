@@ -18,8 +18,8 @@ const grid = $('#grid');
 const tpl = $('#card-tpl');
 
 const CATEGORY_ORDER = {
-  themes: ['Blog & Personal', 'Magazine & Editorial', 'Portfolio & Creative', 'Business & Local', 'SaaS & Startup', 'Docs & Knowledge'],
-  plugins: ['Automation', 'SEO & AI', 'Content & Reading', 'Engagement', 'Media & UX'],
+  themes: ['E-commerce & Store', 'Blog & Personal', 'Magazine & Editorial', 'Portfolio & Creative', 'Business & Local', 'SaaS & Startup', 'Docs & Knowledge'],
+  plugins: ['E-commerce', 'Automation', 'SEO & AI', 'Content & Reading', 'Engagement', 'Media & UX'],
 };
 
 function items() {

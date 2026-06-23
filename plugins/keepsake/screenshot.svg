@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Keepsake Wishlist preview">
+  <defs>
+    <linearGradient id="k-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf6f7"/><stop offset="1" stop-color="#f6edef"/></linearGradient>
+    <linearGradient id="k-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3e0cf"/><stop offset="1" stop-color="#e3bd97"/></linearGradient>
+    <linearGradient id="k-b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfeee3"/><stop offset="1" stop-color="#9bd8c2"/></linearGradient>
+    <linearGradient id="k-c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2d6f3"/><stop offset="1" stop-color="#c3aae8"/></linearGradient>
+    <filter id="k-shadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#3a1f25" flood-opacity="0.16"/></filter>
+    <filter id="k-heart-shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#3a1f25" flood-opacity="0.3"/></filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#k-bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="120" font-family="Georgia, serif" font-size="40" font-weight="700" fill="#2a1c1f" text-anchor="middle">Your Wishlist</text>
+  <text x="600" y="158" font-family="system-ui, sans-serif" font-size="17" fill="#9a7e85" text-anchor="middle">Saved instantly. No account. Lives right here in your browser.</text>
+
+  <!-- Header count badge callout -->
+  <g transform="translate(1060,40)">
+    <circle cx="22" cy="22" r="26" fill="#ffffff" filter="url(#k-shadow)"/>
+    <path d="M22 34s-9-5.5-12-11C8 19 9.7 14.6 13.8 14c2.4-.35 4.6 1 5.5 2.9.9-1.9 3.1-3.25 5.5-2.9 4.1.6 5.8 5 3.8 9-3 5.5-12 11-12 11z" transform="translate(0,0) scale(0.9)" fill="none" stroke="#54514a" stroke-width="1.8"/>
+    <circle cx="40" cy="8" r="13" fill="#e0556b"/>
+    <text x="40" y="13" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+  </g>
+
+  <!-- Card 1 (saved) -->
+  <g filter="url(#k-shadow)"><rect x="120" y="240" width="280" height="340" rx="16" fill="#ffffff"/></g>
+  <rect x="120" y="240" width="280" height="250" rx="16" fill="url(#k-a)"/>
+  <rect x="120" y="345" width="280" height="145" fill="url(#k-a)"/>
+  <rect x="186" y="300" width="148" height="74" rx="10" fill="#c79a6a" opacity="0.65"/>
+  <g filter="url(#k-heart-shadow)"><circle cx="364" cy="276" r="22" fill="#ffffff"/></g>
+  <path d="M364 288s-6-3.7-8-7.3c-1.1-2.3 0-5.2 2.7-5.6 1.6-.24 3 .65 3.7 1.9.7-1.25 2.1-2.14 3.7-1.9 2.7.4 3.8 3.3 2.7 5.6-2 3.6-8 7.3-8 7.3z" fill="#e0556b" stroke="#e0556b" stroke-width="1.4"/>
+  <text x="148" y="528" font-family="system-ui, sans-serif" font-size="12" letter-spacing="1.5" fill="#b09aa0">LIVING</text>
+  <text x="148" y="552" font-family="Georgia, serif" font-size="18" font-weight="600" fill="#2a1c1f">Linen Cushion</text>
+  <text x="148" y="574" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#2a1c1f">$36.00</text>
+
+  <!-- Card 2 (saved) -->
+  <g filter="url(#k-shadow)"><rect x="460" y="240" width="280" height="340" rx="16" fill="#ffffff"/></g>
+  <rect x="460" y="240" width="280" height="250" rx="16" fill="url(#k-b)"/>
+  <rect x="460" y="345" width="280" height="145" fill="url(#k-b)"/>
+  <circle cx="600" cy="340" r="56" fill="#6cc0a3" opacity="0.6"/>
+  <g filter="url(#k-heart-shadow)"><circle cx="704" cy="276" r="22" fill="#ffffff"/></g>
+  <path d="M704 288s-6-3.7-8-7.3c-1.1-2.3 0-5.2 2.7-5.6 1.6-.24 3 .65 3.7 1.9.7-1.25 2.1-2.14 3.7-1.9 2.7.4 3.8 3.3 2.7 5.6-2 3.6-8 7.3-8 7.3z" fill="#e0556b" stroke="#e0556b" stroke-width="1.4"/>
+  <text x="488" y="528" font-family="system-ui, sans-serif" font-size="12" letter-spacing="1.5" fill="#b09aa0">KITCHEN</text>
+  <text x="488" y="552" font-family="Georgia, serif" font-size="18" font-weight="600" fill="#2a1c1f">Stoneware Mugs</text>
+  <text x="488" y="574" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#2a1c1f">$38.00</text>
+
+  <!-- Card 3 (saved) -->
+  <g filter="url(#k-shadow)"><rect x="800" y="240" width="280" height="340" rx="16" fill="#ffffff"/></g>
+  <rect x="800" y="240" width="280" height="250" rx="16" fill="url(#k-c)"/>
+  <rect x="800" y="345" width="280" height="145" fill="url(#k-c)"/>
+  <rect x="860" y="310" width="160" height="100" rx="10" fill="#a98fd6" opacity="0.6"/>
+  <g filter="url(#k-heart-shadow)"><circle cx="1044" cy="276" r="22" fill="#ffffff"/></g>
+  <path d="M1044 288s-6-3.7-8-7.3c-1.1-2.3 0-5.2 2.7-5.6 1.6-.24 3 .65 3.7 1.9.7-1.25 2.1-2.14 3.7-1.9 2.7.4 3.8 3.3 2.7 5.6-2 3.6-8 7.3-8 7.3z" fill="#e0556b" stroke="#e0556b" stroke-width="1.4"/>
+  <text x="828" y="528" font-family="system-ui, sans-serif" font-size="12" letter-spacing="1.5" fill="#b09aa0">ACCESSORIES</text>
+  <text x="828" y="552" font-family="Georgia, serif" font-size="18" font-weight="600" fill="#2a1c1f">Market Tote</text>
+  <text x="828" y="574" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#2a1c1f">$42.00</text>
+
+  <!-- Caption -->
+  <text x="600" y="700" font-family="system-ui, sans-serif" font-size="22" font-weight="600" fill="#6b4a52" text-anchor="middle">Tap the heart on any product to keep it for later.</text>
+  <text x="600" y="734" font-family="system-ui, sans-serif" font-size="16" fill="#9a7e85" text-anchor="middle">A live count in the header, a saved page that matches your store — and zero sign-up.</text>
+</svg>

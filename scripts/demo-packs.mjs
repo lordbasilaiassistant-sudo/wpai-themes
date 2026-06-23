@@ -79,6 +79,65 @@ export const DEFAULT_PACK = {
 };
 
 export const DEMO_PACKS = {
+  "emporium": {
+    "site": {
+      "name": "Maison Verre",
+      "tagline": "Considered objects for a calmer home."
+    },
+    "author": {
+      "name": "Camille Renaud",
+      "bio": "Founder of Maison Verre, writing about materials, makers, and the quiet craft of a well-made home."
+    },
+    "menuCategories": [
+      "Guides",
+      "Makers",
+      "Home Notes"
+    ],
+    "pages": [
+      {
+        "title": "About",
+        "image": "sand",
+        "content": "<p>Maison Verre began at a kitchen table, with two people who were tired of buying the same disposable things twice. We wanted objects that earned their place — a chair you would still want in ten years, a mug that felt right in the hand, a lamp that made the evening softer. So we started making them, and finding the people who already did it well.</p><p>Everything we sell is chosen the slow way: we hold it, use it, and live with it before it ever reaches the shop. We work directly with small workshops, favour natural materials that age gracefully, and price things fairly because a good home should not be a luxury. Free shipping, easy returns, and a real person on the other end of every message.</p><p>This is a demo storefront built with the free Emporium theme and the Till commerce plugin — but the philosophy is real enough. Have a look around, fill your cart, and see how good a free WordPress shop can feel.</p>"
+      }
+    ],
+    "posts": [
+      {
+        "title": "How to Choose a Sofa You Will Still Love in Ten Years",
+        "category": "Guides",
+        "image": "ember",
+        "excerpt": "The frame, the fill, and the fabric — the three decisions that decide whether a sofa lasts a decade or a season.",
+        "content": "<p>A sofa is the most-used object most of us will ever buy, and the one we most often get wrong. The trick is to spend your attention, not just your money, on the three things that actually decide its life.</p><h2>The frame</h2><p>Everything rests on the frame, literally. Look for kiln-dried hardwood and joints that are screwed and glued, not stapled. A good frame outlives three sets of cushions.</p><h2>The fill</h2><p>Feather-wrapped foam is the sweet spot: the plushness of down with the recovery of foam, so the seat does not flatten into a memory of itself by year two.</p><blockquote>Buy the frame for the decade and the cushions for the season — only one of them is easy to replace.</blockquote><p>Get those right and the fabric is the fun part. Choose a weave you would happily live with through a few changes of taste, and you will have a piece that ages into a friend rather than a regret.</p>"
+      },
+      {
+        "title": "Inside the Workshop: The Potter Behind Our Stoneware",
+        "category": "Makers",
+        "image": "grove",
+        "excerpt": "A morning in a hillside studio, where every mug we sell is thrown, glazed, and quietly imperfect on purpose.",
+        "content": "<p>The mugs arrive at the shop in straw-packed crates, and no two are quite alike. That is not a flaw in the process; it <em>is</em> the process. We spent a morning with the potter who makes them to understand why.</p><p>She throws in batches but glazes by feel, dipping each piece into a reactive glaze that pools and breaks differently every time it meets the heat. The result is a shelf of mugs that are siblings, not clones — the same in spirit, distinct in detail.</p><p>It is slower, and it costs more, and it is exactly why the pieces feel alive in a way a flawless factory mug never will. When you wrap your hands around one on a grey morning, you are holding an afternoon of someone's careful, deliberate work.</p>"
+      },
+      {
+        "title": "Five Small Changes That Make a Room Feel Calmer",
+        "category": "Home Notes",
+        "image": "dusk",
+        "excerpt": "You do not need to redecorate. A handful of small, almost-free moves will quiet a room by the weekend.",
+        "content": "<p>Calm is not a budget. Most of the rooms that feel serene got there through subtraction and a few small, deliberate moves — not a renovation. Here are five we come back to again and again.</p><ul><li><strong>Lower the light.</strong> Swap one harsh overhead bulb for a warm lamp at eye level and the whole room exhales.</li><li><strong>Clear one surface completely.</strong> A single empty table is worth more than a dozen tidied ones.</li><li><strong>Add one living thing.</strong> A sprig of greenery does what no cushion can.</li><li><strong>Choose natural materials.</strong> Linen, wood, and stone read as calm because they age honestly.</li><li><strong>Leave a little space.</strong> Resist filling the last corner. The room will thank you for the pause.</li></ul><p>None of this requires a trip to the shop — though if you are minded to, the new season's linens are exactly the kind of quiet we mean.</p>"
+      }
+    ],
+    "comments": [
+      {
+        "author": "Priya Nair",
+        "content": "Bought the stoneware mugs after reading the workshop piece and they are even better in person. The little imperfections are the whole charm."
+      },
+      {
+        "author": "Tom Albright",
+        "content": "The sofa guide saved me from a very expensive mistake. 'Buy the frame for the decade' is going on a sticky note."
+      },
+      {
+        "author": "Camille Renaud",
+        "content": "So glad it helped, Tom — and Priya, the potter will be thrilled to hear it. That is exactly why we do it the slow way."
+      }
+    ]
+  },
   "aurora": {
     "site": {
       "name": "The Long Way Round",
